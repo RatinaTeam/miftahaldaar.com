@@ -34,7 +34,7 @@ export default function Dashboard() {
                 "auth-key": "sdofmasdmfasdmflkmasdf",
             };
             const res = await axios.get("https://miftahaldaar.ratina.co/orders/all_orders", { headers });
-
+console.log(res)
             // If failed to fetch
             if (res.data.status !== true) {
                 setLoading(false);

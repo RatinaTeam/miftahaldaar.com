@@ -51,19 +51,19 @@ const Header = () => {
                                 to="/dashboard"
                                 className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-700 mr-4 "
                             >
-                                Dashboard
+                                لوحة القيادة
                             </Link>
                             <Link
                                 to="users_list"
                                 className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-700 "
                             >
-                                Users
+                                المستخدمون
                             </Link>
                         </div>
                     </div>
                     <div className="flex items-center flex-shrink-0 ">
                         <span className="font-semibold text-xl tracking-tight mr-4 border py-2 px-2 rounded-lg text-gray-800">
-                            LOGO
+                        شعار
                         </span>
                     </div>
                 </nav>

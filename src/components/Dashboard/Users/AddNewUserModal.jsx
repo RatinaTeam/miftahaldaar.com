@@ -39,24 +39,24 @@ const AddNewUserModal = ({ openAddNewUser, handleOpenAddNewUser }) => {
     return (
         <Dialog open={openAddNewUser} handler={handleOpenAddNewUser} size="md">
             <div className="flex items-center justify-between">
-                <DialogHeader>Add New User</DialogHeader>
+                <DialogHeader>إضافة مستخدم جديد</DialogHeader>
                 <XMarkIcon className="mr-3 h-5 w-5" onClick={handleOpenAddNewUser} />
             </div>
 
             <form action="" onSubmit={handleFormSubmit}>
                 <DialogBody divider>
                     <div className="grid grid-cols-2 gap-4">
-                        <Input name="username" size="md" label="Username" required />
-                        <Input name="password" size="md" label="Password" type="password" required />
-                        <Input name="role" size="md" label="Role" required />
+                        <Input name="username" size="md" label="اسم المستخدم" required />
+                        <Input name="password" size="md" label="كلمة المرور" type="password" required />
+                        <Input name="role" size="md" label="دور" required />
                     </div>
                 </DialogBody>
                 <DialogFooter className="flex justify-between">
                     <Button type="submit" variant="gradient" color="green">
-                        Add User
+                    إضافة مستخدم جديد
                     </Button>
                     <Button variant="outlined" color="red" onClick={handleOpenAddNewUser}>
-                        Close / إغلاق
+                       إغلاق
                     </Button>
                 </DialogFooter>
             </form>

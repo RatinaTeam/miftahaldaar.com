@@ -54,26 +54,26 @@ const Login = () => {
             <Card className="mx-auto w-full max-w-[24rem] ">
                 <CardHeader variant="gradient" color="blue" className="mb-4 grid h-28 place-items-center">
                     <Typography variant="h3" color="white">
-                        Sign In
+                    تسجيل الدخول
                     </Typography>
                 </CardHeader>
                 <form onSubmit={handleSingin}>
                     <CardBody className="flex flex-col gap-4">
-                        <Input required label="User ID" type="number" name="uid" size="lg" />
-                        <Input required label="Password" type="password" name="password" size="lg" />
+                        <Input required label="معرف المستخدم" type="number" name="uid" size="lg" />
+                        <Input required label="كلمة المرور" type="password" name="password" size="lg" />
                         <div className="-ml-2.5">
-                            <Checkbox label="Remember Me" />
+                            <Checkbox label="تذكرنى" />
                         </div>
                     </CardBody>
                     <CardFooter className="pt-0">
-                        {error && <p className="text-sm text-red-600 font-medium mb-2">Failed to login, Try again</p>}
+                        {error && <p className="text-sm text-red-600 font-medium mb-2">فشل في تسجيل الدخول ، حاول مرة أخرى</p>}
                         {isLoading ? (
                             <Button disabled variant="gradient" className="" fullWidth>
                                 <Spinner className="mx-auto" />
                             </Button>
                         ) : (
                             <Button type="submit" variant="gradient" fullWidth>
-                                Sign In
+                                الدخول
                             </Button>
                         )}
                     </CardFooter>
