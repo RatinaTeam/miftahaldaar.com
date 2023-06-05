@@ -1,99 +1,51 @@
 import { Card, Typography } from "@material-tailwind/react";
+import { SearchField } from "../Shared/StyledComponents";
 
-const TABLE_HEAD = [
-    {
-        arabic: "الملاحظات",
-    },
-    {
-        arabic: "الموظف",
-        english: "Employee",
-    },
-    {
-        arabic: "حالة الطلب",
-        english: "Status",
-    },
-    {
-        arabic: "تاريخ إعادة المعالجة",
-    },
-    {
-        arabic: "بنك الراتب",
-        english: "Salary on Bank",
-    },
-    {
-        arabic: "رقم الحوال",
-        english: "Phone",
-    },
-    {
-        arabic: "العميل",
-        english: "Client Name",
-    },
-    {
-        arabic: "نوع الطلب",
-        english: "Order Type",
-    },
-];
+export default function OverDueOrders({ dueOrders }) {
+    const TABLE_HEAD = [
+        {
+            arabic: "الملاحظات",
+        },
+        {
+            arabic: "الموظف",
+        },
+        {
+            arabic: "حالة الطلب",
+        },
+        {
+            arabic: "تاريخ إعادة المعالجة",
+        },
+        {
+            arabic: "بنك الراتب",
+        },
+        {
+            arabic: "رقم الحوال",
+        },
+        {
+            arabic: "العميل",
+        },
+        {
+            arabic: "نوع الطلب",
+        },
+    ];
 
-const TABLE_ROWS = [
-    {
-        arabic_texts: "John Michael",
-        employeeName: "Khalid",
-        status: "Processing",
-        date: "2023/06/21",
-        salaryOnBank: "600000",
-        phone: "0501654412",
-        clientName: "Ahmed",
-        orderType: "unknown",
-    },
-    {
-        arabic_texts: "Sarah Johnson",
-        employeeName: "Ali",
-        status: "Completed",
-        date: "2023/07/12",
-        salaryOnBank: "450000",
-        phone: "0551234567",
-        clientName: "Mohammed",
-        orderType: "Standard",
-    },
-    {
-        arabic_texts: "Ahmed Hassan",
-        employeeName: "Fatima",
-        status: "Pending",
-        date: "2023/08/05",
-        salaryOnBank: "550000",
-        phone: "0569876543",
-        clientName: "Sara",
-        orderType: "Express",
-    },
-    {
-        arabic_texts: "Lina Ahmed",
-        employeeName: "Karim",
-        status: "Processing",
-        date: "2023/08/19",
-        salaryOnBank: "700000",
-        phone: "0523456789",
-        clientName: "Nadia",
-        orderType: "Custom",
-    },
-];
+    const TABLE_ROWS = dueOrders;
 
-export default function OverDueOrders() {
     return (
         <Card className="overflow-auto h-full w-full">
             <table className="w-full min-w-max table-auto text-left">
                 <thead>
                     <tr>
-                        {TABLE_HEAD.map((head) => (
-                            <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-3   ">
+                        {TABLE_HEAD.map((head, i) => (
+                            <th key={i} className="border-b border-blue-gray-100 bg-blue-gray-50 p-3   ">
                                 <div className="flex flex-col gap-2 ">
                                     <span>{head?.arabic}</span>
                                     <span>{head?.english}</span>
                                 </div>
-                                {(head?.english === "Employee" ||
-                                    head?.english === "Status" ||
-                                    head?.english === "Client Name" ||
-                                    head?.english === "Order Type") && (
-                                    <input type="text" className="max-w-[100px] py-1 px-2 mt-2" placeholder="Search" />
-                                )}
+                                {(head?.arabic === "الموظف" ||
+                                    head?.arabic === "حالة الطلب" ||
+                                    head?.arabic === "العميل" ||
+                                    head?.arabic === "نوع الطلب") && <SearchField />}
                             </th>
                         ))}
                     </tr>
@@ -101,7 +53,15 @@ export default function OverDueOrders() {
                 <tbody>
                     {TABLE_ROWS.map(
                         (
-                            { arabic_texts, employeeName, status, date, salaryOnBank, phone, clientName, orderType },
+                            {
+                                last_update_note,
+                                customer_name,
+                                status,
+                                date_of_reprocessing = "NO DATA",
+                                customer_salary_amount,
+                                customer_phone,
+                                order_type,
+                            },
                             index
                         ) => {
                             const isLast = index === TABLE_ROWS.length - 1;
@@ -111,12 +71,12 @@ export default function OverDueOrders() {
                                 <tr key={index}>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {arabic_texts}
+                                            {last_update_note}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {employeeName}
+                                            {customer_name}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
@@ -126,27 +86,27 @@ export default function OverDueOrders() {
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {salaryOnBank}
+                                            {date_of_reprocessing}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {date}
+                                            {customer_salary_amount}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {phone}
+                                            {customer_phone}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {clientName}
+                                            {customer_name}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {orderType}
+                                            {order_type}
                                         </Typography>
                                     </td>
                                 </tr>

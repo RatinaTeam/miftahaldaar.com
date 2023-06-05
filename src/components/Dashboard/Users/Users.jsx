@@ -1,22 +1,44 @@
-import AddNewUserModal from "@/components/ui/users/AddNewUserModal";
-import Container from "@/components/widgets/Container";
-import { getAllUsers } from "@/utils/dataFetchingFunctions";
 import { Button, ButtonGroup, Card, Typography } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Container from "../../widgets/Container";
+import AddNewUserModal from "./AddNewUserModal";
+import { getAllUsers } from "../../../utils/dataFetchingFunctions";
 
-const users = ({ users }) => {
+const Users = () => {
+    const [users, setUsers] = useState([]);
+
     // Modal States
     const [openAddNewUser, setOpenAddNewUser] = useState(false);
     // Modal Handlers
     const handleOpenAddNewUser = () => setOpenAddNewUser(!openAddNewUser);
-    /* 
-    { id: 1010,
-         username: 'admin',
-          is_active: true,
-           role: 'ADMIN',
-            password: 'password123' }
-    */
+
     const [showPass, setShowPass] = useState();
+
+    // Fetch Data
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://miftahaldaar.ratina.co/", {
+                    headers: {
+                        "user-id": "1010",
+                        "auth-key": "sdofmasdmfasdmflkmasdf",
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch users");
+                }
+
+                const usersData = await response.json();
+                setUsers(usersData);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+    if (users.length == 0) return <div>Loading</div>;
 
     const TABLE_HEAD = ["", "Password", "Username", "نوع الحساب", "UID/رقم الحساب"];
 
@@ -179,11 +201,4 @@ const users = ({ users }) => {
     );
 };
 
-export async function getServerSideProps() {
-    // Fetch data from external API
-    const users = await getAllUsers();
-    // Pass data to the page via props
-    return { props: { users: users.data } };
-}
-
-export default users;
+export default Users;

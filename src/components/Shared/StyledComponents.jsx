@@ -25,3 +25,11 @@ export const NewOrderSectionFormContainerTwoCol = ({ children }) => <div classNa
 export const NewOrderFinalActionButtonContainer = ({ children }) => (
     <div className=" flex flex-wrap justify-between">{children}</div>
 );
+
+export const SearchField = () => (
+    <input
+        type="text"
+        className="max-w-[100px] text-sm font-normal focus-visible:outline-none px-2 py-1 mt-2 rounded-sm"
+        placeholder="Search"
+    />
+);

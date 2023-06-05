@@ -24,7 +24,6 @@ const OrderTimelineModal = ({ openAddUpdates, handleOpenAddUpdates }) => {
         },
         {
             arabic: "تاريخ",
-            english: "Date",
         },
     ];
 
@@ -43,7 +42,7 @@ const OrderTimelineModal = ({ openAddUpdates, handleOpenAddUpdates }) => {
     return (
         <Dialog open={openAddUpdates} handler={handleOpenAddUpdates} size="md">
             <div className="flex items-center justify-between">
-                <DialogHeader>تحديث الطلب / Order Timeline</DialogHeader>
+                <DialogHeader>تحديث الطلب</DialogHeader>
                 <XMarkIcon className="mr-3 h-5 w-5" onClick={handleOpenAddUpdates} />
             </div>
             <DialogBody divider>
@@ -97,7 +96,7 @@ const OrderTimelineModal = ({ openAddUpdates, handleOpenAddUpdates }) => {
                     </table>
                 </Card>
                 <div className="grid gap-6 mt-5">
-                    <Textarea label="اكتب الملاحظة write note" />
+                    <Textarea label="اكتب الملاحظة" />
                 </div>
             </DialogBody>
             <DialogFooter className="flex justify-between">

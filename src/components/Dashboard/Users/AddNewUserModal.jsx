@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { addNewUser } from "@/utils/dataFetchingFunctions";
+import { addNewUser } from "../../../utils/dataFetchingFunctions";
 
 const AddNewUserModal = ({ openAddNewUser, handleOpenAddNewUser }) => {
     const handleFormSubmit = async (e) => {

@@ -1,0 +1,86 @@
+import {
+    Button,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Checkbox,
+    Input,
+    Spinner,
+    Typography,
+} from "@material-tailwind/react";
+import { signIn } from "../../utils/dataFetchingFunctions";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const Login = () => {
+    const { setUser, setIsLoading, isLoading, user } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || "/dashboard";
+    const [error, setError] = useState(false);
+
+    const handleSingin = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        const uid = e.target.uid.value;
+        const password = e.target.password.value;
+        const formData = new FormData();
+        formData.append("uid", uid);
+        formData.append("password", password);
+
+        const isSignedIn = await signIn(formData);
+
+        // If Login Failed
+
+        if (isSignedIn.status !== true) {
+            setIsLoading(false);
+            setUser(false);
+            setError(true);
+            return;
+        }
+
+        // If Logged in
+
+        setUser(true);
+        setError(false);
+        setIsLoading(false);
+        navigate(from, { replace: true });
+    };
+
+    return (
+        <div className="grid place-items-center h-screen">
+            <Card className="mx-auto w-full max-w-[24rem] ">
+                <CardHeader variant="gradient" color="blue" className="mb-4 grid h-28 place-items-center">
+                    <Typography variant="h3" color="white">
+                        Sign In
+                    </Typography>
+                </CardHeader>
+                <form onSubmit={handleSingin}>
+                    <CardBody className="flex flex-col gap-4">
+                        <Input required label="User ID" type="number" name="uid" size="lg" />
+                        <Input required label="Password" type="password" name="password" size="lg" />
+                        <div className="-ml-2.5">
+                            <Checkbox label="Remember Me" />
+                        </div>
+                    </CardBody>
+                    <CardFooter className="pt-0">
+                        {error && <p className="text-sm text-red-600 font-medium mb-2">Failed to login, Try again</p>}
+                        {isLoading ? (
+                            <Button disabled variant="gradient" className="" fullWidth>
+                                <Spinner className="mx-auto" />
+                            </Button>
+                        ) : (
+                            <Button type="submit" variant="gradient" fullWidth>
+                                Sign In
+                            </Button>
+                        )}
+                    </CardFooter>
+                </form>
+            </Card>
+        </div>
+    );
+};
+
+export default Login;

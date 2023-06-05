@@ -22,6 +22,14 @@ export const addNewUser = async (formData, headers) => {
 };
 
 /****************************************************************
+ *********** Authentication
+ ***************************************************************/
+export const signIn = async (formData) => {
+    const newUser = await axios.post(baseUrl + "user/login", formData);
+    return newUser.data;
+};
+
+/****************************************************************
  *********** Order
  ***************************************************************/
 
