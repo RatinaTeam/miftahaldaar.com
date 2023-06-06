@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../components/Dashboard/Dashboard";
 import Users from "../components/Dashboard/Users/Users";
 import NewOrders from "../components/Dashboard/NewOrders";
+import NewOrder from "../components/Dashboard/NewOrder/NewOrder";
 
 const router = createBrowserRouter([
     {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "new_order",
-                element: <NewOrders />,
+                element: <NewOrder />,
             },
         ],
     },

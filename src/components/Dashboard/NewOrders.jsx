@@ -6,6 +6,9 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
     const TABLE_HEAD = [
         "",
         {
+            arabic: "",
+        },
+        {
             arabic: "تاريخ الطلب",
         },
         {
@@ -40,7 +43,7 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
                                         <span>{head?.english}</span>
                                     </div>
 
-                                    {head.length !== 0 && <SearchField />}
+                                    {head.length !== 0 && i !==1 && <SearchField />}
                                 </th>
                             ))}
                         </tr>

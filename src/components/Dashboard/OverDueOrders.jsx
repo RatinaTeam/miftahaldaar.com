@@ -1,8 +1,11 @@
-import { Card, Typography } from "@material-tailwind/react";
+import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
 
 export default function OverDueOrders({ dueOrders }) {
     const TABLE_HEAD = [
+        {
+            arabic: "",
+        },
         {
             arabic: "الملاحظات",
         },
@@ -26,6 +29,9 @@ export default function OverDueOrders({ dueOrders }) {
         },
         {
             arabic: "نوع الطلب",
+        },
+        {
+            arabic: "id",
         },
     ];
 
@@ -61,6 +67,7 @@ export default function OverDueOrders({ dueOrders }) {
                                 customer_salary_amount,
                                 customer_phone,
                                 order_type,
+                                id,
                             },
                             index
                         ) => {
@@ -68,7 +75,32 @@ export default function OverDueOrders({ dueOrders }) {
                             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
                             return (
+                                
                                 <tr key={index}>
+                                    <td className={classes}>
+                                    <Button
+                        // onClick={handleOpenAddNewUser}
+                        color="green"
+                        className="flex items-center gap-3 float-right"
+                    >
+                        
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                        إضافة التحديث
+                    </Button>
+                                    </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
                                             {last_update_note}
@@ -109,6 +141,12 @@ export default function OverDueOrders({ dueOrders }) {
                                             {order_type}
                                         </Typography>
                                     </td>
+                                    <td className={classes}>
+                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                            {id}
+                                        </Typography>
+                                    </td>
+                                    
                                 </tr>
                             );
                         }

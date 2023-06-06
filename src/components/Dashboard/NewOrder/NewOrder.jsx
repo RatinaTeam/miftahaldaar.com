@@ -1,3 +1,4 @@
+import { Button, Input, Option, Radio, Select, Textarea } from "@material-tailwind/react";
 import {
     BlackBgTitleBar,
     NewOrderFinalActionButtonContainer,
@@ -5,13 +6,11 @@ import {
     NewOrderSectionContainer,
     NewOrderSectionFormContainer,
     NewOrderSectionFormContainerTwoCol,
-} from "@/components/shared/StyledComponents";
-import LeftHandTable from "@/components/ui/new_order/LeftHandTable";
-import AttachmentTable from "@/components/ui/new_order/AttachmentTable";
-import Container from "@/components/widgets/Container";
-import { Button, Input, Option, Radio, Select, Textarea } from "@material-tailwind/react";
-import React from "react";
-import DeletionTable from "@/components/ui/new_order/DeletionTable";
+} from "../../Shared/StyledComponents";
+import Container from "../../widgets/Container";
+import LeftHandTable from "./LeftHandTable";
+import AttachmentTable from "./AttachmentTable";
+import DeletionTable from "./DeletionTable";
 
 const NewOrder = () => {
     return (

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Container from "../../widgets/Container";
 import AddNewUserModal from "./AddNewUserModal";
 import { getAllUsers } from "../../../utils/dataFetchingFunctions";
+import Loading from "../../Shared/Loading";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -38,7 +39,7 @@ const Users = () => {
 
         fetchData();
     }, []);
-    if (users.length == 0) return <div>Loading</div>;
+    if (users.length == 0) return <Loading />;
 
     const TABLE_HEAD = ["", "كلمة المرور", "اسم المستخدم", "نوع الحساب", "رقم الحساب"];
 
@@ -48,12 +49,13 @@ const Users = () => {
         <>
             <Container>
                 <div className="flex justify-between items-center  mt-10 mb-5">
-                    <h2 className="text-2xl font-bold">قائمة المستخدمين</h2>
+                 
                     <Button
                         onClick={handleOpenAddNewUser}
                         color="green"
                         className="flex items-center gap-3 float-right"
                     >
+                        
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -70,6 +72,7 @@ const Users = () => {
                         </svg>
                         إضافة مستخدم جديد
                     </Button>
+                    <h2 className="text-2xl font-bold">قائمة المستخدمين</h2>
                 </div>
 
                 {/* Table */}
