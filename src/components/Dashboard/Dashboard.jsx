@@ -26,51 +26,39 @@ export default function Dashboard() {
     const [failedToFetch, setFailedToFetch] = useState(false);
     const { setOverDueOrderCounts } = useContext(OtherContext);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            const headers = {
-                "user-id": "1010",
-                "auth-key": "sdofmasdmfasdmflkmasdf",
-            };
-            const res = await axios.get("https://miftahaldaar.ratina.co/orders/all_orders", { headers });
-console.log(res)
-            // If failed to fetch
-            if (res.data.status !== true) {
-                setLoading(false);
-                return setFailedToFetch(true);
-            }
+   useEffect(() => {
+  const fetchData = async () => {
+    setLoading(true);
+    const headers = {
+      "user-id": "1010",
+      "auth-key": "sdofmasdmfasdmflkmasdf",
+    };
+    try {
+      const [delayedRes, newRes] = await Promise.all([
+        axios.get("https://miftahaldaar.ratina.co/orders/delayed_orders", { headers }),
+        axios.get("https://miftahaldaar.ratina.co/orders/new_orders", { headers })
+      ]);
 
-            setLoading(false);
-            setFailedToFetch(false);
-            setDueOrders(res.data.orders);
-            setOverDueOrderCounts(res.data.orders.length);
-        };
-        fetchData();
-    }, []);
+      // If failed to fetch
+      if (delayedRes.data.status !== true || newRes.data.status !== true) {
+        setLoading(false);
+        return setFailedToFetch(true);
+      }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            const headers = {
-                "user-id": "1010",
-                "auth-key": "sdofmasdmfasdmflkmasdf",
-            };
-            const res = await axios.get("https://miftahaldaar.ratina.co/orders/new_orders", { headers });
-
-            // If failed to fetch
-            if (res.data.status !== true) {
-                setLoading(false);
-                return setFailedToFetch(true);
-            }
-
-            setLoading(false);
-            setFailedToFetch(false);
-            setNewOrders(res.data.orders);
-            setOverDueOrderCounts(res.data.orders.length);
-        };
-        fetchData();
-    }, []);
+      setLoading(false);
+      setFailedToFetch(false);
+      setDueOrders(delayedRes.data.orders);
+      setOverDueOrderCounts(delayedRes.data.orders.length);
+      setNewOrders(newRes.data.orders);
+      setOverDueOrderCounts(newRes.data.orders.length);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      setFailedToFetch(true);
+    }
+  };
+  fetchData();
+}, []);
 
     if (loading) {
         return <Loading />;

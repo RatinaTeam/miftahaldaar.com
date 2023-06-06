@@ -11,8 +11,77 @@ import Container from "../../widgets/Container";
 import LeftHandTable from "./LeftHandTable";
 import AttachmentTable from "./AttachmentTable";
 import DeletionTable from "./DeletionTable";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Loading from "../../Shared/Loading";
+import ErrorPage from "../../Shared/ErrorPage";
 
 const NewOrder = () => {
+    const [fundedBanks, setFundedBanks] = useState([]);
+    const [city_of_property_options_list, set_city_of_property_options_list] = useState([]);
+    const [type_of_property_option_list, set_type_of_property_option_list] = useState([]);
+
+    const [loading, setLoading] = useState(false);
+    const [failedToFetch, setFailedToFetch] = useState(false);
+    const [selectedFundedBankOption, setSelectedFundedBank] = useState("");
+    const [selectedCityOfPropertyOption, setSelectedCityOfProperty] = useState("");
+    const [selectedTypeOfPropertyOption, setSelectedTypeOfProperty] = useState("");
+
+    const handleSelectTypeOfPropertyChange = (event) => {
+        setSelectedTypeOfProperty(event.target.value);
+    };
+
+    const handleSelectCityOfPropertyChange = (event) => {
+        setSelectedCityOfProperty(event.target.value);
+    };
+
+    const handleSelectFundedBankChange = (event) => {
+        setSelectedFundedBank(event.target.value);
+    };
+    
+
+    useEffect(() => {
+      
+        const fetchData = async () => {
+          
+        setLoading(true);
+        const headers = {
+          "user-id": "1010",
+          "auth-key": "sdofmasdmfasdmflkmasdf",
+        };
+       
+        try {
+          const [response] = await Promise.all([
+            axios.get("https://miftahaldaar.ratina.co/fields_options", { headers })
+          ]);
+
+          // If failed to fetch
+          if (response.data.status !== true) {
+            setLoading(false);
+            return setFailedToFetch(true);
+          }
+  
+          setLoading(false);
+          setFailedToFetch(false);
+         
+        
+            setFundedBanks(response.data.bank_name_options_list);
+            set_city_of_property_options_list(response.data.city_of_property_options_list);
+            set_type_of_property_option_list(response.data.type_of_property_option_list);
+        } catch (error) {
+          console.log(error);
+          setLoading(false);
+          setFailedToFetch(true);
+        }
+      };
+      fetchData();
+    }, []);
+    if (loading) {
+        return <Loading />;
+    }
+    if (failedToFetch) {
+        return <ErrorPage />;
+    }
     return (
         <Container>
             <NewOrderSectionContainer>
@@ -44,24 +113,25 @@ const NewOrder = () => {
                         <Input size="md" label="duration/المدة" />
                         <Input size="md" label="موظف البنك/Bank employee" />
                         {/* Dropdown */}
-                        <Select label="funded bank/البنك الممول">
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
+                        <Select dir="rtl" label="البنك الممول" value={selectedFundedBankOption}   onClick={handleSelectFundedBankChange}>
+                        {fundedBanks.map((option, index) => (
+    <Option key={index}>{option}</Option>
+  ))}
                         </Select>
                         <Input size="md" label="الموظف المتابعfollow-up employee" />
                         <Input size="md" label="المشرفadmin" />
                         <Input size="md" label="هوية العميلClient ID" />
                         <Input size="md" label="قيم العقار الاصليoriginal property values" />
                         {/* Dropdown */}
-                        <Select label="نوع العقارtype of property">
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
+                        <Select label="نوع العقار"
+                            value={selectedTypeOfPropertyOption}
+                            onClick={handleSelectTypeOfPropertyChange}
+                            
+                        >
+                            {type_of_property_option_list.map((option, index) => (
+                                <Option key={index}>{option}</Option>
+                            ))}
+                        
                         </Select>
                         {/* Dropdown */}
                         <Select label="requested service/الخدمة المطلوبة">
@@ -89,12 +159,12 @@ const NewOrder = () => {
                         </Select>
 
                         {/* Dropdown */}
-                        <Select label="مدينة العقار city of the property">
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
+                        <Select dir="rtl" label="مدينة العقار"
+                        value={selectedCityOfPropertyOption}   onClick={handleSelectCityOfPropertyChange}
+                        >
+                            {city_of_property_options_list.map((option, index) => (
+                                <Option key={index}>{option}</Option>
+                            ))}
                         </Select>
 
                         <Input size="md" label="جوال المالك/Owner phone" />
