@@ -1,7 +1,8 @@
 import { Card, Typography } from "@material-tailwind/react";
 import React from "react";
 
-const AttachmentTable = () => {
+const AttachmentTable = ({ required_attachments }) => {
+    console.log(required_attachments)
     // Table Data Left Hand Side
     const TABLE_HEAD_LEFT_HAND = [
         {
@@ -39,26 +40,42 @@ const AttachmentTable = () => {
                         ))}
                     </tr>
                 </thead>
+              
                 <tbody>
-                    {TABLE_ROWS_LEFT_HAND.map(({ attachment, docsRequired, progress, date }, index) => {
-                        const isLast = index === TABLE_ROWS_LEFT_HAND.length - 1;
+                    {Object.keys(required_attachments).map((attachmentName) => (
+                        <tr key={attachmentName} className="text-center">
+                            <td className="p-4 border-b border-blue-gray-50">
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {required_attachments[attachmentName]}
+                                </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {attachmentName}
+                                </Typography>
+                            </td>
+                        </tr>
+                        
+                    ))}
+                    {/* {required_attachments.map((items, index) => {
+                        const isLast = index === required_attachments.length - 1;
                         const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
                         return (
                             <tr key={index} className="text-center">
                                 <td className={classes}>
                                     <Typography variant="small" color="blue-gray" className="font-normal">
-                                        {attachment}
+                                        {items}
                                     </Typography>
                                 </td>
                                 <td className={classes}>
                                     <Typography variant="small" color="blue-gray" className="font-normal">
-                                        {docsRequired}
+                                        {items}
                                     </Typography>
                                 </td>
                             </tr>
                         );
-                    })}
+                    })} */}
                 </tbody>
             </table>
         </Card>

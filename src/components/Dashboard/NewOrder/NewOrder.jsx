@@ -20,12 +20,24 @@ const NewOrder = () => {
     const [fundedBanks, setFundedBanks] = useState([]);
     const [city_of_property_options_list, set_city_of_property_options_list] = useState([]);
     const [type_of_property_option_list, set_type_of_property_option_list] = useState([]);
-
+    const [lead_source_options_list, set_lead_source_options_list] = useState([]);
+    const [order_type_options_list, set_order_type_options_list] = useState([]);
+    const [required_attachments, set_required_attachments] = useState({});
     const [loading, setLoading] = useState(false);
     const [failedToFetch, setFailedToFetch] = useState(false);
     const [selectedFundedBankOption, setSelectedFundedBank] = useState("");
     const [selectedCityOfPropertyOption, setSelectedCityOfProperty] = useState("");
     const [selectedTypeOfPropertyOption, setSelectedTypeOfProperty] = useState("");
+    const [selectedLeadSourceOption, setSelectedLeadSource] = useState("");
+    const [selectedOrderTypeOption, setSelectedOrderType] = useState("");
+
+    const handleSelectOrderTypeChange = (event) => {
+        setSelectedOrderType(event.target.value);
+    };
+
+    const handleSelectLeadSourceChange = (event) => {
+        setSelectedLeadSource(event.target.value);
+    };
 
     const handleSelectTypeOfPropertyChange = (event) => {
         setSelectedTypeOfProperty(event.target.value);
@@ -68,6 +80,9 @@ const NewOrder = () => {
             setFundedBanks(response.data.bank_name_options_list);
             set_city_of_property_options_list(response.data.city_of_property_options_list);
             set_type_of_property_option_list(response.data.type_of_property_option_list);
+            set_lead_source_options_list(response.data.lead_source_options_list);
+            set_required_attachments(response.data.required_attachments);
+            set_order_type_options_list(response.data.order_type_options_list);
         } catch (error) {
           console.log(error);
           setLoading(false);
@@ -89,16 +104,28 @@ const NewOrder = () => {
                 <NewOrderSection>
                     <BlackBgTitleBar>المعلومات الاساسية</BlackBgTitleBar>
                     <NewOrderSectionFormContainer>
-                        <Input size="md" label="الراتب/Salary" />
-                        <Input size="md" label="Salary deposit bank/بنك الإيداع الراتب" />
-                        <Input size="md" label="رقم الهاتف/Phone" />
-                        <Input size="md" label="اسم العميل/ Client name" />
-                        <Input size="md" label="تاريخ الطلب/Order Date" />
-                        <Input size="md" label="OrderNo/رقم الطلب" />
-                        <Input size="md" label="العمر/old" />
-                        <Input size="md" label="Employer/جهة العمل" />
-                        <Input size="md" label="الخدمة المطلوبةService Type" />
-                        <Input size="md" label="value of the property(Option)" />
+                        <Input size="md" label="الراتب" />
+                        <Input size="md" label="بنك الإيداع الراتب" />
+                        <Input size="md" label="رقم الهاتف" />
+                        <Input size="md" label="اسم العميل" />
+                        <Input size="md" label="تاريخ الطلب" />
+                        <Input size="md" label="رقم الطلب" />
+                        <Input size="md" label="العمر" />
+                        <Input size="md" label="جهة العمل" />
+                        <Select dir="rtl"
+                            label="الخدمة المطلوبة"
+                            value={selectedOrderTypeOption}
+                            onClick={handleSelectOrderTypeChange}
+                        >
+                            {order_type_options_list.map((option,index) => (
+                                <Option key={index} value={option}>
+                                    {option}
+                                </Option>
+
+                            ))}
+                        </Select>
+                        <Input size="md" label="الخدمة المطلوبة" />
+                        <Input size="md" label="قيمة العقار ان وجد" />
                     </NewOrderSectionFormContainer>
                 </NewOrderSection>
 
@@ -150,12 +177,13 @@ const NewOrder = () => {
                         </div>
 
                         {/* Dropdown */}
-                        <Select label="Knowing the customer ">
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
+                        <Select dir="rtl" label="معرفة العميل بالشركة"
+                            value={selectedLeadSourceOption}
+                            onClick={handleSelectLeadSourceChange}
+                        >
+                            {lead_source_options_list.map((option, index) => (
+                                <Option key={index}>{option}</Option>
+                            ))}
                         </Select>
 
                         {/* Dropdown */}
@@ -183,7 +211,7 @@ const NewOrder = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4">
                         {/* Left Table */}
                         <LeftHandTable />
-                        <AttachmentTable />
+                        <AttachmentTable required_attachments={required_attachments}  />
                     </div>
                     <Button className="flex ml-auto mr-4 mb-4">إضافة مستند مطلوب</Button>
                 </NewOrderSection>
