@@ -104,14 +104,14 @@ const NewOrder = () => {
                 <NewOrderSection>
                     <BlackBgTitleBar>المعلومات الاساسية</BlackBgTitleBar>
                     <NewOrderSectionFormContainer>
-                        <Input size="md" label="الراتب" />
-                        <Input size="md" label="بنك الإيداع الراتب" />
-                        <Input size="md" label="رقم الهاتف" />
-                        <Input size="md" label="اسم العميل" />
-                        <Input size="md" label="تاريخ الطلب" />
-                        <Input size="md" label="رقم الطلب" />
-                        <Input size="md" label="العمر" />
-                        <Input size="md" label="جهة العمل" />
+                        <Input dir="rtl" size="md" label="الراتب" />
+                        <Input dir="rtl" size="md" label="بنك الإيداع الراتب" />
+                        <Input dir="rtl"  size="md" label="رقم الهاتف" />
+                        <Input dir="rtl" size="md" label="اسم العميل" />
+                        <Input dir="rtl" size="md" label="تاريخ الطلب" />
+                        <Input dir="rtl" size="md" label="رقم الطلب" />
+                        <Input dir="rtl" size="md" label="العمر" />
+                        <Input dir="rtl" size="md" label="جهة العمل" />
                         <Select dir="rtl"
                             label="الخدمة المطلوبة"
                             value={selectedOrderTypeOption}
@@ -124,8 +124,8 @@ const NewOrder = () => {
 
                             ))}
                         </Select>
-                        <Input size="md" label="الخدمة المطلوبة" />
-                        <Input size="md" label="قيمة العقار ان وجد" />
+                        <Input dir="rtl" size="md" label="الخدمة المطلوبة" />
+                        <Input dir="rtl" size="md" label="قيمة العقار ان وجد" />
                     </NewOrderSectionFormContainer>
                 </NewOrderSection>
 
@@ -133,24 +133,24 @@ const NewOrder = () => {
                 <NewOrderSection>
                     <BlackBgTitleBar>المعلومات واكمال المستندات</BlackBgTitleBar>
                     <NewOrderSectionFormContainer>
-                        <Input size="md" label="قسط الدعمPremium support" />
-                        <Input size="md" label="القسطinstallment" />
-                        <Input size="md" label="التمويل الشخصيpersonal finance" />
-                        <Input size="md" label="التمويل العقاري/Mortgage" />
-                        <Input size="md" label="duration/المدة" />
-                        <Input size="md" label="موظف البنك/Bank employee" />
+                        <Input dir="rtl" size="md" label="قسط الدعمPremium support" />
+                        <Input dir="rtl" size="md" label="القسطinstallment" />
+                        <Input dir="rtl" size="md" label="التمويل الشخصيpersonal finance" />
+                        <Input dir="rtl" size="md" label="التمويل العقاري/Mortgage" />
+                        <Input dir="rtl" size="md" label="duration/المدة" />
+                        <Input dir="rtl" size="md" label="موظف البنك/Bank employee" />
                         {/* Dropdown */}
                         <Select dir="rtl" label="البنك الممول" value={selectedFundedBankOption}   onClick={handleSelectFundedBankChange}>
                         {fundedBanks.map((option, index) => (
     <Option key={index}>{option}</Option>
   ))}
                         </Select>
-                        <Input size="md" label="الموظف المتابعfollow-up employee" />
-                        <Input size="md" label="المشرفadmin" />
-                        <Input size="md" label="هوية العميلClient ID" />
-                        <Input size="md" label="قيم العقار الاصليoriginal property values" />
+                        <Input dir="rtl" size="md" label="الموظف المتابعfollow-up employee" />
+                        <Input dir="rtl" size="md" label="المشرفadmin" />
+                        <Input dir="rtl" size="md" label="هوية العميلClient ID" />
+                        <Input dir="rtl" size="md" label="قيم العقار الاصليoriginal property values" />
                         {/* Dropdown */}
-                        <Select label="نوع العقار"
+                        <Select dir="rtl" label="نوع العقار"
                             value={selectedTypeOfPropertyOption}
                             onClick={handleSelectTypeOfPropertyChange}
                             
@@ -161,7 +161,7 @@ const NewOrder = () => {
                         
                         </Select>
                         {/* Dropdown */}
-                        <Select label="requested service/الخدمة المطلوبة">
+                        <Select dir="rtl" label="requested service/الخدمة المطلوبة">
                             <Option>نوع العقارtype of property</Option>
                             <Option>نوع العقارtype of property</Option>
                             <Option>نوع العقارtype of property</Option>
@@ -172,8 +172,8 @@ const NewOrder = () => {
                     <NewOrderSectionFormContainer>
                         {/* Radio Button */}
                         <div className="flex ">
-                            <Radio id="html" name="type" label="يوجد ضامن" />
-                            <Radio id="react" name="type" label="لا يوجد ضامن" defaultChecked />
+                            <Radio dir="rtl" id="html" name="type" label="يوجد ضامن" />
+                            <Radio dir="rtl" id="react" name="type" label="لا يوجد ضامن" defaultChecked />
                         </div>
 
                         {/* Dropdown */}
@@ -195,11 +195,11 @@ const NewOrder = () => {
                             ))}
                         </Select>
 
-                        <Input size="md" label="جوال المالك/Owner phone" />
+                        <Input dir="rtl" size="md" label="جوال المالك/Owner phone" />
                     </NewOrderSectionFormContainer>
                     <NewOrderSectionFormContainer>
                         <div className="col-span-4">
-                            <Textarea label="Explain the client's situation/شرح حالة العميل" />
+                            <Textarea dir="rtl" label="Explain the client's situation/شرح حالة العميل" />
                         </div>
                     </NewOrderSectionFormContainer>
                 </NewOrderSection>
@@ -217,14 +217,15 @@ const NewOrder = () => {
                 </NewOrderSection>
 
                 {/* Section Four */}
+
+
+{/*                 
                 <NewOrderSection>
-                    {/* Two Table In single Column */}
+                   
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4">
-                        {/* Left Table */}
                         <DeletionTable />
                         <NewOrderSectionFormContainerTwoCol>
-                            {/* Dropdown */}
-                            <Select label="مدينة العقار city of the property">
+                            <Select dir="rtl" label="مدينة العقار city of the property">
                                 <Option>نوع العقارtype of property</Option>
                                 <Option>نوع العقارtype of property</Option>
                                 <Option>نوع العقارtype of property</Option>
@@ -232,18 +233,16 @@ const NewOrder = () => {
                                 <Option>نوع العقارtype of property</Option>
                             </Select>
 
-                            <Input size="md" label="المشرفadmin" />
+                            <Input dir="rtl" size="md" label="المشرفadmin" />
 
-                            {/* Dropdown */}
-                            <Select label="مدينة العقار city of the property">
+                            <Select dir="rtl" label="مدينة العقار city of the property">
                                 <Option>نوع العقارtype of property</Option>
                                 <Option>نوع العقارtype of property</Option>
                                 <Option>نوع العقارtype of property</Option>
                                 <Option>نوع العقارtype of property</Option>
                                 <Option>نوع العقارtype of property</Option>
                             </Select>
-                            {/* Dropdown */}
-                            <Select label="مدينة العقار city of the property">
+                            <Select dir="rtl" label="مدينة العقار city of the property">
                                 <Option>نوع العقارtype of property</Option>
                                 <Option>نوع العقارtype of property</Option>
                                 <Option>نوع العقارtype of property</Option>
@@ -252,19 +251,24 @@ const NewOrder = () => {
                             </Select>
                         </NewOrderSectionFormContainerTwoCol>
                     </div>
-                    <Button className="flex  ml-4 mb-4">إضافة مستند مطلوب</Button>
-                </NewOrderSection>
+                    <Button dir="rtl" className="flex  ml-4 mb-4">إضافة مستند مطلوب</Button>
+                </NewOrderSection> */}
+
+
+
+
+
                 <NewOrderFinalActionButtonContainer>
-                    <Button className="px-16 py-4" color="green">
+                    <Button dir="rtl" className="px-16 py-4" color="green">
                         إكمال/Completed
                     </Button>
-                    <Button className="px-16 py-4" color="blue">
+                    <Button dir="rtl" className="px-16 py-4" color="blue">
                         إكتملت المهمة/Completed
                     </Button>
-                    <Button className="px-16 py-4" color="orange">
+                    <Button dir="rtl" className="px-16 py-4" color="orange">
                         تأجيل/Delay
                     </Button>
-                    <Button className="px-16 py-4" color="red">
+                    <Button dir="rtl" className="px-16 py-4" color="red">
                         إلغاء الطلب/ Cancel Order
                     </Button>
                 </NewOrderFinalActionButtonContainer>

@@ -1,4 +1,5 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
+
 import axios from "axios";
 import React, { useState } from "react";
 
@@ -7,6 +8,8 @@ const AttachmentTable = ({ required_attachments }) => {
   
     const [fileList, setFileList] = useState({});
     const [fileSelectedList, setFileSelectedList] = useState([]);
+    // file upload completed
+    const [fileUploadCompleted, setFileUploadCompleted] = useState(false);
     
 
     const handleFileChange = (event,index) => {
@@ -41,6 +44,7 @@ console.log(fileList)
                     }
                 );
                 console.log(response.data);
+                setFileUploadCompleted(true);
             } catch (error) {
                 console.log(error);
             }
@@ -133,9 +137,18 @@ console.log(fileList)
             </Card>
             <div className="flex justify-end">
  
-                <Button className="flex ml-auto mr-4 mb-4"
-                 onClick={handleUpload} 
-                >إضافة مستند مطلوب</Button>
+                <Button className=
+                    {`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer
+                    ${fileUploadCompleted ? "bg-green-500" : ""}
+                    `}
+                    onClick={handleUpload} 
+                    disabled={fileUploadCompleted}
+                >
+                    {fileUploadCompleted ? "تم الرفع" : "إضافة مستند مطلوب"}
+                
+                </Button>
+
+
             </div></div>
 
     );
