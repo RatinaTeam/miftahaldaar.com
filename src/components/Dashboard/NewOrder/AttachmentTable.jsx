@@ -1,9 +1,17 @@
 import { Card, Typography } from "@material-tailwind/react";
-import React from "react";
+import React, { useState } from "react";
 
 const AttachmentTable = ({ required_attachments }) => {
-    console.log(required_attachments)
-    // Table Data Left Hand Side
+
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (event) => {
+      setFile(event.target.files[0]);
+    };
+  
+    const handleUpload = () => {
+      // Handle file upload logic here
+    };
     const TABLE_HEAD_LEFT_HAND = [
         {
             arabic: "المرفق",
@@ -47,6 +55,25 @@ const AttachmentTable = ({ required_attachments }) => {
                             <td className="p-4 border-b border-blue-gray-50">
                                 <Typography variant="small" color="blue-gray" className="font-normal">
                                     {required_attachments[attachmentName]}
+                                    <div>
+                                       
+                                    <input
+    type="file"
+  
+    onChange={handleFileChange}
+    className="hidden"
+    id="file-upload"
+  />
+  <label
+    htmlFor="file-upload"
+    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
+    // onClick={() => document.getElementById('file-upload').click()}
+  >
+    اضافة
+  </label>
+                                           
+                                        
+    </div>
                                 </Typography>
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
@@ -57,25 +84,7 @@ const AttachmentTable = ({ required_attachments }) => {
                         </tr>
                         
                     ))}
-                    {/* {required_attachments.map((items, index) => {
-                        const isLast = index === required_attachments.length - 1;
-                        const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-
-                        return (
-                            <tr key={index} className="text-center">
-                                <td className={classes}>
-                                    <Typography variant="small" color="blue-gray" className="font-normal">
-                                        {items}
-                                    </Typography>
-                                </td>
-                                <td className={classes}>
-                                    <Typography variant="small" color="blue-gray" className="font-normal">
-                                        {items}
-                                    </Typography>
-                                </td>
-                            </tr>
-                        );
-                    })} */}
+                   
                 </tbody>
             </table>
         </Card>
