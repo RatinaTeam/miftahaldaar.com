@@ -1,17 +1,56 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
+import axios from "axios";
 import React, { useState } from "react";
 
 const AttachmentTable = ({ required_attachments }) => {
 
-    const [file, setFile] = useState(null);
-
-    const handleFileChange = (event) => {
-      setFile(event.target.files[0]);
-    };
   
-    const handleUpload = () => {
-      // Handle file upload logic here
+    const [fileList, setFileList] = useState({});
+    const [fileSelectedList, setFileSelectedList] = useState([]);
+    
+
+    const handleFileChange = (event,index) => {
+     
+
+        setFileList({...fileList, [index]: event.target.files[0]});
+        if (event.target.files[0]) {
+            setFileSelectedList([...fileSelectedList, index]);
+          }
+       
     };
+
+
+    const handleUpload = async () => {
+console.log(fileList)
+
+        Object.keys(fileList).map(async (key) => {
+           
+            const formData = new FormData();
+            formData.append("file", fileList[key]);
+            try {
+                const response = await axios.post(
+                    "https://miftahaldaar.ratina.co/update_file",
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                        params: {
+                            file_ext: 'pdf',
+                        },
+                    }
+                );
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        });
+          
+        
+
+
+    };
+    
     const TABLE_HEAD_LEFT_HAND = [
         {
             text: "المرفق",
@@ -41,26 +80,37 @@ const AttachmentTable = ({ required_attachments }) => {
                 </thead>
               
                 <tbody>
-                    {Object.keys(required_attachments).map((attachmentName) => (
+                    {Object.keys(required_attachments).map((attachmentName,index) => (
                         <tr key={attachmentName} className="text-center">
                             <td className="p-4 border-b border-blue-gray-50">
                                 <Typography variant="small" color="blue-gray" className="font-normal">
                                     {required_attachments[attachmentName]}
                                     <div>
-                                       
-                                    <input
-    type="file"
-  
-    onChange={handleFileChange}
+                                    
+                                        <input
+                                            type="file"
+                                            id={`file-upload-${index}`}
+                                            name={`file-upload-${index}`}
+                                            itemID={index}
+                                            onClick={() => console.log(`Clicked on input field ${index}`)}
+                                            onChange={(event) => {
+                                                handleFileChange(event, index)
+                                            }}
+                                      
     className="hidden"
-    id="file-upload"
+    
   />
-  <label
-    htmlFor="file-upload"
-    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
-    // onClick={() => document.getElementById('file-upload').click()}
-  >
-    اضافة
+                                        <label
+                                          
+                                          htmlFor={`file-upload-${index}`}
+                                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer 
+    ${
+        fileSelectedList.includes(index)
+         ? "bg-green-500" : ""
+      }
+      `}
+    >
+      { fileSelectedList.includes(index) ? "تم الاختيار" : "اضافة"}
   </label>
                                            
                                         
