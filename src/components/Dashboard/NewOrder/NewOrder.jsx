@@ -213,7 +213,7 @@ const NewOrder = () => {
                         <LeftHandTable />
                         <AttachmentTable required_attachments={required_attachments}  />
                     </div>
-                    <Button className="flex ml-auto mr-4 mb-4">إضافة مستند مطلوب</Button>
+               
                 </NewOrderSection>
 
                 {/* Section Four */}

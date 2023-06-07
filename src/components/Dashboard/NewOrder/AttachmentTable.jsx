@@ -1,4 +1,4 @@
-import { Card, Typography } from "@material-tailwind/react";
+import { Button, Card, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 
 const AttachmentTable = ({ required_attachments }) => {
@@ -14,26 +14,17 @@ const AttachmentTable = ({ required_attachments }) => {
     };
     const TABLE_HEAD_LEFT_HAND = [
         {
-            arabic: "المرفق",
-            english: "Attachment",
+            text: "المرفق",
+            
         },
         {
-            arabic: "المستند",
-            english: "Required Document",
+            text: "المستند",
+         
         },
     ];
 
-    const TABLE_ROWS_LEFT_HAND = [
-        {
-            attachment: "اضافة",
-            docsRequired: "الهوية",
-        },
-        {
-            attachment: "اضافة",
-            docsRequired: "الهوية",
-        },
-    ];
     return (
+        <div className="flex flex-col gap-4">
         <Card className="overflow-auto h-full ">
             <table className="w-full min-w-max table-auto text-center">
                 <thead>
@@ -41,8 +32,8 @@ const AttachmentTable = ({ required_attachments }) => {
                         {TABLE_HEAD_LEFT_HAND.map((head, i) => (
                             <th key={i} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                                 <div className="flex flex-col gap-2">
-                                    <span>{head?.arabic}</span>
-                                    <span>{head?.english}</span>
+                                    <span>{head?.text}</span>
+                                 
                                 </div>
                             </th>
                         ))}
@@ -87,7 +78,16 @@ const AttachmentTable = ({ required_attachments }) => {
                    
                 </tbody>
             </table>
-        </Card>
+
+            
+            </Card>
+            <div className="flex justify-end">
+ 
+                <Button className="flex ml-auto mr-4 mb-4"
+                 onClick={handleUpload} 
+                >إضافة مستند مطلوب</Button>
+            </div></div>
+
     );
 };
 
