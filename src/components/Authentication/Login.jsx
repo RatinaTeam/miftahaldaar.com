@@ -14,8 +14,9 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 
+
 const Login = () => {
-    const { setUser, setIsLoading, isLoading, user } = useContext(AuthContext);
+    const { setIsLoading, isLoading, setIsSignedInAlready } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location?.state?.from?.pathname || "/dashboard";
@@ -31,19 +32,20 @@ const Login = () => {
         formData.append("password", password);
 
         const isSignedIn = await signIn(formData);
+      
 
         // If Login Failed
 
         if (isSignedIn.status !== true) {
             setIsLoading(false);
-            setUser(false);
+            setIsSignedInAlready(false);
             setError(true);
             return;
         }
 
         // If Logged in
 
-        setUser(true);
+        setIsSignedInAlready(true);
         setError(false);
         setIsLoading(false);
         navigate(from, { replace: true });

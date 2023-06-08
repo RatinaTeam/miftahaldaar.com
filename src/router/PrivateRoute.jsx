@@ -3,13 +3,14 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 
 const PrivateRoute = ({ children }) => {
-    const { isLoading, user } = useContext(AuthContext);
+    const { isLoading, isSignedInAlready } = useContext(AuthContext);
 
-    if (!user && !isLoading) {
+
+    if (!isSignedInAlready && !isLoading) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    if (user && !isLoading) {
+    if (isSignedInAlready && !isLoading) {
         return children;
     }
 };
