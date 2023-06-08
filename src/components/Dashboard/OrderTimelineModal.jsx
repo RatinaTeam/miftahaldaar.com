@@ -96,15 +96,15 @@ const OrderTimelineModal = ({ openAddUpdates, handleOpenAddUpdates }) => {
                     </table>
                 </Card>
                 <div className="grid gap-6 mt-5">
-                    <Textarea label="اكتب الملاحظة" />
+                    <Textarea dir="rtl" label="اكتب الملاحظة" />
                 </div>
             </DialogBody>
             <DialogFooter className="flex justify-between">
                 <Button variant="gradient" color="green" onClick={handleOpenAddUpdates}>
-                    Add تحديث
+                    تحديث
                 </Button>
                 <Button variant="outlined" color="red" onClick={handleOpenAddUpdates}>
-                    Close / إغلاق
+                    إغلاق
                 </Button>
             </DialogFooter>
         </Dialog>

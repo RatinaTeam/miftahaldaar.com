@@ -1,11 +1,13 @@
 import { Button, ButtonGroup, Card, Typography } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Container from "../../widgets/Container";
 import AddNewUserModal from "./AddNewUserModal";
 import { getAllUsers } from "../../../utils/dataFetchingFunctions";
 import Loading from "../../Shared/Loading";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Users = () => {
+    const {userID} = useContext(AuthContext);
     const [userList, setUserList] = useState([]);
 
     // Modal States
@@ -32,7 +34,7 @@ const Users = () => {
                 //     throw new Error("Failed to fetch users");
                 // }
 
-                const usersData = await getAllUsers();
+                const usersData = await getAllUsers(userID);
 
                 setUserList(usersData.data.users);
                

@@ -7,9 +7,9 @@ const baseUrl = "https://miftahaldaar.ratina.co/";
 /****************************************************************
  *********** USERS
  ***************************************************************/
-export const getAllUsers = async () => {
+export const getAllUsers = async (userID) => {
     const headers = {
-        "user-id": "1010",
+        "user-id": userID,
         "auth-key": "sdofmasdmfasdmflkmasdf",
     };
     const users = await axios.get(baseUrl + "user/all", { headers });

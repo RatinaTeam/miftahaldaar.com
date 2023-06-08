@@ -135,22 +135,22 @@ const NewOrder = () => {
                 <NewOrderSection>
                     <BlackBgTitleBar>المعلومات واكمال المستندات</BlackBgTitleBar>
                     <NewOrderSectionFormContainer>
-                        <Input dir="rtl" size="md" label="قسط الدعمPremium support" />
-                        <Input dir="rtl" size="md" label="القسطinstallment" />
-                        <Input dir="rtl" size="md" label="التمويل الشخصيpersonal finance" />
-                        <Input dir="rtl" size="md" label="التمويل العقاري/Mortgage" />
-                        <Input dir="rtl" size="md" label="duration/المدة" />
-                        <Input dir="rtl" size="md" label="موظف البنك/Bank employee" />
+                        <Input dir="rtl" size="md" label="قسط الدعم" />
+                        <Input dir="rtl" size="md" label="القسط" />
+                        <Input dir="rtl" size="md" label="التمويل الشخصي" />
+                        <Input dir="rtl" size="md" label="التمويل العقاري" />
+                        <Input dir="rtl" size="md" label="المدة" />
+                        <Input dir="rtl" size="md" label="موظف البنك" />
                         {/* Dropdown */}
                         <Select dir="rtl" label="البنك الممول" value={selectedFundedBankOption}   onClick={handleSelectFundedBankChange}>
                         {fundedBanks.map((option, index) => (
     <Option key={index}>{option}</Option>
   ))}
                         </Select>
-                        <Input dir="rtl" size="md" label="الموظف المتابعfollow-up employee" />
-                        <Input dir="rtl" size="md" label="المشرفadmin" />
-                        <Input dir="rtl" size="md" label="هوية العميلClient ID" />
-                        <Input dir="rtl" size="md" label="قيم العقار الاصليoriginal property values" />
+                        <Input dir="rtl" size="md" label="الموظف المتابع" />
+                        <Input dir="rtl" size="md" label="المشرف" />
+                        <Input dir="rtl" size="md" label="هوية العميل" />
+                        <Input dir="rtl" size="md" label="قيم العقار الاصلي" />
                         {/* Dropdown */}
                         <Select dir="rtl" label="نوع العقار"
                             value={selectedTypeOfPropertyOption}
@@ -163,12 +163,12 @@ const NewOrder = () => {
                         
                         </Select>
                         {/* Dropdown */}
-                        <Select dir="rtl" label="requested service/الخدمة المطلوبة">
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
-                            <Option>نوع العقارtype of property</Option>
+                        <Select dir="rtl" label="الخدمة المطلوبة">
+                            <Option>نوع العقار</Option>
+                            <Option>نوع العقار</Option>
+                            <Option>نوع العقار</Option>
+                            <Option>نوع العقار</Option>
+                            <Option>نوع العقار</Option>
                         </Select>
                     </NewOrderSectionFormContainer>
                     <NewOrderSectionFormContainer>
@@ -197,11 +197,11 @@ const NewOrder = () => {
                             ))}
                         </Select>
 
-                        <Input dir="rtl" size="md" label="جوال المالك/Owner phone" />
+                        <Input dir="rtl" size="md" label="جوال المالك" />
                     </NewOrderSectionFormContainer>
                     <NewOrderSectionFormContainer>
                         <div className="col-span-4">
-                            <Textarea dir="rtl" label="Explain the client's situation/شرح حالة العميل" />
+                            <Textarea dir="rtl" label="شرح حالة العميل" />
                         </div>
                     </NewOrderSectionFormContainer>
                 </NewOrderSection>
@@ -262,16 +262,16 @@ const NewOrder = () => {
 
                 <NewOrderFinalActionButtonContainer>
                     <Button dir="rtl" className="px-16 py-4" color="green">
-                        إكمال/Completed
+                        إكمال
                     </Button>
                     <Button dir="rtl" className="px-16 py-4" color="blue">
-                        إكتملت المهمة/Completed
+                        إكتملت المهمة
                     </Button>
                     <Button dir="rtl" className="px-16 py-4" color="orange">
-                        تأجيل/Delay
+                        تأجيل
                     </Button>
                     <Button dir="rtl" className="px-16 py-4" color="red">
-                        إلغاء الطلب/ Cancel Order
+                        إلغاء الطلب
                     </Button>
                 </NewOrderFinalActionButtonContainer>
             </NewOrderSectionContainer>
