@@ -15,7 +15,7 @@ const LeftHandTable = () => {
         },
         {
             arabic: "تاريخ",
-            english: "Date",
+       
         },
     ];
 
