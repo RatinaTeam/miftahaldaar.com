@@ -1,9 +1,11 @@
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input, Spinner } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { addNewUser } from "../../../utils/dataFetchingFunctions";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const AddNewUserModal = ({ openAddNewUser, handleOpenAddNewUser }) => {
+    const { userID } = useContext(AuthContext);
     const [loading, setLoading] = useState();
     const [failed, setFailed] = useState();
 
@@ -22,7 +24,7 @@ const AddNewUserModal = ({ openAddNewUser, handleOpenAddNewUser }) => {
         formData.append("is_active", true);
         formData.append("role", role);
         const headers = {
-            "user-id": "1010",
+            "user-id": userID,
             "auth-key": "sdofmasdmfasdmflkmasdf",
         };
 

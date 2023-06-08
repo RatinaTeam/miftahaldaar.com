@@ -16,7 +16,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 
 const Login = () => {
-    const { setIsLoading, isLoading, setIsSignedInAlready } = useContext(AuthContext);
+    const { setIsLoading, isLoading, setIsSignedInAlready,setUserID } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location?.state?.from?.pathname || "/dashboard";
@@ -31,7 +31,7 @@ const Login = () => {
         formData.append("uid", uid);
         formData.append("password", password);
 
-        const isSignedIn = await signIn(formData);
+        const isSignedIn = await signIn(formData,uid);
       
 
         // If Login Failed
@@ -44,7 +44,7 @@ const Login = () => {
         }
 
         // If Logged in
-
+        setUserID(uid);
         setIsSignedInAlready(true);
         setError(false);
         setIsLoading(false);

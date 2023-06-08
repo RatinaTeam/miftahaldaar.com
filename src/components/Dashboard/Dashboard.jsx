@@ -6,12 +6,14 @@ import OverDueOrders from "./OverDueOrders";
 import NewOrders from "./NewOrders";
 import OrderTimelineModal from "./OrderTimelineModal";
 import { OtherContext } from "../../contexts/OtherContexts";
+import { AuthContext } from "../../contexts/AuthProvider";
 import Loading from "../Shared/Loading";
 import ErrorPage from "../Shared/ErrorPage";
 import axios from "axios";
 
 export default function Dashboard() {
     const { overDueOrders } = useContext(OtherContext);
+    const { userID } = useContext(AuthContext);
     const navigate = useNavigate();
     // Modal States
     const [openAddUpdates, setOpenAddUpdates] = useState(false);
@@ -30,7 +32,7 @@ export default function Dashboard() {
   const fetchData = async () => {
     setLoading(true);
     const headers = {
-      "user-id": "1010",
+      "user-id": userID,
       "auth-key": "sdofmasdmfasdmflkmasdf",
     };
     try {

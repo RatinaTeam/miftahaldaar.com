@@ -11,12 +11,14 @@ import Container from "../../widgets/Container";
 import LeftHandTable from "./LeftHandTable";
 import AttachmentTable from "./AttachmentTable";
 import DeletionTable from "./DeletionTable";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Shared/Loading";
 import ErrorPage from "../../Shared/ErrorPage";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const NewOrder = () => {
+    const { userID } = useContext(AuthContext);
     const [fundedBanks, setFundedBanks] = useState([]);
     const [city_of_property_options_list, set_city_of_property_options_list] = useState([]);
     const [type_of_property_option_list, set_type_of_property_option_list] = useState([]);
@@ -58,7 +60,7 @@ const NewOrder = () => {
           
         setLoading(true);
         const headers = {
-          "user-id": "1010",
+          "user-id": userID,
           "auth-key": "sdofmasdmfasdmflkmasdf",
         };
        

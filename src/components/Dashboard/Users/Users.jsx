@@ -6,7 +6,7 @@ import { getAllUsers } from "../../../utils/dataFetchingFunctions";
 import Loading from "../../Shared/Loading";
 
 const Users = () => {
-    const [users, setUsers] = useState([]);
+    const [userList, setUserList] = useState([]);
 
     // Modal States
     const [openAddNewUser, setOpenAddNewUser] = useState(false);
@@ -17,33 +17,39 @@ const Users = () => {
 
     // Fetch Data
     useEffect(() => {
+        
         const fetchData = async () => {
             try {
-                const response = await fetch("https://miftahaldaar.ratina.co/user/all", {
-                    headers: {
-                        "user-id": "1010",
-                        "auth-key": "sdofmasdmfasdmflkmasdf",
-                    },
-                });
+         
+                // const response = await fetch("https://miftahaldaar.ratina.co/user/all", {
+                //     headers: {
+                //         "user-id": "1010",
+                //         "auth-key": "sdofmasdmfasdmflkmasdf",
+                //     },
+                // });
+                // console.log(response)
+                // if (!response.ok) {
+                //     throw new Error("Failed to fetch users");
+                // }
 
-                if (!response.ok) {
-                    throw new Error("Failed to fetch users");
-                }
+                const usersData = await getAllUsers();
 
-                const usersData = await response.json();
-                setUsers(usersData);
+                setUserList(usersData.data.users);
+               
+                
+
             } catch (error) {
-                console.error("Error fetching users:", error);
+                console.log("Error fetching users:", error);
             }
         };
 
         fetchData();
     }, []);
-    if (users.length == 0) return <Loading />;
-
+    if (userList.length == 0) return <Loading />;
+   
     const TABLE_HEAD = ["", "كلمة المرور", "اسم المستخدم", "نوع الحساب", "رقم الحساب"];
 
-    const TABLE_ROWS = users?.users;
+    const TABLE_ROWS = userList;
 
     return (
         <>
@@ -88,7 +94,8 @@ const Users = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.users.map(({ id, username, is_active, role, password }, index) => {
+                            
+                            {userList.map(({ id, username, is_active, role, password }, index) => {
                                 const isLast = index === TABLE_ROWS.length - 1;
                                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
@@ -199,7 +206,9 @@ const Users = () => {
                     </table>
                 </Card>
             </Container>
-            <AddNewUserModal openAddNewUser={openAddNewUser} handleOpenAddNewUser={handleOpenAddNewUser} />
+            <AddNewUserModal
+                openAddNewUser={openAddNewUser} handleOpenAddNewUser={handleOpenAddNewUser}
+            />
         </>
     );
 };
