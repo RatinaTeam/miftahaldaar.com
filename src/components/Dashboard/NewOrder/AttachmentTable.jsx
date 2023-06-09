@@ -1,10 +1,11 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { OtherContext } from "../../../contexts/OtherContexts";
 
 const AttachmentTable = ({ required_attachments }) => {
-
+    const {  attachments,setAttachments } = useContext(OtherContext);
   
     const [fileList, setFileList] = useState({});
     const [fileSelectedList, setFileSelectedList] = useState([]);
@@ -31,7 +32,7 @@ console.log(fileList)
             const formData = new FormData();
             formData.append("file", fileList[key]);
             try {
-                const response = await axios.post(
+                const response = await axios.post( 
                     "https://miftahaldaar.ratina.co/update_file",
                     formData,
                     {
@@ -43,8 +44,9 @@ console.log(fileList)
                         },
                     }
                 );
-                console.log(response.data);
                 setFileUploadCompleted(true);
+                setAttachments({...attachments, [Object.keys(required_attachments)[key]]: response.data.file_link});
+
             } catch (error) {
                 console.log(error);
             }
@@ -65,6 +67,8 @@ console.log(fileList)
          
         },
     ];
+
+    console.log(Object.keys(required_attachments)[0]);
 
     return (
         <div className="flex flex-col gap-4">
