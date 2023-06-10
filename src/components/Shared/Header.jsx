@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Container from "../widgets/Container";
 import { Link } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,6 +9,12 @@ const Header = () => {
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    const handleLogOut = () => {
+        localStorage.removeItem("userID");
+        window.location.href = "/";
+    };
+
 
     return (
         <div className="mb-5 bg-blue-300 ">
@@ -59,11 +66,19 @@ const Header = () => {
                             >
                                 المستخدمون
                             </Link>
+                            <Button
+                                onClick={handleLogOut}
+                                className="block mt-4 lg:inline-block lg:mt-0 text-white bg-red-500"
+                                style={{ marginLeft: '2rem' }}
+                              
+>
+  تسجيل الخروج
+</Button>
                         </div>
                     </div>
                     <div className="flex items-center flex-shrink-0 ">
                         <span className="font-semibold text-xl tracking-tight mr-4 border py-2 px-2 rounded-lg text-gray-800">
-                        شعار
+                      مفتاح الدار للخدمات العقارية
                         </span>
                     </div>
                 </nav>

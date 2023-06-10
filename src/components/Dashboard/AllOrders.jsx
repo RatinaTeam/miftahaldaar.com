@@ -1,5 +1,6 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
+import { Link } from "react-router-dom";
 
 export default function AllOrders({ allOrders }) {
 const order_status_translations = {
@@ -88,6 +89,7 @@ const order_status_translations = {
                             return (
                                 
                                 <tr key={index}>
+                                   
                                     <td className={classes}>
                                     <Button
                         // onClick={handleOpenAddNewUser}
@@ -123,9 +125,9 @@ const order_status_translations = {
                                         </Typography>
                                     </td>
                                     <td className={classes}>
-                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                    <Link to={`/dashboard/new_order?order_id=${id}`} key={index}>    <Typography variant="small" color="blue-gray" className="font-normal">
                                             {order_status_translations[status]}
-                                        </Typography>
+                                        </Typography></Link>
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
@@ -158,7 +160,8 @@ const order_status_translations = {
                                         </Typography>
                                     </td>
                                     
-                                </tr>
+                                    </tr>
+                                
                             );
                         }
                     )}

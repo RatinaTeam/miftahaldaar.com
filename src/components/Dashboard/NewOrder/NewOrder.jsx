@@ -21,8 +21,12 @@ import Swal from "sweetalert2";
 
 const NewOrder = () => {
     const { userID } = useContext(AuthContext);
-    const {  attachments } = useContext(OtherContext);
+    const { attachments } = useContext(OtherContext);
     
+    //get order id from url param
+    const urlParams = new URLSearchParams(window.location.search);
+    const order_id = urlParams.get("order_id");
+   
     const [fundedBanks, setFundedBanks] = useState([]);
     const [city_of_property_options_list, set_city_of_property_options_list] = useState([]);
     const [type_of_property_option_list, set_type_of_property_option_list] = useState([]);
@@ -71,12 +75,7 @@ const NewOrder = () => {
     const [leadSource, setLeadSource] = useState("");
     const [isGuarantees, setIsGuarantees] = useState(false);
     const [notes, setNotes] = useState("");
-
-
-  // Modal States
-  const [openAddUpdates, setOpenAddUpdates] = useState(false);
-  // Modal Handlers
-  const handleOpenAddUpdates = () => setOpenAddUpdates(!openAddUpdates);
+    const [orderResponse, setOrderResponse] = useState({});
     
     const handleSelectOrderTypeChange = (event) => {
         setSelectedOrderType(event.target.value);
@@ -197,14 +196,10 @@ const NewOrder = () => {
         }
     };
 
+    const fetchData = async () => {
+        const formData = new FormData();
 
-
-    
-
-    useEffect(() => {
-      
-        const fetchData = async () => {
-          
+        formData.append('order_id',order_id);
         setLoading(true);
         const headers = {
           "user-id": userID,
@@ -212,12 +207,15 @@ const NewOrder = () => {
         };
        
         try {
-          const [response] = await Promise.all([
-            axios.get("https://miftahaldaar.ratina.co/fields_options", { headers })
+          const [fields_options_response,orderResponse] = await Promise.all([
+              axios.get("https://miftahaldaar.ratina.co/fields_options", { headers }),
+              axios.post("https://miftahaldaar.ratina.co/order/get",formData, { headers }),
           ]);
-
+            
+         
+     
           // If failed to fetch
-          if (response.data.status !== true) {
+          if (fields_options_response.data.status !== true) {
             setLoading(false);
             return setFailedToFetch(true);
           }
@@ -226,20 +224,64 @@ const NewOrder = () => {
           setFailedToFetch(false);
          
         
-            setFundedBanks(response.data.bank_name_options_list);
-            set_city_of_property_options_list(response.data.city_of_property_options_list);
-            set_type_of_property_option_list(response.data.type_of_property_option_list);
-            set_lead_source_options_list(response.data.lead_source_options_list);
-            set_required_attachments(response.data.required_attachments);
-            set_order_type_options_list(response.data.order_type_options_list);
+            setFundedBanks(fields_options_response.data.bank_name_options_list);
+            set_city_of_property_options_list(fields_options_response.data.city_of_property_options_list);
+            set_type_of_property_option_list(fields_options_response.data.type_of_property_option_list);
+            set_lead_source_options_list(fields_options_response.data.lead_source_options_list);
+            set_required_attachments(fields_options_response.data.required_attachments);
+            set_order_type_options_list(fields_options_response.data.order_type_options_list);
+
+
+            if(orderResponse.data.status === true){
+                setOrderID(orderResponse.data.order.order_id);
+                setCustomerName(orderResponse.data.order.customer_name);
+                setCustomerPhone(orderResponse.data.order.customer_phone);
+                setCustomerSalaryAmount(orderResponse.data.order.customer_salary_amount);
+                setCustomerSalaryDepositBank(orderResponse.data.order.customer_salary_deposit_bank);
+                setCustomerEmployer(orderResponse.data.order.customer_employer);
+                setCustomerOld(orderResponse.data.order.customer_old);
+                setOrderDate(orderResponse.data.order.order_date);
+                setSelectedOrderType(orderResponse.data.order.order_type);
+                setPropertyValue(orderResponse.data.order.property_value);
+                setSelectedFundedBank(orderResponse.data.order.bank_name);
+                setBankEmployeeName(orderResponse.data.order.bank_employee_name);
+                setDuration(orderResponse.data.order.duration);
+                setMortgage(orderResponse.data.order.mortgage);
+                setPersonalFinancing(orderResponse.data.order.personal_financing);
+                setInstallmentAmount(orderResponse.data.order.installment_amount);
+                setPremiumSupport(orderResponse.data.order.premium_support);
+                setSelectedTypeOfProperty(orderResponse.data.order.type_of_property);
+                setOriginalPropertyValue(orderResponse.data.order.original_property_value);
+                setSupervisorID(orderResponse.data.order.supervisor_id);
+                setEmpID(orderResponse.data.order.emp_id);
+                setCustomerID(orderResponse.data.order.customer_id);
+                setOwnerPhone(orderResponse.data.order.owner_phone);
+                setSelectedCityOfProperty(orderResponse.data.order.city_of_property);
+                setSelectedLeadSource(orderResponse.data.order.lead_source);
+                setIsGuarantees(orderResponse.data.order.is_guarantees);
+                setNotes(orderResponse.data.order.notes);
+                // setAttachments(orderResponse.data.order.attachments);
+            }
+
+
+
+
         } catch (error) {
           console.log(error);
           setLoading(false);
           setFailedToFetch(true);
         }
       };
+
+    
+
+    useEffect(() => {
       fetchData();
     }, []);
+
+
+
+
     if (loading) {
         return <Loading />;
     }
