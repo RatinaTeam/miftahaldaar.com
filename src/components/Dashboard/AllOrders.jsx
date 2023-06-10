@@ -1,8 +1,14 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { AuthContext } from "../../contexts/AuthProvider";
+import { useContext, useState } from "react";
 
-export default function AllOrders({ allOrders,handleOpenAddUpdates }) {
+export default function AllOrders({ allOrders, handleOpenAddUpdates }) {
+    const { userID } = useContext(AuthContext);
+    const [usersList, setUsersList] = useState([]);
 const order_status_translations = {
     "PENDING": "معلق",
     "CANCELLED": "ملغى",
@@ -10,9 +16,56 @@ const order_status_translations = {
     "COMPLETED": "منجز",
     "ON_PROGRESS": "قيد التنفيذ",
     "DELAYED": "متأخر"
+}
+const headers = {
+    "user-id": userID,
+    "auth-key": "sdofmasdmfasdmflkmasdf",
+  };
+    const handleAssign =async (
+        order_id
+    ) => {
+ 
+        axios.get("https://miftahaldaar.ratina.co/user/all",
+          
+            { headers }).then((res) => {
+               console.log(res.data.users)
+            setUsersList(res.data.users);
+           }).catch((err) => {
+               console.log(err);
+           })
+     
+
+        const { value: selectedValue } = await Swal.fire({
+            title: 'تعيين موظف',
+            input: 'select',
+            inputOptions: {
+                'المستخدمون': usersList.map((user) => {
+                    return user.username;
+                  })
+            
+            },
+            inputPlaceholder: 'اختر موظف',
+            showCancelButton: true,
+         
+        })
+        
+
+        if (selectedValue) {
+            console.log(usersList[selectedValue].id)
+                   const formData = new FormData();
+        formData.append("order_id", order_id);
+        formData.append("emp_id", usersList[selectedValue].id);
+        await axios.post("https://miftahaldaar.ratina.co/order_status/assign",
+            formData,
+            { headers }).then((res) => {
+                console.log(res.data)
+            }).catch((err) => {
+                console.log(err);
+            })
+    Swal.fire(`${usersList[selectedValue].username} : لقد حددت`)
   }
-
-
+    };
+  
 
     const TABLE_HEAD = [
         {
@@ -120,12 +173,18 @@ const order_status_translations = {
                                         </Typography>
                                     </td>
                                     <td className={classes}>
-                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                        <Typography
+                                            onClick={() => handleAssign(id)}
+                                            variant="small" color="blue-gray" className="font-normal bg-blue-400 p-2 text-center rounded-lg text-white
+                                            hover:bg-blue-500 cursor-pointer
+                                            ">
                                             {customer_name}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
-                                    <Link to={`/dashboard/new_order?order_id=${id}`} key={index}>    <Typography variant="small" color="blue-gray" className="font-normal">
+                                        <Link to={`/dashboard/new_order?order_id=${id}`} key={index}>    <Typography variant="small" color="blue-gray" className="font-normal text-white bg-orange-400 p-2 text-center rounded-lg"
+                                            
+                                        >
                                             {order_status_translations[status]}
                                         </Typography></Link>
                                     </td>
@@ -145,9 +204,14 @@ const order_status_translations = {
                                         </Typography>
                                     </td>
                                     <td className={classes}>
-                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                   <Typography
+                                             
+                                            variant="small" color="blue-gray" className="font-normal">
                                             {customer_name}
                                         </Typography>
+                                       
+                                        
+                                       
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
