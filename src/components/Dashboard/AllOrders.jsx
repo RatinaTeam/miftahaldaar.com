@@ -2,7 +2,7 @@ import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
 import { Link } from "react-router-dom";
 
-export default function AllOrders({ allOrders }) {
+export default function AllOrders({ allOrders,handleOpenAddUpdates }) {
 const order_status_translations = {
     "PENDING": "معلق",
     "CANCELLED": "ملغى",
@@ -92,7 +92,7 @@ const order_status_translations = {
                                    
                                     <td className={classes}>
                                     <Button
-                        // onClick={handleOpenAddNewUser}
+                         onClick={()=> handleOpenAddUpdates(id)}
                         color="green"
                         className="flex items-center gap-3 float-right"
                     >

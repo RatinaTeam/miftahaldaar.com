@@ -128,8 +128,12 @@ setOrderTimeline(res.data.order.timeline)
                             </ButtonGroup>
                         </div>
 
-                        {select === "allOrders" && <AllOrders allOrders={allOrders} />}
-                        {select === "overdue" && <OverDueOrders dueOrders={dueOrders} />}
+                        {select === "allOrders" && <AllOrders allOrders={allOrders}
+                            handleOpenAddUpdates={handleOpenAddUpdates}
+                        />}
+                        {select === "overdue" && <OverDueOrders dueOrders={dueOrders}
+                            handleOpenAddUpdates={handleOpenAddUpdates}
+                        />}
                         {select === "neworders" && (
                             <NewOrders newOrders={newOrders} handleOpenAddUpdates={handleOpenAddUpdates} />
                         )}

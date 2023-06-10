@@ -198,8 +198,10 @@ const NewOrder = () => {
 
     const fetchData = async () => {
         const formData = new FormData();
-
-        formData.append('order_id',order_id);
+        if (order_id) {
+            formData.append('order_id',order_id);
+}
+       
         setLoading(true);
         const headers = {
           "user-id": userID,

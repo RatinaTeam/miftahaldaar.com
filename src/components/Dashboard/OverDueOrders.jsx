@@ -1,7 +1,7 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
 
-export default function OverDueOrders({ dueOrders }) {
+export default function OverDueOrders({ dueOrders,handleOpenAddUpdates }) {
 const order_status_translations = {
     "PENDING": "معلق",
     "CANCELLED": "ملغى",
@@ -90,7 +90,7 @@ const order_status_translations = {
                                 <tr key={index}>
                                     <td className={classes}>
                                     <Button
-                        // onClick={handleOpenAddNewUser}
+                    onClick={()=> handleOpenAddUpdates(id)}
                         color="green"
                         className="flex items-center gap-3 float-right"
                     >
