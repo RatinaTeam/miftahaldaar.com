@@ -17,7 +17,7 @@ import Loading from "../../Shared/Loading";
 import ErrorPage from "../../Shared/ErrorPage";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { OtherContext } from "../../../contexts/OtherContexts";
-import { json } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const NewOrder = () => {
     const { userID } = useContext(AuthContext);
@@ -73,7 +73,10 @@ const NewOrder = () => {
     const [notes, setNotes] = useState("");
 
 
-
+  // Modal States
+  const [openAddUpdates, setOpenAddUpdates] = useState(false);
+  // Modal Handlers
+  const handleOpenAddUpdates = () => setOpenAddUpdates(!openAddUpdates);
     
     const handleSelectOrderTypeChange = (event) => {
         setSelectedOrderType(event.target.value);
@@ -180,7 +183,14 @@ const NewOrder = () => {
             setIsGuarantees(false);
             setNotes("");
 
-
+            Swal.fire({
+                title:  'منتهي',
+                text: 'تم تقديم الطلب بنجاح',
+                icon: 'success',
+                confirmButtonColor: '#3088D6',
+                confirmButtonText: 'نعم'
+            }
+              )
         } catch (error) {
             console.log(error);
             // setFailedToFetch(true);
@@ -480,15 +490,23 @@ const NewOrder = () => {
                     {/* <Button dir="rtl" className="px-16 py-4" color="blue">
                         إكتملت المهمة
                     </Button> */}
-                    <Button dir="rtl" className="px-16 py-4" color="orange">
+                        <Button dir="rtl" className="px-16 py-4" color="orange"
+                
+                        >
                         تأجيل
                     </Button>
-                    <Button dir="rtl" className="px-16 py-4" color="red">
+                        <Button dir="rtl" className="px-16 py-4" color="red"
+                            onClick={() => {
+                               
+                               
+                        }}
+                        >
                         إلغاء الطلب
                     </Button>
                 </NewOrderFinalActionButtonContainer>
             </NewOrderSectionContainer>
         </Container>
+
     );
 };
 

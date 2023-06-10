@@ -4,7 +4,7 @@ import { SearchField } from "../Shared/StyledComponents";
 
 export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
     const TABLE_HEAD = [
-        "",
+  
         {
             arabic: "",
         },
@@ -43,7 +43,7 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
                                         <span>{head?.english}</span>
                                     </div>
 
-                                    {head.length !== 0 && i !==1 && <SearchField />}
+                                    {head.length !== 0  && i !== 0 && <SearchField />}
                                 </th>
                             ))}
                         </tr>

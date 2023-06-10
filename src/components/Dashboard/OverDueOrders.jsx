@@ -31,7 +31,7 @@ export default function OverDueOrders({ dueOrders }) {
             arabic: "نوع الطلب",
         },
         {
-            arabic: "id",
+            arabic: "بطاقة تعريف",
         },
     ];
 
