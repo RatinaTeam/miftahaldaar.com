@@ -9,7 +9,8 @@ import { OtherContext } from "../../contexts/OtherContexts";
 import { AuthContext } from "../../contexts/AuthProvider";
 import Loading from "../Shared/Loading";
 import ErrorPage from "../Shared/ErrorPage";
-import axios from "axios";
+import axios, { all } from "axios";
+import AllOrders from "./AllOrders";
 
 export default function Dashboard() {
     const { overDueOrders } = useContext(OtherContext);
@@ -24,6 +25,7 @@ export default function Dashboard() {
     const [select, setSelect] = useState("overdue");
     const [dueOrders, setDueOrders] = useState([]);
     const [newOrders, setNewOrders] = useState([]);
+    const [allOrders, setAllOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const [failedToFetch, setFailedToFetch] = useState(false);
     const { setOverDueOrderCounts } = useContext(OtherContext);
@@ -36,19 +38,22 @@ export default function Dashboard() {
       "auth-key": "sdofmasdmfasdmflkmasdf",
     };
     try {
-      const [delayedRes, newRes] = await Promise.all([
+        const [ allRes, delayedRes, newRes] = await Promise.all([
+        axios.get("https://miftahaldaar.ratina.co/orders/all", { headers }),
         axios.get("https://miftahaldaar.ratina.co/orders/delayed_orders", { headers }),
         axios.get("https://miftahaldaar.ratina.co/orders/new_orders", { headers })
       ]);
 
       // If failed to fetch
-      if (delayedRes.data.status !== true || newRes.data.status !== true) {
+        if (delayedRes.data.status !== true || newRes.data.status !== true
+       || allRes.data.status !== true ) {
         setLoading(false);
         return setFailedToFetch(true);
       }
 
       setLoading(false);
       setFailedToFetch(false);
+      setAllOrders(allRes.data.orders);
       setDueOrders(delayedRes.data.orders);
       setOverDueOrderCounts(delayedRes.data.orders.length);
       setNewOrders(newRes.data.orders);
@@ -78,7 +83,18 @@ export default function Dashboard() {
                         <div className="my-5 mx-auto">
                             <ButtonGroup size="md">
                                 <Button onClick={() => navigate("new_order")}>اضافة طلب جديد</Button>
-                                <Button>جميع المتطلبات</Button>
+                                <Button
+                               onClick={() => setSelect("allOrders")} className="flex items-center">
+                                      <span className="bg-red-500 p-2 rounded-full mr-3">{allOrders.length}</span>
+                                    <p>
+                                    جميع المتطلبات
+                                    </p>
+                               
+                                      
+                               
+                               
+                               
+                                </Button>
                                 <Button onClick={() => setSelect("overdue")} className="flex items-center">
                                     <span className="bg-red-500 p-2 rounded-full mr-3">{dueOrders.length}</span>
                                     <p>تحديثات الطلبات</p>
@@ -90,7 +106,7 @@ export default function Dashboard() {
                             </ButtonGroup>
                         </div>
 
-                        {/* show overdue / neworders */}
+                        {select === "allOrders" && <AllOrders allOrders={allOrders} />}
                         {select === "overdue" && <OverDueOrders dueOrders={dueOrders} />}
                         {select === "neworders" && (
                             <NewOrders newOrders={newOrders} handleOpenAddUpdates={handleOpenAddUpdates} />
