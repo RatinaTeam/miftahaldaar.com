@@ -2,6 +2,17 @@ import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
 
 export default function OverDueOrders({ dueOrders }) {
+const order_status_translations = {
+    "PENDING": "معلق",
+    "CANCELLED": "ملغى",
+    "PARTIALLY_COMPLETED": "منجز جزئياً",
+    "COMPLETED": "منجز",
+    "ON_PROGRESS": "قيد التنفيذ",
+    "DELAYED": "متأخر"
+  }
+
+
+
     const TABLE_HEAD = [
         {
             arabic: "",
@@ -113,7 +124,7 @@ export default function OverDueOrders({ dueOrders }) {
                                     </td>
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {status}
+                                            {order_status_translations[status]}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
