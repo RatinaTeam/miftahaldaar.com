@@ -14,12 +14,34 @@ import AllOrders from "./AllOrders";
 
 export default function Dashboard() {
     const { overDueOrders } = useContext(OtherContext);
+    const [orderTimeline, setOrderTimeline] = useState([]);
     const { userID } = useContext(AuthContext);
     const navigate = useNavigate();
     // Modal States
     const [openAddUpdates, setOpenAddUpdates] = useState(false);
     // Modal Handlers
-    const handleOpenAddUpdates = () => setOpenAddUpdates(!openAddUpdates);
+    const handleOpenAddUpdates = (order_id) => {
+        setOpenAddUpdates(!openAddUpdates)
+     
+        if (openAddUpdates === false) {
+            const formData = new FormData();
+            console.log(order_id)
+            formData.append("order_id", order_id);
+            axios.post("https://miftahaldaar.ratina.co/order/get", 
+                formData
+            , {
+                headers: {
+                    "user-id": userID,
+                    "auth-key": "sdofmasdmfasdmflkmasdf",
+                }
+            }).then(res => {
+setOrderTimeline(res.data.order.timeline)
+            }).catch(err => {
+                console.log(err)
+            })
+         
+        }
+    };
 
     // Other States
     const [select, setSelect] = useState("overdue");
@@ -114,7 +136,7 @@ export default function Dashboard() {
                     </div>
                 </Container>
             </main>
-            <OrderTimelineModal openAddUpdates={openAddUpdates} handleOpenAddUpdates={handleOpenAddUpdates} />
+            <OrderTimelineModal orderTimeline={orderTimeline} openAddUpdates={openAddUpdates} handleOpenAddUpdates={handleOpenAddUpdates} setOpenAddUpdates={setOpenAddUpdates} />
         </>
     );
 }

@@ -71,7 +71,7 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
                                             <Typography variant="small" color="blue-gray" className="font-normal">
                                                 <Button
                                                     className="flex items-center gap-3"
-                                                    onClick={handleOpenAddUpdates}
+                                                    onClick={()=> handleOpenAddUpdates(id)}
                                                 >
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
