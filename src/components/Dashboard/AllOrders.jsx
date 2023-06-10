@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function AllOrders({ allOrders, handleOpenAddUpdates }) {
     const { userID } = useContext(AuthContext);
@@ -17,6 +17,26 @@ const order_status_translations = {
     "ON_PROGRESS": "قيد التنفيذ",
     "DELAYED": "متأخر"
 }
+    
+    const fetchData = async () => {
+        axios.get("https://miftahaldaar.ratina.co/user/all",
+          
+        { headers }).then((res) => {
+      
+        setUsersList(res.data.users);
+       }).catch((err) => {
+           console.log(err);
+       })
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
+    
+    const filterUsers = (id) => {
+        return usersList?.filter((user) => user.id === id)[0].username;
+    };
+
+    
 const headers = {
     "user-id": userID,
     "auth-key": "sdofmasdmfasdmflkmasdf",
@@ -25,15 +45,7 @@ const headers = {
         order_id
     ) => {
  
-        axios.get("https://miftahaldaar.ratina.co/user/all",
-          
-            { headers }).then((res) => {
-               console.log(res.data.users)
-            setUsersList(res.data.users);
-           }).catch((err) => {
-               console.log(err);
-           })
-     
+    
 
         const { value: selectedValue } = await Swal.fire({
             title: 'تعيين موظف',
@@ -51,8 +63,7 @@ const headers = {
         
 
         if (selectedValue) {
-            console.log(usersList[selectedValue].id)
-                   const formData = new FormData();
+        const formData = new FormData();
         formData.append("order_id", order_id);
         formData.append("emp_id", usersList[selectedValue].id);
         await axios.post("https://miftahaldaar.ratina.co/order_status/assign",

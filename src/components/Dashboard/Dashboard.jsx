@@ -74,7 +74,8 @@ setOrderTimeline(res.data.order.timeline)
       }
 
       setLoading(false);
-      setFailedToFetch(false);
+        setFailedToFetch(false);
+        console.log(allRes.data.orders)
       setAllOrders(allRes.data.orders);
       setDueOrders(delayedRes.data.orders);
       setOverDueOrderCounts(delayedRes.data.orders.length);
