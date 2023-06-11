@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Container from "../widgets/Container";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Header = () => {
+    const { userID,loggedUser } = useContext(AuthContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleMenuToggle = () => {
@@ -60,12 +62,12 @@ const Header = () => {
                             >
                                 لوحة القيادة
                             </Link>
-                            <Link
+                            {(loggedUser === 1 || loggedUser === 2) && (<Link
                                 to="users_list"
                                 className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-700 "
                             >
                                 المستخدمون
-                            </Link>
+                            </Link>)}
                             <Button
                                 onClick={handleLogOut}
                                 className="block mt-4 lg:inline-block lg:mt-0 text-white bg-red-500"

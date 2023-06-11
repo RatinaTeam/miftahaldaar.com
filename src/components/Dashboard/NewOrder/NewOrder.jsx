@@ -20,7 +20,7 @@ import { OtherContext } from "../../../contexts/OtherContexts";
 import Swal from "sweetalert2";
 
 const NewOrder = () => {
-    const { userID } = useContext(AuthContext);
+    const { userID,loggedUser } = useContext(AuthContext);
     const { attachments } = useContext(OtherContext);
     
     //get order id from url param
@@ -486,40 +486,40 @@ const NewOrder = () => {
                 {/* Section Four */}
 
 
-{/*                 
-                <NewOrderSection>
+                {(loggedUser === 1 || loggedUser === 2) && (
+                    <NewOrderSection>
                    
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4">
-                        <DeletionTable />
-                        <NewOrderSectionFormContainerTwoCol>
-                            <Select dir="rtl" label="مدينة العقار city of the property">
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                            </Select>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4">
+                            <DeletionTable />
+                            <NewOrderSectionFormContainerTwoCol>
+                                <Select dir="rtl" label="مدينة العقار city of the property">
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                </Select>
 
-                            <Input dir="rtl" size="md" label="المشرفadmin" />
+                                <Input dir="rtl" size="md" label="المشرفadmin" />
 
-                            <Select dir="rtl" label="مدينة العقار city of the property">
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                            </Select>
-                            <Select dir="rtl" label="مدينة العقار city of the property">
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                                <Option>نوع العقارtype of property</Option>
-                            </Select>
-                        </NewOrderSectionFormContainerTwoCol>
-                    </div>
-                    <Button dir="rtl" className="flex  ml-4 mb-4">إضافة مستند مطلوب</Button>
-                </NewOrderSection> */}
+                                <Select dir="rtl" label="مدينة العقار city of the property">
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                </Select>
+                                <Select dir="rtl" label="مدينة العقار city of the property">
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                    <Option>نوع العقارtype of property</Option>
+                                </Select>
+                            </NewOrderSectionFormContainerTwoCol>
+                        </div>
+                        <Button dir="rtl" className="flex  ml-4 mb-4">إضافة مستند مطلوب</Button>
+                    </NewOrderSection>)}
 
 
 

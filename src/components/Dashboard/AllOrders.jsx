@@ -7,7 +7,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 
 export default function AllOrders({ allOrders, handleOpenAddUpdates }) {
-    const { userID } = useContext(AuthContext);
+    const { userID,loggedUser } = useContext(AuthContext);
     const [usersList, setUsersList] = useState([]);
 const order_status_translations = {
     "PENDING": "معلق",
@@ -149,7 +149,7 @@ const headers = {
                         ) => {
                             const isLast = index === TABLE_ROWS.length - 1;
                             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-
+//   {(loggedUser === 1 || loggedUser === 2) && (
                             return (
                                 
                                 <tr key={index}>
@@ -183,7 +183,7 @@ const headers = {
                                             {last_update_note}
                                         </Typography>
                                     </td>
-                                    <td className={classes}>
+                                    {(loggedUser === 1 || loggedUser === 2) && (<td className={classes}>
                                         <Typography
                                             onClick={() => handleAssign(id)}
                                             variant="small" color="blue-gray" className="font-normal bg-blue-400 p-2 text-center rounded-lg text-white
@@ -191,14 +191,14 @@ const headers = {
                                             ">
                                             {customer_name}
                                         </Typography>
-                                    </td>
-                                    <td className={classes}>
+                                    </td>)}
+                                    {(loggedUser === 1 || loggedUser === 2) && (<td className={classes}>
                                         <Link to={`/dashboard/new_order?order_id=${id}`} key={index}>    <Typography variant="small" color="blue-gray" className="font-normal text-white bg-orange-400 p-2 text-center rounded-lg"
                                             
                                         >
                                             {order_status_translations[status]}
                                         </Typography></Link>
-                                    </td>
+                                    </td>)}
                                     <td className={classes}>
                                         <Typography variant="small" color="blue-gray" className="font-normal">
                                             {date_of_reprocessing}
