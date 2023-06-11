@@ -492,29 +492,29 @@ const NewOrder = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4">
                             <DeletionTable />
                             <NewOrderSectionFormContainerTwoCol>
-                                <Select dir="rtl" label="مدينة العقار city of the property">
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
+                                <Select dir="rtl" label="مدينة العقار">
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
                                 </Select>
 
-                                <Input dir="rtl" size="md" label="المشرفadmin" />
+                                <Input dir="rtl" size="md" label="المشرف" />
 
-                                <Select dir="rtl" label="مدينة العقار city of the property">
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
+                                <Select dir="rtl" label="مدينة العقار">
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
                                 </Select>
-                                <Select dir="rtl" label="مدينة العقار city of the property">
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
-                                    <Option>نوع العقارtype of property</Option>
+                                <Select dir="rtl" label="مدينة العقار">
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
+                                    <Option>نوع العقار</Option>
                                 </Select>
                             </NewOrderSectionFormContainerTwoCol>
                         </div>
