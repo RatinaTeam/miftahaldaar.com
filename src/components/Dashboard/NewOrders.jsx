@@ -53,7 +53,8 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
                             (
                                 {
                                     order_date,
-                                    rand_date = "NO DATA",
+                                    // rand_date = "NO DATA",
+                                    rand_date = "",
                                     order_type,
                                     customer_salary_amount,
                                     customer_phone,
