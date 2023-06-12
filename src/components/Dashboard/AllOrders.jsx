@@ -58,7 +58,7 @@ const headers = {
             inputPlaceholder: 'اختر موظف',
             showCancelButton: true,
             confirmButtonText: "تعيين",
-            cancelButtonText: "إغلاق",         
+            cancelButtonText: "إغلاق",
         })
         
 
@@ -139,7 +139,7 @@ const headers = {
                                 last_update_note,
                                 customer_name,
                                 status,
-                                // date_of_reprocessing = "NO DATA",
+                                // date_of_reprocessing = "لا يوجد",
                                 date_of_reprocessing = "",
                                 customer_salary_amount,
                                 customer_phone,
