@@ -184,7 +184,7 @@ const NewOrder = () => {
 
             Swal.fire({
                 title:  'تم !',
-                text: 'تم تقديم الطلب بنجاح',
+                text: 'تم تحديث الطلب بنجاح',
                 icon: 'success',
                 confirmButtonColor: '#3088D6',
                 confirmButtonText: 'نعم'
