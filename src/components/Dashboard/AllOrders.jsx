@@ -9,14 +9,14 @@ import { useContext, useEffect, useState } from "react";
 export default function AllOrders({ allOrders, handleOpenAddUpdates }) {
     const { userID,loggedUser } = useContext(AuthContext);
     const [usersList, setUsersList] = useState([]);
-const order_status_translations = {
-    "PENDING": "معلق",
-    "CANCELLED": "ملغى",
-    "PARTIALLY_COMPLETED": "منجز جزئياً",
-    "COMPLETED": "منجز",
-    "ON_PROGRESS": "قيد التنفيذ",
-    "DELAYED": "متأخر"
-}
+    const order_status_translations = {
+        "PENDING": "معلق",
+        "CANCELLED": "ملغى",
+        "PARTIALLY_COMPLETED": "منجز جزئياً",
+        "COMPLETED": "منجز",
+        "ON_PROGRESS": "قيد التنفيذ",
+        "DELAYED": "متأخر"
+    }
     
     const fetchData = async () => {
         axios.get("https://miftahaldaar.ratina.co/user/all",
@@ -53,12 +53,12 @@ const headers = {
             inputOptions: {
                 'المستخدمون': usersList.map((user) => {
                     return user.username;
-                  })
-            
+                  })            
             },
             inputPlaceholder: 'اختر موظف',
             showCancelButton: true,
-         
+            confirmButtonText: "تعيين",
+            cancelButtonText: "إغلاق",         
         })
         
 
