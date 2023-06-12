@@ -183,7 +183,7 @@ const NewOrder = () => {
             setNotes("");
 
             Swal.fire({
-                title:  'منتهي',
+                title:  'تم !',
                 text: 'تم تقديم الطلب بنجاح',
                 icon: 'success',
                 confirmButtonColor: '#3088D6',
