@@ -74,13 +74,13 @@ const OrderTimelineModal = ({ openAddUpdates, handleOpenAddUpdates, orderTimelin
 
   console.log(orderTimeline)
     return (
-        <Dialog open={openAddUpdates} handler={handleOpenAddUpdates} size="md">
+        <Dialog open={openAddUpdates} handler={handleOpenAddUpdates} size="md" className="max-h-[90vh] overflow-y-scroll">
             <div className="flex items-center justify-between">
                 <DialogHeader>تحديث الطلب</DialogHeader>
                 <XMarkIcon className="mr-3 h-5 w-5" onClick={handleOpenAddUpdates} />
             </div>
-            <DialogBody divider>
-                <Card className="overflow-auto h-full">
+            <DialogBody divider className=" h-1/3">
+                <Card className="overflow-y-auto">
                     <table className="w-full min-w-max table-auto text-left">
                         <thead>
                             <tr>
