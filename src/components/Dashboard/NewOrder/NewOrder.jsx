@@ -77,9 +77,10 @@ const NewOrder = () => {
     const [notes, setNotes] = useState("");
     const [orderResponse, setOrderResponse] = useState({});
     
-    const handleSelectOrderTypeChange = (event) => {
-        setSelectedOrderType(event.target.value);
-        setOrderType(event.target.value);
+    const handleSelectOrderTypeChange = (value) => {
+        setSelectedOrderType(value);
+        setOrderType(value);
+        console.log("orderType", value);
     };
 
     const handleSelectLeadSourceChange = (event) => {
@@ -333,7 +334,7 @@ const NewOrder = () => {
                         <Select dir="rtl"
                             label="الخدمة المطلوبة"
                             value={selectedOrderTypeOption}
-                            onClick={handleSelectOrderTypeChange}
+                            onChange={(e) => handleSelectOrderTypeChange(e)}
                         >
                             {order_type_options_list.map((option,index) => (
                                 <Option key={index} value={option}>
@@ -414,7 +415,7 @@ const NewOrder = () => {
                         <Select dir="rtl"
                             label="الخدمة المطلوبة"
                             value={selectedOrderTypeOption}
-                            onClick={handleSelectOrderTypeChange}
+                            onChange={(e) => handleSelectOrderTypeChange(e)}
                         >
                             {order_type_options_list.map((option,index) => (
                                 <Option key={index} value={option}>
