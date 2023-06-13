@@ -1,6 +1,6 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -113,6 +113,11 @@ const headers = {
 
     const TABLE_ROWS = allOrders;
 
+    const navigate = useNavigate();
+    const navigateToRow = (id) => {
+        navigate(`/dashboard/order_details?order_id=${id}`);
+    }
+
     return (
         <Card className="overflow-auto h-full w-full">
             <table className="w-full min-w-max table-auto text-left">
@@ -153,7 +158,7 @@ const headers = {
 //   {(loggedUser === 1 || loggedUser === 2) && (
                             return (
                                 
-                                <tr key={index}>
+                                <tr key={index} onClick={() => navigateToRow(id)}>
                                    
                                     <td className={classes}>
                                     <Button

@@ -8,6 +8,7 @@ import Dashboard from "../components/Dashboard/Dashboard";
 import Users from "../components/Dashboard/Users/Users";
 import NewOrders from "../components/Dashboard/NewOrders";
 import NewOrder from "../components/Dashboard/NewOrder/NewOrder";
+import OrderDetails from "../components/Dashboard/NewOrder/OrderDetails";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: "new_order",
                 element: <NewOrder />,
+            },
+            {
+                path: "order_details",
+                element: <OrderDetails />,
             },
         ],
     },
