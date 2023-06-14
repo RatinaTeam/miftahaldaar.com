@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 
-const OrderTimelineModal = ({ openAddUpdates, handleOpenAddUpdates, orderTimeline, setOpenAddUpdates }) => {
+const OrderTimelineModal = ({ openAddUpdates, orderId, handleOpenAddUpdates, orderTimeline, setOpenAddUpdates }) => {
     const { userID } = useContext(AuthContext);
     const order_status_translations = {
         "PENDING": "معلق",
@@ -31,7 +31,7 @@ const OrderTimelineModal = ({ openAddUpdates, handleOpenAddUpdates, orderTimelin
     const handleAddNotes =  () => {
 
         const formData = new FormData();
-        formData.append("order_id", orderTimeline[0].order_id);
+        formData.append("order_id", orderId);
         formData.append("notes", note);
         try {
             axios.post("https://miftahaldaar.ratina.co/order_status/add_notes", formData
