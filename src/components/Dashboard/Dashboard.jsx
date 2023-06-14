@@ -67,8 +67,9 @@ export default function Dashboard() {
     
     const headers = {
       "user-id": userID,
-      "auth-key": "sdofmasdmfasdmflkmasdf",
+      "auth-key": userID === "1010" ? "sdofmasdmfasdmflkmasdf" : "18d78df6bf254dd4b9a2ad2a93f7144f",
     };
+
     try {
         const [ allRes, delayedRes, newRes] = await Promise.all([
         axios.get("https://miftahaldaar.ratina.co/orders/all", { headers }),
@@ -85,13 +86,13 @@ export default function Dashboard() {
 
       setLoading(false);
       setFailedToFetch(false);
-      setAllOrders(allRes.data.orders);
-      setDueOrders(delayedRes.data.orders);
-      setOverDueOrderCounts(delayedRes.data.orders.length);
-      setNewOrders(newRes.data.orders);
-      setOverDueOrderCounts(newRes.data.orders.length);
+      setAllOrders(allRes.data.orders || []);
+      setDueOrders(delayedRes.data.orders || []);
+      setOverDueOrderCounts(delayedRes.data.orders && delayedRes.data.orders.length);
+      setNewOrders(newRes.data.orders || []);
+      setOverDueOrderCounts(newRes.data.orders && newRes.data.orders.length);
 
-      if(fetchedData) {
+      if(fetchedData && !allOrders) {
 
           if(allRes.data.orders.length > oldOrdersNumber) {
               audioRef.current.play();
@@ -101,11 +102,12 @@ export default function Dashboard() {
 
 
       if(!fetchedData) {
-        oldOrdersNumber = allRes.data.orders.length;
+        oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
         fetchedData = true;
     }
 
     } catch (error) {
+        
       console.error(error);
       setLoading(false);
       setFailedToFetch(true);
