@@ -53,9 +53,12 @@ export default function Dashboard() {
     const [failedToFetch, setFailedToFetch] = useState(false);
     const { setOverDueOrderCounts } = useContext(OtherContext);
 
+    const [refetchData, setRefetchData] = useState(false);
+
    useEffect(() => {
   const fetchData = async () => {
     setLoading(true);
+
     const headers = {
       "user-id": userID,
       "auth-key": "sdofmasdmfasdmflkmasdf",
@@ -88,7 +91,8 @@ export default function Dashboard() {
     }
   };
   fetchData();
-}, []);
+
+}, [refetchData]);
 
     if (loading) {
         return <Loading />;
@@ -131,6 +135,7 @@ export default function Dashboard() {
 
                         {select === "allOrders" && <AllOrders allOrders={allOrders}
                             handleOpenAddUpdates={handleOpenAddUpdates}
+                            refetchData={() => setRefetchData(!refetchData)}
                         />}
                         {select === "overdue" && <OverDueOrders dueOrders={dueOrders}
                             handleOpenAddUpdates={handleOpenAddUpdates}

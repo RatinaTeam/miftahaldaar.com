@@ -6,7 +6,7 @@ import axios from 'axios'
 import { AuthContext } from '../../contexts/AuthProvider'
 import { useContext, useEffect, useRef, useState } from 'react'
 
-export default function AllOrders({ allOrders, handleOpenAddUpdates }) {
+export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData }) {
   const { userID, loggedUser } = useContext(AuthContext)
   const [usersList, setUsersList] = useState([])
   const order_status_translations = {
@@ -68,7 +68,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates }) {
           headers,
         })
         .then((res) => {
-          console.log(res.data)
+          refetchData()
         })
         .catch((err) => {
           console.log(err)
@@ -151,6 +151,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates }) {
                 customer_phone,
                 order_type,
                 id,
+                emp,
               },
               index
             ) => {
@@ -204,7 +205,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates }) {
                         variant='small'
                         color='blue-gray'
                         className='font-normal bg-blue-400 p-2 text-center rounded-lg text-white hover:bg-blue-500 cursor-pointer no-click'>
-                        {customer_name}
+                        {emp.username}
                       </Typography>
                     </td>
                   )}
