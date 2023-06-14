@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Container from "../widgets/Container";
 import { Button, ButtonGroup } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
@@ -54,11 +54,17 @@ export default function Dashboard() {
     const { setOverDueOrderCounts } = useContext(OtherContext);
 
     const [refetchData, setRefetchData] = useState(false);
+    const audioRef = useRef(null);
 
    useEffect(() => {
-  const fetchData = async () => {
-    setLoading(true);
+    let fetchedData = false;
+    let oldOrdersNumber = 0;
 
+  const fetchData = async () => {
+    if(!fetchedData) {
+        setLoading(true);
+    }
+    
     const headers = {
       "user-id": userID,
       "auth-key": "sdofmasdmfasdmflkmasdf",
@@ -84,6 +90,21 @@ export default function Dashboard() {
       setOverDueOrderCounts(delayedRes.data.orders.length);
       setNewOrders(newRes.data.orders);
       setOverDueOrderCounts(newRes.data.orders.length);
+
+      if(fetchedData) {
+
+          if(allRes.data.orders.length > oldOrdersNumber) {
+              audioRef.current.play();
+          }
+        oldOrdersNumber = allRes.data.orders.length;
+      }
+
+
+      if(!fetchedData) {
+        oldOrdersNumber = allRes.data.orders.length;
+        fetchedData = true;
+    }
+
     } catch (error) {
       console.error(error);
       setLoading(false);
@@ -92,6 +113,11 @@ export default function Dashboard() {
   };
   fetchData();
 
+    // Refresh data every 5 seconds
+    const interval = setInterval(fetchData, 5000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
 }, [refetchData]);
 
     if (loading) {
@@ -104,6 +130,7 @@ export default function Dashboard() {
     return (
         <>
             <main>
+            <audio ref={audioRef} src="notification.mp3" />
                 <Container>
                     <div className="flex flex-col justify-center">
                         {/* Action Buttons */}
