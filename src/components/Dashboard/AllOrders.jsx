@@ -118,9 +118,6 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       arabic: 'الملاحظات',
     },
     {
-      arabic: 'حالة الطلب',
-    },
-    {
       arabic: 'تاريخ إعادة المعالجة',
     },
     {
@@ -131,6 +128,9 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     },
     {
       arabic: 'العميل',
+    },
+    {
+      arabic: 'نوع الطلب',
     },
     {
       arabic: 'بطاقة تعريف',
