@@ -44,7 +44,7 @@ const NewOrder = () => {
 
     // input fields for customer
 
-    const [orderID, setOrderID] = useState("");
+    const [orderID, setOrderID] = useState(orderID);
     const [customerName, setCustomerName] = useState("");
     const [customerPhone, setCustomerPhone] = useState("");
     const [customerSalaryAmount, setCustomerSalaryAmount] = useState("");
@@ -212,7 +212,7 @@ const NewOrder = () => {
         const formData = new FormData();
         if (order_id) {
             formData.append('order_id',order_id);
-}
+        }
        
         setLoading(true);
         const headers = {
