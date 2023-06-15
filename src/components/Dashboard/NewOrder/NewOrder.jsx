@@ -44,7 +44,7 @@ const NewOrder = () => {
 
     // input fields for customer
 
-    const [orderID, setOrderID] = useState("");
+    const [orderID, setOrderID] = useState(orderID);
     const [customerName, setCustomerName] = useState("");
     const [customerPhone, setCustomerPhone] = useState("");
     const [customerSalaryAmount, setCustomerSalaryAmount] = useState("");
@@ -112,6 +112,8 @@ const NewOrder = () => {
        const fileAttachments = JSON.stringify(attachments)
 
         const formData = new FormData();
+        if (order_id)
+            formData.append('order_id', customerName);    
 
         formData.append('customer_name', customerName);
         formData.append('customer_phone', customerPhone);
@@ -142,19 +144,36 @@ const NewOrder = () => {
         formData.append('attachment_json', fileAttachments);
         
 
-        try {
-            const [response] = await Promise.all([
-                axios.post("https://miftahaldaar.ratina.co/order/create", formData, { headers }),
-            ]);
+        try {            
+            let response
+            if (order_id)
+                [response] = await Promise.all([
+                    axios.post("https://miftahaldaar.ratina.co/order/update", formData, { headers }),
+                ]);
+            else
+                [response] = await Promise.all([
+                    axios.post("https://miftahaldaar.ratina.co/order/create", formData, { headers }),
+                ]);
 
             // If failed to fetch
             if (response.data.status !== true) {
                 return ;
             }
 
+            
+            Swal.fire({
+                title:  'تم !',
+                text: 'تم تحديث الطلب بنجاح',
+                icon: 'success',
+                confirmButtonColor: '#3088D6',
+                confirmButtonText: 'نعم'
+            }
+              )
             // If success
-
-
+            if (order_id){
+                return;
+            }
+            
             setOrderID("");
             setCustomerName("");
             setCustomerPhone("");
@@ -183,14 +202,7 @@ const NewOrder = () => {
             setIsGuarantees(false);
             setNotes("");
 
-            Swal.fire({
-                title:  'تم !',
-                text: 'تم تحديث الطلب بنجاح',
-                icon: 'success',
-                confirmButtonColor: '#3088D6',
-                confirmButtonText: 'نعم'
-            }
-              )
+            
         } catch (error) {
             console.log(error);
             // setFailedToFetch(true);
@@ -201,7 +213,7 @@ const NewOrder = () => {
         const formData = new FormData();
         if (order_id) {
             formData.append('order_id',order_id);
-}
+        }
        
         setLoading(true);
         const headers = {
@@ -369,7 +381,7 @@ const NewOrder = () => {
                         <Input dir="rtl" size="md" label="التمويل العقاري"
                             value={mortgage}
                             onChange={(e) => setMortgage(e.target.value)}
-                        />
+                    />
                         <Input dir="rtl" size="md" label="المدة"
                             value={duration}
                             onChange={(e) => setDuration(e.target.value)}
