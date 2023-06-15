@@ -25,13 +25,9 @@ export const addNewUser = async (formData, headers) => {
  *********** Authentication
  ***************************************************************/
 export const signIn = async (formData,uid) => {
-    console.log("1");
     const newUser = await axios.post(baseUrl + "user/login", formData);
-    console.log("2");
     localStorage.setItem("userID",uid);
     localStorage.setItem("authKey",newUser.data.auth_key);
-    console.log(newUser.data.auth_key);
-    console.log(localStorage.getItem("authKey"));
     return newUser.data;
 };
 

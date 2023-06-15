@@ -1,6 +1,7 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 import Container from "../widgets/Container";
 import { SearchField } from "../Shared/StyledComponents";
+import { useNavigate } from "react-router-dom";
 
 export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
     const TABLE_HEAD = [
@@ -29,6 +30,11 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
     ];
 
     const TABLE_ROWS = newOrders;
+
+    const navigate = useNavigate()
+    const navigateToRow = (id) => {
+      navigate(`/dashboard/order_details?order_id=${id}`)
+    }
 
     return (
         <Container>
@@ -67,11 +73,17 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
                                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
                                 return (
-                                    <tr key={index}>
+                                    <tr key={index}                   
+                                        onClick={(event) => {
+                                        if (!event.target.classList.contains('no-click')) {
+                                          navigateToRow(id)
+                                        }
+                                      }} 
+                                        className='hover:bg-gray-100 cursor-pointer'>
                                         <td className={classes}>
-                                            <Typography variant="small" color="blue-gray" className="font-normal">
+                                            <Typography variant="small" color="blue-gray" className="font-normal no-click">
                                                 <Button
-                                                    className="flex items-center gap-3"
+                                                    className="flex items-center gap-3 no-click"
                                                     onClick={()=> handleOpenAddUpdates(id)}
                                                 >
                                                     <svg
@@ -80,7 +92,7 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
                                                         viewBox="0 0 24 24"
                                                         strokeWidth={1.5}
                                                         stroke="currentColor"
-                                                        className="w-6 h-6"
+                                                        className="w-6 h-6 no-click"
                                                     >
                                                         <path
                                                             strokeLinecap="round"

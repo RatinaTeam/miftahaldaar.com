@@ -1,5 +1,6 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
+import { useNavigate } from "react-router-dom";
 
 export default function OverDueOrders({ dueOrders,handleOpenAddUpdates }) {
 const order_status_translations = {
@@ -48,6 +49,11 @@ const order_status_translations = {
 
     const TABLE_ROWS = dueOrders;
 
+    const navigate = useNavigate()
+    const navigateToRow = (id) => {
+      navigate(`/dashboard/order_details?order_id=${id}`)
+    }
+
     return (
         <Card className="overflow-auto h-full w-full">
             <table className="w-full min-w-max table-auto text-left">
@@ -87,12 +93,18 @@ const order_status_translations = {
 
                             return (
                                 
-                                <tr key={index}>
+                                <tr key={index}                   
+                                    onClick={(event) => {
+                                    if (!event.target.classList.contains('no-click')) {
+                                      navigateToRow(id)
+                                    }
+                                  }}
+                                  className='hover:bg-gray-100 cursor-pointer'>
                                     <td className={classes}>
                                     <Button
                     onClick={()=> handleOpenAddUpdates(id)}
                         color="green"
-                        className="flex items-center gap-3 float-right"
+                        className="flex items-center gap-3 float-right no-click"
                     >
                         
                         <svg
@@ -101,7 +113,7 @@ const order_status_translations = {
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            className="w-6 h-6"
+                            className="w-6 h-6 no-click"
                         >
                             <path
                                 strokeLinecap="round"

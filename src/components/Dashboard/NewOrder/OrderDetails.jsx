@@ -486,19 +486,19 @@ const OrderDetails = () => {
         </NewOrderSection>
 
         {/* Section Three */}
-        {/* <NewOrderSection> */}
-          {/* <BlackBgTitleBar>المعلومات واكمال المستندات</BlackBgTitleBar> */}
-          {/* Two Table In single Column */}
-          {/* <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4'> */}
+        <NewOrderSection>
+          <BlackBgTitleBar>المعلومات واكمال المستندات</BlackBgTitleBar>
+          Two Table In single Column
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4'>
             {/* Left Table */}
-            {/* <LeftHandTable /> */}
-            {/* <AttachmentTable required_attachments={required_attachments} /> */}
-          {/* </div> */}
-        {/* </NewOrderSection> */}
+            <LeftHandTable />
+            <AttachmentTable required_attachments={required_attachments} />
+          </div>
+        </NewOrderSection>
 
         {/* Section Four */}
 
-        {/* {(loggedUser === 1 || loggedUser === 2) && (
+        {(loggedUser === 1 || loggedUser === 2) && (
           <NewOrderSection>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4'>
               <DeletionTable />
@@ -533,7 +533,7 @@ const OrderDetails = () => {
               إضافة مستند مطلوب
             </Button>
           </NewOrderSection>
-        )} */}
+        )}
 
       </NewOrderSectionContainer>
     </Container>

@@ -180,7 +180,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
                         viewBox='0 0 24 24'
                         strokeWidth={1.5}
                         stroke='currentColor'
-                        className='w-6 h-6'>
+                        className='w-6 h-6 no-click'>
                         <path
                           strokeLinecap='round'
                           strokeLinejoin='round'
