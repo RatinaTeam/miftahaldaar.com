@@ -43,7 +43,7 @@ const order_status_translations = {
             arabic: "نوع الطلب",
         },
         {
-            arabic: "بطاقة تعريف",
+            arabic: 'رقم الطلب',
         },
     ];
 

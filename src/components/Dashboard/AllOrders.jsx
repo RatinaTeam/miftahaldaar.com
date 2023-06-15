@@ -106,7 +106,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       arabic: 'نوع الطلب',
     },
     {
-      arabic: 'بطاقة تعريف',
+      arabic: 'رقم الطلب',
     },
   ]
 
