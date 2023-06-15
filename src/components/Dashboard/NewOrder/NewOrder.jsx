@@ -112,7 +112,7 @@ const NewOrder = () => {
        const fileAttachments = JSON.stringify(attachments)
 
         const formData = new FormData();
-        if (orderID)
+        if (order_id)
             formData.append('order_id', customerName);    
 
         formData.append('customer_name', customerName);
@@ -145,7 +145,7 @@ const NewOrder = () => {
         
 
         try {            
-            if (orderID)
+            if (order_id)
                 const [response] = await Promise.all([
                     axios.post("https://miftahaldaar.ratina.co/order/update", formData, { headers }),
                 ]);
@@ -169,7 +169,7 @@ const NewOrder = () => {
             }
               )
             // If success
-            if (orderID){
+            if (order_id){
                 return;
             }
             
