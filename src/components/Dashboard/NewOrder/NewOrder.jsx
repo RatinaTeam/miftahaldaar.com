@@ -20,7 +20,7 @@ import { OtherContext } from "../../../contexts/OtherContexts";
 import Swal from "sweetalert2";
 
 const NewOrder = () => {
-    const { userID,loggedUser } = useContext(AuthContext);
+    const { userID, authKey, loggedUser } = useContext(AuthContext);
     const { attachments } = useContext(OtherContext);
     
     //get order id from url param
@@ -106,7 +106,7 @@ const NewOrder = () => {
     const handleCompleteOrder = async () => {
         const headers = {
             "user-id": userID,
-            "auth-key": "sdofmasdmfasdmflkmasdf",
+            "auth-key": authKey,
         };
 
        const fileAttachments = JSON.stringify(attachments)
@@ -206,7 +206,7 @@ const NewOrder = () => {
         setLoading(true);
         const headers = {
           "user-id": userID,
-          "auth-key": "sdofmasdmfasdmflkmasdf",
+          "auth-key": authKey,
         };
        
         try {

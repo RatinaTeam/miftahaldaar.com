@@ -27,7 +27,7 @@ import { OtherContext } from '../../../contexts/OtherContexts'
 import Swal from 'sweetalert2'
 
 const OrderDetails = () => {
-  const { userID, loggedUser } = useContext(AuthContext)
+  const { userID, authKey, loggedUser } = useContext(AuthContext)
   const { attachments } = useContext(OtherContext)
 
   //get order id from url param
@@ -119,7 +119,7 @@ const OrderDetails = () => {
     setLoading(true)
     const headers = {
       'user-id': userID,
-      'auth-key': 'sdofmasdmfasdmflkmasdf',
+      'auth-key': authKey,
     }
 
     try {

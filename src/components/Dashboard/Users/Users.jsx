@@ -7,7 +7,7 @@ import Loading from "../../Shared/Loading";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Users = () => {
-    const {userID} = useContext(AuthContext);
+    const {userID, authKey} = useContext(AuthContext);
     const [userList, setUserList] = useState([]);
 
     // Modal States
@@ -26,7 +26,7 @@ const Users = () => {
                 // const response = await fetch("https://miftahaldaar.ratina.co/user/all", {
                 //     headers: {
                 //         "user-id": "1010",
-                //         "auth-key": "sdofmasdmfasdmflkmasdf",
+                //         "auth-key": authKey,
                 //     },
                 // });
                 // console.log(response)

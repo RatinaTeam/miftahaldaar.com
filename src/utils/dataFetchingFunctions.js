@@ -7,10 +7,10 @@ const baseUrl = "https://miftahaldaar.ratina.co/";
 /****************************************************************
  *********** USERS
  ***************************************************************/
-export const getAllUsers = async (userID) => {
+export const getAllUsers = async (userID, authKey) => {
     const headers = {
         "user-id": userID,
-        "auth-key": "sdofmasdmfasdmflkmasdf",
+        "auth-key": authKey,
     };
     const users = await axios.get(baseUrl + "user/all", { headers });
     return users;
@@ -25,8 +25,13 @@ export const addNewUser = async (formData, headers) => {
  *********** Authentication
  ***************************************************************/
 export const signIn = async (formData,uid) => {
+    console.log("1");
     const newUser = await axios.post(baseUrl + "user/login", formData);
+    console.log("2");
     localStorage.setItem("userID",uid);
+    localStorage.setItem("authKey",newUser.data.auth_key);
+    console.log(newUser.data.auth_key);
+    console.log(localStorage.getItem("authKey"));
     return newUser.data;
 };
 

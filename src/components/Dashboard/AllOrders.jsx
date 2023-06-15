@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/AuthProvider'
 import { useContext, useEffect, useRef, useState } from 'react'
 
 export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData }) {
-  const { userID, loggedUser } = useContext(AuthContext)
+  const { userID, authKey, loggedUser } = useContext(AuthContext)
   const [usersList, setUsersList] = useState([])
   const order_status_translations = {
     PENDING: 'معلق',
@@ -42,7 +42,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
 
   const headers = {
     'user-id': userID,
-    'auth-key': 'sdofmasdmfasdmflkmasdf',
+    'auth-key': authKey,
   }
   const handleAssign = async (order_id) => {
     const { value: selectedValue } = await Swal.fire({

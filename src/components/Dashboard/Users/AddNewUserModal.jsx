@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const AddNewUserModal = ({ openAddNewUser, handleOpenAddNewUser }) => {
-    const { userID } = useContext(AuthContext);
+    const { userID, authKey } = useContext(AuthContext);
     const [loading, setLoading] = useState();
     const [failed, setFailed] = useState();
 
@@ -25,7 +25,7 @@ const AddNewUserModal = ({ openAddNewUser, handleOpenAddNewUser }) => {
         formData.append("role", role);
         const headers = {
             "user-id": userID,
-            "auth-key": "sdofmasdmfasdmflkmasdf",
+            "auth-key": authKey,
         };
 
         // Create user with data

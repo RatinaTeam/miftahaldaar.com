@@ -16,7 +16,7 @@ export default function Dashboard() {
     const { overDueOrders } = useContext(OtherContext);
     const [orderTimeline, setOrderTimeline] = useState([]);
     const [orderId, setOrderId] = useState(null);
-    const { userID } = useContext(AuthContext);
+    const { userID, authKey } = useContext(AuthContext);
     const navigate = useNavigate();
     // Modal States
     const [openAddUpdates, setOpenAddUpdates] = useState(false);
@@ -32,7 +32,7 @@ export default function Dashboard() {
             , {
                 headers: {
                     "user-id": userID,
-                    "auth-key": "sdofmasdmfasdmflkmasdf",
+                    "auth-key": authKey,
                 }
             }).then(res => {
                 setOrderId(order_id);
@@ -67,7 +67,7 @@ export default function Dashboard() {
     
     const headers = {
       "user-id": userID,
-      "auth-key": userID === "1010" ? "sdofmasdmfasdmflkmasdf" : "18d78df6bf254dd4b9a2ad2a93f7144f",
+      "auth-key": authKey,
     };
 
     try {

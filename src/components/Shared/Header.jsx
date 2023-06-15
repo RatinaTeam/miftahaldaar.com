@@ -14,6 +14,7 @@ const Header = () => {
 
     const handleLogOut = () => {
         localStorage.removeItem("userID");
+        localStorage.removeItem("authKey");
         window.location.href = "/";
     };
 

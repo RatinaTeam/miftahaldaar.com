@@ -16,7 +16,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const OrderTimelineModal = ({ openAddUpdates, orderId, handleOpenAddUpdates, orderTimeline, setOpenAddUpdates }) => {
-    const { userID } = useContext(AuthContext);
+    const { userID, authKey } = useContext(AuthContext);
     const order_status_translations = {
         "PENDING": "معلق",
         "CANCELLED": "ملغى",
@@ -38,7 +38,7 @@ const OrderTimelineModal = ({ openAddUpdates, orderId, handleOpenAddUpdates, ord
                 , {
                     headers: {
                         "user-id": userID,
-                        "auth-key": "sdofmasdmfasdmflkmasdf",
+                        "auth-key": authKey,
                     }
                 });
     } catch (error) {
