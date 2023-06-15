@@ -15,6 +15,7 @@ const Header = () => {
     const handleLogOut = () => {
         localStorage.removeItem("userID");
         localStorage.removeItem("authKey");
+        localStorage.removeItem("isSignedInAlready")
         window.location.href = "/";
     };
 
