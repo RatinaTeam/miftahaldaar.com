@@ -98,17 +98,14 @@ export default function Dashboard() {
           setOverDueOrderCounts(newRes.data.orders && newRes.data.orders.length);
       
           if (fetchedData) {
-              console.log("new oldOrdersNumber");
             if (allRes.data.orders.length > oldOrdersNumber) {
                 audioRef.current.play();
             }
             if (delayedRes.data.orders.length > oldDelayedRes) {
-                console.log("new oldDelayedRes");
                 audioRef.current.play();
             }
             if (newRes.data.orders.length > oldNewRes) {
-                console.log("new oldNewRes");
-              audioRef.current.play();
+                audioRef.current.play();
             }
             oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
             oldDelayedRes = delayedRes.data.orders && delayedRes.data.orders.length;
