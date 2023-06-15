@@ -110,6 +110,33 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     },
   ]
 
+  const EMPLOYEE_TABLE_HEAD = [
+    {
+      arabic: '',
+    },
+    {
+      arabic: 'الملاحظات',
+    },
+    {
+      arabic: 'حالة الطلب',
+    },
+    {
+      arabic: 'تاريخ إعادة المعالجة',
+    },
+    {
+      arabic: 'بنك الراتب',
+    },
+    {
+      arabic: 'رقم الحوال',
+    },
+    {
+      arabic: 'العميل',
+    },
+    {
+      arabic: 'نوع الطلب',
+    },
+  ]
+
   const TABLE_ROWS = allOrders
 
   const navigate = useNavigate()
@@ -122,10 +149,10 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       <table className='w-full min-w-max table-auto text-left'>
         <thead>
           <tr>
-            {TABLE_HEAD.map((head, i) => (
+            {(loggedUser === 1 || loggedUser === 2 ? TABLE_HEAD : EMPLOYEE_TABLE_HEAD).map((head, i) => (
               <th
                 key={i}
-                className='border-b border-blue-gray-100 bg-blue-gray-50 p-3   '>
+                className='border-b border-blue-gray-100 bg-blue-gray-50 p-3'>
                 <div className='flex flex-col gap-2 '>
                   <span>{head?.arabic}</span>
                   <span>{head?.english}</span>
