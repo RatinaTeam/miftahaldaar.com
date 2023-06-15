@@ -145,12 +145,13 @@ const NewOrder = () => {
         
 
         try {            
+            let response
             if (order_id)
-                const [response] = await Promise.all([
+                [response] = await Promise.all([
                     axios.post("https://miftahaldaar.ratina.co/order/update", formData, { headers }),
                 ]);
             else
-                const [response] = await Promise.all([
+                [response] = await Promise.all([
                     axios.post("https://miftahaldaar.ratina.co/order/create", formData, { headers }),
                 ]);
 
