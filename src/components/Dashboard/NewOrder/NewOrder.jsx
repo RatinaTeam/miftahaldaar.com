@@ -44,7 +44,7 @@ const NewOrder = () => {
 
     // input fields for customer
 
-    const [orderID, setOrderID] = useState(orderID);
+    const [orderID, setOrderID] = useState("");
     const [customerName, setCustomerName] = useState("");
     const [customerPhone, setCustomerPhone] = useState("");
     const [customerSalaryAmount, setCustomerSalaryAmount] = useState("");
@@ -145,7 +145,7 @@ const NewOrder = () => {
         
 
         try {            
-            let response
+            let response = None;
             if (order_id)
                 [response] = await Promise.all([
                     axios.post("https://miftahaldaar.ratina.co/order/update", formData, { headers }),
