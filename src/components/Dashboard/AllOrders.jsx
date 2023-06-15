@@ -141,7 +141,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
 
   const navigate = useNavigate()
   const navigateToRow = (id) => {
-    navigate(`/dashboard/order_details?order_id=${id}`)
+    navigate(`/dashboard/new_order?order_id=${id}`)
   }
 
   return (

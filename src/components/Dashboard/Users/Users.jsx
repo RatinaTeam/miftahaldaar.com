@@ -34,7 +34,7 @@ const Users = () => {
                 //     throw new Error("Failed to fetch users");
                 // }
 
-                const usersData = await getAllUsers(userID);
+                const usersData = await getAllUsers(userID, authKey);
 
                 setUserList(usersData.data.users);
                
