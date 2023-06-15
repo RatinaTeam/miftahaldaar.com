@@ -97,7 +97,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       arabic: 'بنك الراتب',
     },
     {
-      arabic: 'رقم الحوال',
+      arabic: 'رقم الجوال',
     },
     {
       arabic: 'العميل',
@@ -124,7 +124,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       arabic: 'بنك الراتب',
     },
     {
-      arabic: 'رقم الحوال',
+      arabic: 'رقم الجوال',
     },
     {
       arabic: 'العميل',

@@ -113,7 +113,7 @@ const NewOrder = () => {
 
         const formData = new FormData();
         if (order_id)
-            formData.append('order_id', customerName);    
+            formData.append('order_id', order_id);    
 
         formData.append('customer_name', customerName);
         formData.append('customer_phone', customerPhone);
@@ -145,7 +145,7 @@ const NewOrder = () => {
         
 
         try {            
-            let response = None;
+            let response = null;
             if (order_id)
                 [response] = await Promise.all([
                     axios.post("https://miftahaldaar.ratina.co/order/update", formData, { headers }),

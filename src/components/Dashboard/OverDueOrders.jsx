@@ -34,7 +34,7 @@ const order_status_translations = {
             arabic: "بنك الراتب",
         },
         {
-            arabic: "رقم الحوال",
+            arabic: "رقم الجوال",
         },
         {
             arabic: "العميل",

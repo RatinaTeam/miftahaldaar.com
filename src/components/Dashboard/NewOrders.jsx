@@ -19,7 +19,7 @@ export default function NewOrders({ handleOpenAddUpdates, newOrders }) {
             arabic: "بنك الراتب",
         },
         {
-            arabic: "رقم الحوال",
+            arabic: "رقم الجوال",
         },
         {
             arabic: "العميل",

@@ -82,7 +82,7 @@ const Header = () => {
                     </div>
                     <div className="flex items-center flex-shrink-0 ">
                         <span className="font-semibold text-xl tracking-tight mr-4 border py-2 px-2 rounded-lg text-gray-800">
-                      مفتاح الدار للخدمات العقارية
+                     مفتاح الدار للعقارات
                         </span>
                     </div>
                 </nav>
