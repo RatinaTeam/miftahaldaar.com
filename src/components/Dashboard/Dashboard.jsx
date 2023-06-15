@@ -59,60 +59,75 @@ export default function Dashboard() {
    useEffect(() => {
     let fetchedData = false;
     let oldOrdersNumber = 0;
+    let oldDelayedRes = 0;
+    let oldNewRes = 0;
 
-  const fetchData = async () => {
-    if(!fetchedData) {
-        setLoading(true);
-    }
-    
-    const headers = {
-      "user-id": userID,
-      "auth-key": authKey,
-    };
-
-    try {
-        const [ allRes, delayedRes, newRes] = await Promise.all([
-        axios.get("https://miftahaldaar.ratina.co/orders/all", { headers }),
-        axios.get("https://miftahaldaar.ratina.co/orders/delayed_orders", { headers }),
-        axios.get("https://miftahaldaar.ratina.co/orders/new_orders", { headers })
-      ]);
-
-      // If failed to fetch
-        if (delayedRes.data.status !== true || newRes.data.status !== true
-       || allRes.data.status !== true ) {
-        setLoading(false);
-        return setFailedToFetch(true);
-      }
-
-      setLoading(false);
-      setFailedToFetch(false);
-      setAllOrders(allRes.data.orders || []);
-      setDueOrders(delayedRes.data.orders || []);
-      setOverDueOrderCounts(delayedRes.data.orders && delayedRes.data.orders.length);
-      setNewOrders(newRes.data.orders || []);
-      setOverDueOrderCounts(newRes.data.orders && newRes.data.orders.length);
-
-      if(fetchedData && !allOrders) {
-
-          if(allRes.data.orders.length > oldOrdersNumber) {
-              audioRef.current.play();
+    const fetchData = async () => {
+        if (!fetchedData) {
+          setLoading(true);
+        }
+      
+        const headers = {
+          "user-id": userID,
+          "auth-key": authKey,
+        };
+      
+        try {
+          const [allRes, delayedRes, newRes] = await Promise.all([
+            axios.get("https://miftahaldaar.ratina.co/orders/all", { headers }),
+            axios.get("https://miftahaldaar.ratina.co/orders/delayed_orders", { headers }),
+            axios.get("https://miftahaldaar.ratina.co/orders/new_orders", { headers }),
+          ]);
+      
+          // If failed to fetch
+          if (
+            delayedRes.data.status !== true ||
+            newRes.data.status !== true ||
+            allRes.data.status !== true
+          ) {
+            setLoading(false);
+            return setFailedToFetch(true);
           }
-        oldOrdersNumber = allRes.data.orders.length;
-      }
-
-
-      if(!fetchedData) {
-        oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
-        fetchedData = true;
-    }
-
-    } catch (error) {
-        
-      console.error(error);
-      setLoading(false);
-      setFailedToFetch(true);
-    }
-  };
+      
+          setLoading(false);
+          setFailedToFetch(false);
+          setAllOrders(allRes.data.orders || []);
+          setDueOrders(delayedRes.data.orders || []);
+          setOverDueOrderCounts(delayedRes.data.orders && delayedRes.data.orders.length);
+          setNewOrders(newRes.data.orders || []);
+          setOverDueOrderCounts(newRes.data.orders && newRes.data.orders.length);
+      
+          if (fetchedData) {
+              console.log("new oldOrdersNumber");
+            if (allRes.data.orders.length > oldOrdersNumber) {
+                audioRef.current.play();
+            }
+            if (delayedRes.data.orders.length > oldDelayedRes) {
+                console.log("new oldDelayedRes");
+                audioRef.current.play();
+            }
+            if (newRes.data.orders.length > oldNewRes) {
+                console.log("new oldNewRes");
+              audioRef.current.play();
+            }
+            oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
+            oldDelayedRes = delayedRes.data.orders && delayedRes.data.orders.length;
+            oldNewRes = newRes.data.orders && newRes.data.orders.length;
+          }
+      
+          if (!fetchedData) {
+            oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
+            oldDelayedRes = delayedRes.data.orders && delayedRes.data.orders.length;
+            oldNewRes = newRes.data.orders && newRes.data.orders.length;
+            fetchedData = true;
+          }
+        } catch (error) {
+          console.error(error);
+          setLoading(false);
+          setFailedToFetch(true);
+        }
+      };
+      
   fetchData();
 
     // Refresh data every 5 seconds
