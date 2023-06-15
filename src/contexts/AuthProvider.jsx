@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
         .get("https://miftahaldaar.ratina.co/user/all", { headers })
         .then((res) => {
           const usersList = res.data.users;
-          const userInfo = usersList?.find((user) => user.id === userID);
+          const userInfo = usersList?.find((user) => user.id == userID);
           setLoggedUser(who[userInfo?.role]);
         })
         .catch((err) => {
