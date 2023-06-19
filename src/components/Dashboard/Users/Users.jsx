@@ -5,11 +5,12 @@ import AddNewUserModal from "./AddNewUserModal";
 import { getAllUsers } from "../../../utils/dataFetchingFunctions";
 import Loading from "../../Shared/Loading";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import axios from "axios";
 
 const Users = () => {
-    const {userID, authKey} = useContext(AuthContext);
+    const { userID, authKey } = useContext(AuthContext);
     const [userList, setUserList] = useState([]);
-
+    
     // Modal States
     const [openAddNewUser, setOpenAddNewUser] = useState(false);
     // Modal Handlers
@@ -19,10 +20,10 @@ const Users = () => {
 
     // Fetch Data
     useEffect(() => {
-        
+
         const fetchData = async () => {
             try {
-         
+
                 // const response = await fetch("https://miftahaldaar.ratina.co/user/all", {
                 //     headers: {
                 //         "user-id": "1010",
@@ -37,8 +38,8 @@ const Users = () => {
                 const usersData = await getAllUsers(userID, authKey);
 
                 setUserList(usersData.data.users);
-               
-                
+
+
 
             } catch (error) {
                 console.log("Error fetching users:", error);
@@ -48,7 +49,7 @@ const Users = () => {
         fetchData();
     }, []);
     if (userList.length == 0) return <Loading />;
-   
+
     const TABLE_HEAD = ["", "كلمة المرور", "اسم المستخدم", "نوع الحساب", "رقم الحساب"];
 
     const TABLE_ROWS = userList;
@@ -57,13 +58,13 @@ const Users = () => {
         <>
             <Container>
                 <div className="flex justify-between items-center  mt-10 mb-5">
-                 
+
                     <Button
                         onClick={handleOpenAddNewUser}
                         color="green"
                         className="flex items-center gap-3 float-right"
                     >
-                        
+
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -96,7 +97,7 @@ const Users = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             {userList.map(({ id, username, is_active, role, password }, index) => {
                                 const isLast = index === TABLE_ROWS.length - 1;
                                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
@@ -106,7 +107,30 @@ const Users = () => {
                                         <td className={classes}>
                                             <ButtonGroup>
                                                 {/* Save */}
-                                                <Button size="sm" className="flex items-center gap-3  ">
+                                                <Button size="sm" className="flex items-center gap-3  "
+                                                    onClick={
+                                                        () => {
+                                                            let formData = new FormData();
+                                                            formData.append("id", id);
+                                                            formData.append("username", document.getElementById("username" + id).value);
+                                                            formData.append("password", document.getElementById("password" + id).value);
+                                                            formData.append("role", document.getElementById("role" + id).value);
+                                                            formData.append("is_active", is_active);
+                                                            axios.post("https://miftahaldaar.ratina.co/user/update",
+                                                                formData
+                                                                , {
+                                                                    headers: {
+                                                                        "user-id": userID,
+                                                                        "auth-key": authKey,
+                                                                    }
+                                                                }).then(res => {
+                                                                    console.log(res)
+                                                                }).catch(err => {
+                                                                    console.log(err)
+                                                                })
+                                                        }
+                                                    }
+                                                >
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
@@ -124,7 +148,7 @@ const Users = () => {
                                                     يحفظ
                                                 </Button>
                                                 {/* Disable */}
-                                                <Button size="sm" className="flex items-center gap-3  ">
+                                                {/* <Button size="sm" className="flex items-center gap-3  ">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
@@ -140,7 +164,7 @@ const Users = () => {
                                                         />
                                                     </svg>
                                                     إبطال
-                                                </Button>
+                                                </Button> */}
                                             </ButtonGroup>
                                         </td>
                                         <td className={classes}>
@@ -169,7 +193,7 @@ const Users = () => {
                                                     className="max-w-[150px] bg-transparent py-2 px-2"
                                                     type={showPass ? "text" : "password"}
                                                     name=""
-                                                    id=""
+                                                    id = {'password'+id}
                                                     defaultValue={password}
                                                 />
                                             </div>
@@ -179,7 +203,7 @@ const Users = () => {
                                                 <input
                                                     type="text"
                                                     name=""
-                                                    id=""
+                                                    id = {'username'+id}
                                                     defaultValue={username}
                                                     className="bg-transparent py-2 px-2"
                                                 />
@@ -190,7 +214,7 @@ const Users = () => {
                                                 <input
                                                     type="text"
                                                     name=""
-                                                    id=""
+                                                    id = {'role'+id}
                                                     defaultValue={role}
                                                     className="bg-transparent py-2 px-2"
                                                 />

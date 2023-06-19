@@ -20,13 +20,13 @@ import { OtherContext } from "../../../contexts/OtherContexts";
 import Swal from "sweetalert2";
 
 const NewOrder = () => {
-    const { userID, authKey, loggedUser } = useContext(AuthContext);
+    const { userID, authKey, loggedUser,userRole } = useContext(AuthContext);
     const { attachments } = useContext(OtherContext);
     
     //get order id from url param
     const urlParams = new URLSearchParams(window.location.search);
     const order_id = urlParams.get("order_id");
-   
+    console.log('userRole',userRole);
     const [fundedBanks, setFundedBanks] = useState([]);
     const [city_of_property_options_list, set_city_of_property_options_list] = useState([]);
     const [type_of_property_option_list, set_type_of_property_option_list] = useState([]);
@@ -295,7 +295,7 @@ const NewOrder = () => {
     }, []);
 
 
-
+    console.log('loggedUser',loggedUser);
 
     if (loading) {
         return <Loading />;
@@ -304,6 +304,7 @@ const NewOrder = () => {
         return <ErrorPage />;
     }
     return (
+        
         <Container>
             <NewOrderSectionContainer>
                 {/* Section One */}
@@ -312,41 +313,51 @@ const NewOrder = () => {
                     <NewOrderSectionFormContainer>
                         <Input dir="rtl" size="md" label="الراتب"
                             value={customerSalaryAmount}
-                            onChange={(e) => setCustomerSalaryAmount(e.target.value)}
+                            onChange={(e) => setCustomerSalaryAmount(e.target.value)}  
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}                          
                         />
                         <Input dir="rtl" size="md" label="بنك الإيداع الراتب"
                             value={customerSalaryDepositBank}
                             onChange={(e) => setCustomerSalaryDepositBank(e.target.value)}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                         />
                         <Input dir="rtl" size="md" label="رقم الهاتف"
                             value={customerPhone}
                             onChange={(e) => setCustomerPhone(e.target.value)}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                         />
                         <Input dir="rtl" size="md" label="اسم العميل"
                             value={customerName}
                             onChange={(e) => setCustomerName(e.target.value)}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                         />
                         <Input dir="rtl" size="md" label="تاريخ الطلب"
                             value={orderDate}
                             onChange={(e) => setOrderDate(e.target.value)}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                         />
                         <Input dir="rtl" size="md" label="رقم الطلب"
                             value={orderID}
                             onChange={(e) => setOrderID(e.target.value)}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                         />
                         <Input dir="rtl" size="md" label="العمر"
                             value={customerOld}
                             onChange={(e) => setCustomerOld(e.target.value)}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                         />
                         <Input dir="rtl" size="md" label="جهة العمل"
                             value={customerEmployer}
                             onChange={(e) => setCustomerEmployer(e.target.value)}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                         />
                         
                         <Select dir="rtl"
                             label="الخدمة المطلوبة"
                             value={selectedOrderTypeOption}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                             onChange={(e) => handleSelectOrderTypeChange(e)}
+                            disabled={userRole === 'EMPLOYEE' ? true : false}
                         >
                             {order_type_options_list.map((option,index) => (
                                 <Option key={index} value={option}>
@@ -354,10 +365,12 @@ const NewOrder = () => {
                                 </Option>
 
                             ))}
+                            
                         </Select>
                         <Input dir="rtl" size="md" label="قيمة العقار ان وجد"
                             value={propertyValue}
                             onChange={(e) => setPropertyValue(e.target.value)}
+                            readOnly={userRole === 'EMPLOYEE' ? true : false}
                         />
                     </NewOrderSectionFormContainer>
                 </NewOrderSection>
@@ -424,18 +437,7 @@ const NewOrder = () => {
                             ))}
                         
                         </Select>
-                        <Select dir="rtl"
-                            label="الخدمة المطلوبة"
-                            value={selectedOrderTypeOption}
-                            onChange={(e) => handleSelectOrderTypeChange(e)}
-                        >
-                            {order_type_options_list.map((option,index) => (
-                                <Option key={index} value={option}>
-                                    {option}
-                                </Option>
-
-                            ))}
-                        </Select>
+                        
                     </NewOrderSectionFormContainer>
                     <NewOrderSectionFormContainer>
                         {/* Radio Button */}

@@ -28,6 +28,8 @@ export const signIn = async (formData,uid) => {
     const newUser = await axios.post(baseUrl + "user/login", formData);
     localStorage.setItem("userID",uid);
     localStorage.setItem("authKey",newUser.data.auth_key);
+    console.log('newUser.data.role',newUser.data.role)
+    localStorage.setItem("userRole",newUser.data.role);
     return newUser.data;
 };
 

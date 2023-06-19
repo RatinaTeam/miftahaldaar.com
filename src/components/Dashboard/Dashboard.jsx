@@ -77,8 +77,7 @@ export default function Dashboard() {
             axios.get("https://miftahaldaar.ratina.co/orders/all", { headers }),
             axios.get("https://miftahaldaar.ratina.co/orders/delayed_orders", { headers }),
             axios.get("https://miftahaldaar.ratina.co/orders/new_orders", { headers }),
-          ]);
-      
+          ]);      
           // If failed to fetch
           if (
             delayedRes.data.status !== true ||
