@@ -8,6 +8,7 @@ const OtherProvider = ({ children }) => {
     const [newOrdersCount, setOverDueOrders] = useState(true);
 
     const [attachments, setAttachments] = useState({});
+    const [detailsDataJson, setDetailsDataJson] = useState({});
 
     const providerValue = {
         overDueOrdersCount,
@@ -16,6 +17,8 @@ const OtherProvider = ({ children }) => {
         setOverDueOrders,
         setAttachments,
         attachments,
+        detailsDataJson,
+        setDetailsDataJson
     };
 
     return <OtherContext.Provider value={providerValue}>{children}</OtherContext.Provider>;

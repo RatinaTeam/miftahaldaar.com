@@ -41,8 +41,7 @@ const DeletionTable = () => {
                 <tbody>
                     {TABLE_ROWS_LEFT_HAND.map(({ attachment, docsRequired, progress, date }, index) => {
                         const isLast = index === TABLE_ROWS_LEFT_HAND.length - 1;
-                        const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-
+                        const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";                        
                         return (
                             <tr key={index} className="text-center">
                                 <td className={classes}>

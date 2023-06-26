@@ -19,6 +19,7 @@ import Container from "../../widgets/Container";
 import LeftHandTable from "./LeftHandTable";
 import AttachmentTable from "./AttachmentTable";
 import DeletionTable from "./DeletionTable";
+import DetailsOfAmountTable from "./DetailsOfAmountTable";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Shared/Loading";
@@ -29,7 +30,7 @@ import Swal from "sweetalert2";
 
 const NewOrder = () => {
   const { userID, authKey, loggedUser } = useContext(AuthContext);
-  const { attachments } = useContext(OtherContext);
+  const { attachments, setAttachments,detailsDataJson, setDetailsDataJson } = useContext(OtherContext);
 
   //get order id from url param
   const urlParams = new URLSearchParams(window.location.search);
@@ -54,7 +55,7 @@ const NewOrder = () => {
   const [selectedOrderTypeOption, setSelectedOrderType] = useState("");
 
   // input fields for customer
-
+  // const [detailsDataJson, setDetailsDataJson ] = useContext(OtherContext);
   const [orderID, setOrderID] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -125,9 +126,10 @@ const NewOrder = () => {
       "user-id": userID,
       "auth-key": authKey,
     };
-
+    
     const fileAttachments = JSON.stringify(attachments);
-
+    const detailsDataJsonString = JSON.stringify(detailsDataJson);
+    console.log("fileAttachments", attachments);
     const formData = new FormData();
     if (order_id) formData.append("order_id", order_id);
 
@@ -160,7 +162,8 @@ const NewOrder = () => {
     formData.append("evaluation_amount", evaluation_amount);
     formData.append("obligation_check", obligation_check);
     formData.append("paying_party", paying_party);
-    formData.append("attachment_json", fileAttachments);
+    formData.append("attchemnets_json", fileAttachments);
+    formData.append("details_of_amount", detailsDataJsonString);
 
     try {
 
@@ -271,13 +274,18 @@ const NewOrder = () => {
       set_lead_source_options_list(
         fields_options_response.data.lead_source_options_list
       );
+      // set_required_attachments(
+      //   fields_options_response.data.required_attachments
+      // );
       set_required_attachments(
-        fields_options_response.data.required_attachments
-      );
+        JSON.parse(orderResponse.data.order.attchemnets_json)
+      )
       set_order_type_options_list(
         fields_options_response.data.order_type_options_list
       );
-
+      setDetailsDataJson(
+        JSON.parse(orderResponse.data.order.details_of_amount)
+      );
       if (orderResponse.data.status === true) {
         setOrderID(orderResponse.data.order.order_id);
         setCustomerName(orderResponse.data.order.customer_name);
@@ -610,7 +618,7 @@ const NewOrder = () => {
         {(loggedUser === 1 || loggedUser === 2) && (
           <NewOrderSection>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4">
-              <DeletionTable />
+              <DetailsOfAmountTable />
               <div style={{ direction: "rtl" }}>
                 <NewOrderSectionFormContainerTwoCol>
                   <Input
@@ -658,9 +666,7 @@ const NewOrder = () => {
                 </NewOrderSectionFormContainerTwoCol>
               </div>
             </div>
-            <Button dir="rtl" className="flex  ml-4 mb-4">
-              إضافة مستند مطلوب
-            </Button>
+            
           </NewOrderSection>
         )}
         <NewOrderFinalActionButtonContainer>
