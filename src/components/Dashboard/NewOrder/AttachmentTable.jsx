@@ -163,7 +163,7 @@ const AttachmentTable = ({ required_attachments }) => {
 
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4" style={{direction:"right"}}>
             <Card className="overflow-auto h-full ">
                 <table className="w-full min-w-max table-auto text-center">
                     <thead>

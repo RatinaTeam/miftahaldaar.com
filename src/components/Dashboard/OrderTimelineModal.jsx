@@ -72,7 +72,7 @@ const OrderTimelineModal = ({ openAddUpdates, orderId, handleOpenAddUpdates, ord
         },
     ];
 
-  console.log(orderTimeline)
+//   console.log(orderTimeline)
     return (
         <Dialog open={openAddUpdates} handler={handleOpenAddUpdates} size="md" className="max-h-[90vh] overflow-y-scroll">
             <div className="flex items-center justify-between">

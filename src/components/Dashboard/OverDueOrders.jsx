@@ -2,6 +2,9 @@ import { Button, Card, Typography } from "@material-tailwind/react";
 import { SearchField } from "../Shared/StyledComponents";
 import { useNavigate } from "react-router-dom";
 import {useState } from 'react'
+// import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
+// import { OtherContext } from "../../../contexts/OtherContexts";
+
 
 export default function OverDueOrders({ dueOrders,handleOpenAddUpdates }) {
 const order_status_translations = {
@@ -30,7 +33,7 @@ const order_status_translations = {
             arabic: "تاريخ إعادة المعالجة",
         },
         {
-            arabic: "بنك الراتب",
+            arabic: "الراتب",
         },
         {
             arabic: "رقم الجوال",

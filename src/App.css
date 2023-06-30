@@ -2,3 +2,9 @@
   direction: rtl;
   text-align: right;
 }
+th {
+  text-align: center;
+}
+td {
+  text-align: center;
+}

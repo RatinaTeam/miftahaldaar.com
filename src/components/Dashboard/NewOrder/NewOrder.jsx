@@ -29,8 +29,8 @@ import { OtherContext } from "../../../contexts/OtherContexts";
 import Swal from "sweetalert2";
 
 const NewOrder = () => {
-  const { userID, authKey, loggedUser } = useContext(AuthContext);
-  const { attachments, setAttachments,detailsDataJson, setDetailsDataJson } = useContext(OtherContext);
+  const { userID, authKey, loggedUser, userRole } = useContext(AuthContext);
+  const { attachments, setAttachments, detailsDataJson, setDetailsDataJson } = useContext(OtherContext);
 
   //get order id from url param
   const urlParams = new URLSearchParams(window.location.search);
@@ -101,24 +101,26 @@ const NewOrder = () => {
     console.log("orderType", value);
   };
 
-  const handleSelectLeadSourceChange = (event) => {
-    setSelectedLeadSource(event.target.value);
-    setLeadSource(event.target.value);
+  const handleSelectLeadSourceChange = (value) => {
+    setSelectedLeadSource(value);
+    setLeadSource(value);
   };
 
-  const handleSelectTypeOfPropertyChange = (event) => {
-    setSelectedTypeOfProperty(event.target.value);
-    setTypeOfProperty(event.target.value);
+
+
+  const handleSelectTypeOfPropertyChange = (value) => {
+    setSelectedTypeOfProperty(value);
+    setTypeOfProperty(value);
   };
 
-  const handleSelectCityOfPropertyChange = (event) => {
-    setSelectedCityOfProperty(event.target.value);
-    setCityOfProperty(event.target.value);
+  const handleSelectCityOfPropertyChange = (value) => {
+    setSelectedCityOfProperty(value);
+    setCityOfProperty(value);
   };
 
-  const handleSelectFundedBankChange = (event) => {
-    setSelectedFundedBank(event.target.value);
-    setBankName(event.target.value);
+  const handleSelectFundedBankChange = (value) => {
+    setSelectedFundedBank(value);
+    setBankName(value);
   };
 
   const handleCompleteOrder = async () => {
@@ -126,7 +128,7 @@ const NewOrder = () => {
       "user-id": userID,
       "auth-key": authKey,
     };
-    
+
     const fileAttachments = JSON.stringify(attachments);
     const detailsDataJsonString = JSON.stringify(detailsDataJson);
     console.log("fileAttachments", attachments);
@@ -151,7 +153,7 @@ const NewOrder = () => {
     formData.append("premium_support", premiumSupport);
     formData.append("type_of_property", typeOfProperty);
     formData.append("original_property_value", originalPropertyValue);
-    formData.append("supervisor_id", supervisorID);
+    // formData.append("supervisor_id", supervisorID);
     formData.append("emp_id", empID);
     formData.append("customer_id", customerID);
     formData.append("owner_phone", ownerPhone);
@@ -173,16 +175,16 @@ const NewOrder = () => {
           axios.post("https://miftahaldaar.ratina.co/order/update", formData, {
             headers,
           }),
-         
+
         ]);
       else
         [response] = await Promise.all([
           axios.post("https://miftahaldaar.ratina.co/order/create", formData, {
             headers,
           }),
-          
+
         ]);
-        console.log(response);
+      console.log(response);
       // If failed to fetch
       if (response.data.status !== true) {
         return;
@@ -277,17 +279,21 @@ const NewOrder = () => {
       // set_required_attachments(
       //   fields_options_response.data.required_attachments
       // );
-      set_required_attachments(
-        JSON.parse(orderResponse.data.order.attchemnets_json)
-      )
+
+
       set_order_type_options_list(
         fields_options_response.data.order_type_options_list
       );
-      setDetailsDataJson(
-        JSON.parse(orderResponse.data.order.details_of_amount)
-      );
+
       if (orderResponse.data.status === true) {
-        setOrderID(orderResponse.data.order.order_id);
+        setDetailsDataJson(
+          JSON.parse(orderResponse.data.order.details_of_amount)
+        );
+        set_required_attachments(
+          JSON.parse(orderResponse.data.order.attchemnets_json)
+        )
+        setNotes(orderResponse.data.order.notes);
+        setOrderID(orderResponse.data.order.id);
         setCustomerName(orderResponse.data.order.customer_name);
         setCustomerPhone(orderResponse.data.order.customer_phone);
         setCustomerSalaryAmount(
@@ -322,7 +328,7 @@ const NewOrder = () => {
         setEvaluation_amount(orderResponse.data.order.evaluation_amount);
         setObligation_check(orderResponse.data.order.obligation_check);
         setPaying_party(orderResponse.data.order.paying_party);
-        
+
         // setAttachments(orderResponse.data.order.attachments);
       }
     } catch (error) {
@@ -352,9 +358,18 @@ const NewOrder = () => {
             <Input
               dir="rtl"
               size="md"
+              label="رقم الطلب"
+              value={orderID}
+              // style={{ backgroundColor: 'gray' }} 
+              readOnly={true}
+            />
+            <Input
+              dir="rtl"
+              size="md"
               label="الراتب"
               value={customerSalaryAmount}
               onChange={(e) => setCustomerSalaryAmount(e.target.value)}
+              readOnly={userRole === 'EMPLOYEE' ? true : false}
             />
             <Input
               dir="rtl"
@@ -362,6 +377,7 @@ const NewOrder = () => {
               label="بنك الإيداع الراتب"
               value={customerSalaryDepositBank}
               onChange={(e) => setCustomerSalaryDepositBank(e.target.value)}
+              readOnly={userRole === 'EMPLOYEE' ? true : false}
             />
             <Input
               dir="rtl"
@@ -369,6 +385,7 @@ const NewOrder = () => {
               label="رقم الهاتف"
               value={customerPhone}
               onChange={(e) => setCustomerPhone(e.target.value)}
+              readOnly={userRole === 'EMPLOYEE' ? true : false}
             />
             <Input
               dir="rtl"
@@ -376,6 +393,7 @@ const NewOrder = () => {
               label="اسم العميل"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
+              readOnly={userRole === 'EMPLOYEE' ? true : false}
             />
             <Input
               dir="rtl"
@@ -383,20 +401,16 @@ const NewOrder = () => {
               label="تاريخ الطلب"
               value={orderDate}
               onChange={(e) => setOrderDate(e.target.value)}
+              readOnly={true}
             />
-            <Input
-              dir="rtl"
-              size="md"
-              label="رقم الطلب"
-              value={orderID}
-              onChange={(e) => setOrderID(e.target.value)}
-            />
+
             <Input
               dir="rtl"
               size="md"
               label="العمر"
               value={customerOld}
               onChange={(e) => setCustomerOld(e.target.value)}
+              readOnly={userRole === 'EMPLOYEE' ? true : false}
             />
             <Input
               dir="rtl"
@@ -404,6 +418,7 @@ const NewOrder = () => {
               label="جهة العمل"
               value={customerEmployer}
               onChange={(e) => setCustomerEmployer(e.target.value)}
+              readOnly={userRole === 'EMPLOYEE' ? true : false}
             />
 
             <Select
@@ -411,6 +426,7 @@ const NewOrder = () => {
               label="الخدمة المطلوبة"
               value={selectedOrderTypeOption}
               onChange={(e) => handleSelectOrderTypeChange(e)}
+              readOnly={userRole === 'EMPLOYEE' ? true : false}
             >
               {order_type_options_list.map((option, index) => (
                 <Option key={index} value={option}>
@@ -424,6 +440,7 @@ const NewOrder = () => {
               label="قيمة العقار ان وجد"
               value={propertyValue}
               onChange={(e) => setPropertyValue(e.target.value)}
+              readOnly={userRole === 'EMPLOYEE' ? true : false}
             />
           </NewOrderSectionFormContainer>
         </NewOrderSection>
@@ -479,10 +496,10 @@ const NewOrder = () => {
               dir="rtl"
               label="البنك الممول"
               value={selectedFundedBankOption}
-              onClick={handleSelectFundedBankChange}
+              onChange={handleSelectFundedBankChange}
             >
               {fundedBanks.map((option, index) => (
-                <Option key={index}>{option}</Option>
+                <Option key={index} value={option}>{option}</Option>
               ))}
             </Select>
             <Input
@@ -492,13 +509,14 @@ const NewOrder = () => {
               value={empID}
               onChange={(e) => setEmpID(e.target.value)}
             />
-            <Input
+            {/* <Input
               dir="rtl"
               size="md"
               label="المشرف"
               value={supervisorID}
+
               onChange={(e) => setSupervisorID(e.target.value)}
-            />
+            /> */}
             <Input
               dir="rtl"
               size="md"
@@ -518,24 +536,13 @@ const NewOrder = () => {
               dir="rtl"
               label="نوع العقار"
               value={selectedTypeOfPropertyOption}
-              onClick={handleSelectTypeOfPropertyChange}
+              onChange={handleSelectTypeOfPropertyChange}
             >
               {type_of_property_option_list.map((option, index) => (
-                <Option key={index}>{option}</Option>
+                <Option key={index} value={option}>{option}</Option>
               ))}
             </Select>
-            <Select
-              dir="rtl"
-              label="الخدمة المطلوبة"
-              value={selectedOrderTypeOption}
-              onChange={(e) => handleSelectOrderTypeChange(e)}
-            >
-              {order_type_options_list.map((option, index) => (
-                <Option key={index} value={option}>
-                  {option}
-                </Option>
-              ))}
-            </Select>
+
           </NewOrderSectionFormContainer>
           <NewOrderSectionFormContainer>
             {/* Radio Button */}
@@ -563,10 +570,10 @@ const NewOrder = () => {
               dir="rtl"
               label="معرفة العميل بالشركة"
               value={selectedLeadSourceOption}
-              onClick={handleSelectLeadSourceChange}
+              onChange={(e) => handleSelectLeadSourceChange(e)}
             >
               {lead_source_options_list.map((option, index) => (
-                <Option key={index}>{option}</Option>
+                <Option key={index} value={option}>{option}</Option>
               ))}
             </Select>
 
@@ -575,10 +582,10 @@ const NewOrder = () => {
               dir="rtl"
               label="مدينة العقار"
               value={selectedCityOfPropertyOption}
-              onClick={handleSelectCityOfPropertyChange}
+              onChange={handleSelectCityOfPropertyChange}
             >
               {city_of_property_options_list.map((option, index) => (
-                <Option key={index}>{option}</Option>
+                <Option key={index} value={option}>{option}</Option>
               ))}
             </Select>
 
@@ -594,10 +601,10 @@ const NewOrder = () => {
             <div className="col-span-4">
               <Textarea
                 dir="rtl"
-                label="شرح حالة العميل"
                 value={notes}
+                label="شرح حالة العميل"
                 onChange={(e) => setNotes(e.target.value)}
-              />
+              >{notes}</Textarea>
             </div>
           </NewOrderSectionFormContainer>
         </NewOrderSection>
@@ -608,7 +615,7 @@ const NewOrder = () => {
           {/* Two Table In single Column */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 p-4">
             {/* Left Table */}
-            <LeftHandTable />
+            {/* <LeftHandTable /> */}
             <AttachmentTable required_attachments={required_attachments} />
           </div>
         </NewOrderSection>
@@ -652,7 +659,7 @@ const NewOrder = () => {
                       checked={!obligation_check}
                       onChange={(e) => setObligation_check(false)}
                       label="لا يوجد التزامات"
-     
+
                     />
                   </div>
 
@@ -666,7 +673,7 @@ const NewOrder = () => {
                 </NewOrderSectionFormContainerTwoCol>
               </div>
             </div>
-            
+
           </NewOrderSection>
         )}
         <NewOrderFinalActionButtonContainer>
@@ -688,7 +695,7 @@ const NewOrder = () => {
             dir="rtl"
             className="px-16 py-4"
             color="red"
-            onClick={() => {}}
+            onClick={() => { }}
           >
             إلغاء الطلب
           </Button>

@@ -3,12 +3,15 @@ import { SearchField } from '../Shared/StyledComponents'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import axios from 'axios'
-import { AuthContext } from '../../contexts/AuthProvider'
-import { useContext, useEffect, useRef, useState,useMemo  } from 'react'
+import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
+import { useContext, useEffect, useRef, useState, useMemo } from 'react'
+import { OtherContext } from "../../contexts/OtherContexts";
 
 export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData }) {
   const { userID, authKey, loggedUser } = useContext(AuthContext)
   const [usersList, setUsersList] = useState([])
+  const { searchQuery, setSearchQuery } = useContext(OtherContext);
+
   const order_status_translations = {
     PENDING: 'معلق',
     CANCELLED: 'ملغى',
@@ -22,7 +25,6 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     axios
       .get(
         'https://miftahaldaar.ratina.co/user/all',
-
         { headers }
       )
       .then((res) => {
@@ -83,30 +85,39 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     },
     {
       arabic: 'الملاحظات',
+      english: 'Notes',
     },
     {
       arabic: 'الموظف',
+      english: 'emp_name',
     },
     {
       arabic: 'حالة الطلب',
+      english: 'status',
     },
     {
       arabic: 'تاريخ إعادة المعالجة',
+
     },
     {
-      arabic: 'بنك الراتب',
+      arabic: 'الراتب',
+      english: 'customer_salary_amount',
     },
     {
       arabic: 'رقم الجوال',
+      english: 'customer_phone',
     },
     {
       arabic: 'العميل',
+      english: 'customer_name',
     },
     {
       arabic: 'نوع الطلب',
+      english: 'order_type',
     },
     {
       arabic: 'رقم الطلب',
+      english: 'id',
     },
   ]
 
@@ -121,7 +132,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       arabic: 'تاريخ إعادة المعالجة',
     },
     {
-      arabic: 'بنك الراتب',
+      arabic: 'الراتب',
     },
     {
       arabic: 'رقم الجوال',
@@ -145,16 +156,13 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
   }
   const [searchValue, setSearchValue] = useState('');
 
-  const handleSearch = (query) => {
-    setSearchValue(query);
-  
-    const translatedSearchValue = Object.values(order_status_translations).find(
-      (translation) => translation === query
-    );
-  
-    if (translatedSearchValue) {
-      setSearchValue(translatedSearchValue);
-    }
+  const handleSearch = (field) => {
+    // if (field.value === '') {
+    const newSearchQuery = { ...searchQuery };
+    newSearchQuery[field.id] = field.value;
+    setSearchQuery(newSearchQuery);
+    console.log(searchQuery);
+    // }
   };
 
   const filteredRows = allOrders.filter((row) => {
@@ -162,17 +170,17 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       row.customer_name,
       row.order_type,
     ];
-  
+
     // Additional check for the "status" field
     if (row.status) {
       searchableFields.push(order_status_translations[row.status]);
     }
-  
+
     // Additional check for the "emp" field
     if (row.emp) {
       searchableFields.push(row.emp.username);
     }
-  
+
     return searchableFields.some(
       (value) =>
         typeof value === "string" &&
@@ -191,12 +199,28 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
                 className='border-b border-blue-gray-100 bg-blue-gray-50 p-3'>
                 <div className='flex flex-col gap-2 '>
                   <span>{head?.arabic}</span>
-                  <span>{head?.english}</span>
+                  {/* <span>{head?.english}</span> */}
                 </div>
-                {(head?.arabic === 'الموظف' ||
-                  head?.arabic === 'حالة الطلب' ||
-                  head?.arabic === 'العميل' ||
-                  head?.arabic === 'نوع الطلب') && <SearchField onSearch={handleSearch} />}
+
+              </th>
+            ))}
+          </tr>
+          <tr>
+            {(loggedUser === 1 || loggedUser === 2 ? TABLE_HEAD : EMPLOYEE_TABLE_HEAD).map((head, i) => (
+              <th
+                key={i}
+                className='border-b border-blue-gray-100 bg-blue-gray-50 p-3'>
+                <div className='flex flex-col gap-2 '>
+                  {(head?.arabic === 'الموظف' ||
+                    head?.arabic === 'حالة الطلب' ||
+                    head?.arabic === 'العميل' ||
+                    head?.arabic === 'رقم الطلب' ||
+                    head?.arabic === 'رقم الجوال' ||
+                    head?.arabic === 'الراتب' ||
+                    head?.arabic === 'نوع الطلب')
+                    && <SearchField onSearch={handleSearch} id={head?.english} value={searchQuery[head?.english]} />}
+                </div>
+
               </th>
             ))}
           </tr>
@@ -268,7 +292,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
                         variant='small'
                         color='blue-gray'
                         className='font-normal bg-blue-400 p-2 text-center rounded-lg text-white hover:bg-blue-500 cursor-pointer no-click'>
-                        {emp.username}
+                        {emp.username || 'تعيين'}
                       </Typography>
                     </td>
                   )}
@@ -338,9 +362,9 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
               )
             }
           )}
-           
+
         </tbody>
-        
+
       </table>
     </Card>
   )

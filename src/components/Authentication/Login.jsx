@@ -13,10 +13,11 @@ import { signIn } from "../../utils/dataFetchingFunctions";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
+import { data } from "autoprefixer";
 
 
 const Login = () => {
-    const { setIsLoading, isLoading, setIsSignedInAlready,setUserID, setAuthKey } = useContext(AuthContext);
+    const { setIsLoading, isLoading, setIsSignedInAlready,setUserID, setAuthKey,userRole,setUserRole } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location?.state?.from?.pathname || "/dashboard";
@@ -46,6 +47,7 @@ const Login = () => {
         // If Logged in
         setUserID(uid);
         setAuthKey(isSignedIn.auth_key);
+        setUserRole(isSignedIn.role);
         setIsSignedInAlready(true);
         setError(false);
         setIsLoading(false);

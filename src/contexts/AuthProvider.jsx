@@ -12,6 +12,8 @@ const AuthProvider = ({ children }) => {
   );
   const [userID, setUserID] = useState(localStorage.getItem("userID"));
   const [authKey, setAuthKey] = useState(localStorage.getItem("authKey"));
+  const [userRole, setUserRole] = useState(localStorage.getItem("userRole"));
+  // const [searchQuery, setSearchQuery] = useState({});
 
   const who = {
     ADMIN: 1,
@@ -32,12 +34,15 @@ const AuthProvider = ({ children }) => {
   }, [authKey]);
 
   useEffect(() => {
+    localStorage.setItem("userRole", userRole);
+  }, [userRole]);
+
+  useEffect(() => {
     if (userID && authKey) {
       const headers = {
         "user-id": userID,
         "auth-key": authKey,
       };
-
       axios
         .get("https://miftahaldaar.ratina.co/user/all", { headers })
         .then((res) => {
@@ -61,6 +66,10 @@ const AuthProvider = ({ children }) => {
     setIsLoading,
     authKey,
     setAuthKey,
+    userRole,
+    setUserRole,
+    // searchQuery,
+    // setSearchQuery,
   };
 
   return (
