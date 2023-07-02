@@ -716,14 +716,14 @@ const NewOrder = () => {
                   const formData = new FormData();
                   formData.append('order_id', orderID);
                   formData.append('status', 'PARTIALLY_COMPLETED');
-                  // formData.append('notes', result.value);
+
                   const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/update`, formData, { headers: headers })
                   console.log(rsp.data)
-                  // get input value
+
                   if (rsp.data.status) {
                     navigator('/dashboard/');
                     Swal.fire(
-                      'تم تحديث حالة الطلب',                      
+                      'تم تحديث حالة الطلب',
                     )
                   }
                 }
