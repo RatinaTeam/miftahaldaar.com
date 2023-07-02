@@ -5,21 +5,14 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
 import { useContext, useEffect, useRef, useState, useMemo } from 'react'
-import { OtherContext } from "../../contexts/OtherContexts";
+import { OtherContext,order_status_translations } from "../../contexts/OtherContexts";
 
 export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData }) {
   const { userID, authKey, loggedUser } = useContext(AuthContext)
   const [usersList, setUsersList] = useState([])
   const { searchQuery, setSearchQuery } = useContext(OtherContext);
 
-  const order_status_translations = {
-    PENDING: 'معلق',
-    CANCELLED: 'ملغى',
-    PARTIALLY_COMPLETED: 'منجز جزئياً',
-    COMPLETED: 'منجز',
-    ON_PROGRESS: 'قيد التنفيذ',
-    DELAYED: 'متأخر',
-  }
+  
 
   const fetchData = async () => {
     axios

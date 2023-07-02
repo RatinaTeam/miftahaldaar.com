@@ -3,7 +3,8 @@ import Container from "../widgets/Container";
 import { SearchField } from "../Shared/StyledComponents";
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
-
+import axios from "axios";
+import Swal from 'sweetalert2'
 import { AuthContext } from '../../contexts/AuthProvider'
 export default function NewOrders({ newOrders, handleOpenAddUpdates, refetchData }) {
     const { userID, authKey, loggedUser } = useContext(AuthContext)

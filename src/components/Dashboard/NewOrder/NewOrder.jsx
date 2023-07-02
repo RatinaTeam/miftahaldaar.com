@@ -21,16 +21,18 @@ import AttachmentTable from "./AttachmentTable";
 import DeletionTable from "./DeletionTable";
 import DetailsOfAmountTable from "./DetailsOfAmountTable";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import axios, { formToJSON } from "axios";
 import Loading from "../../Shared/Loading";
 import ErrorPage from "../../Shared/ErrorPage";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import { OtherContext } from "../../../contexts/OtherContexts";
+import { useNavigate } from 'react-router-dom';
+import { OtherContext, order_status_translations } from "../../../contexts/OtherContexts";
 import Swal from "sweetalert2";
 
 const NewOrder = () => {
   const { userID, authKey, loggedUser, userRole } = useContext(AuthContext);
   const { attachments, setAttachments, detailsDataJson, setDetailsDataJson } = useContext(OtherContext);
+  const navigator = useNavigate();
 
   //get order id from url param
   const urlParams = new URLSearchParams(window.location.search);
@@ -53,10 +55,11 @@ const NewOrder = () => {
     useState("");
   const [selectedLeadSourceOption, setSelectedLeadSource] = useState("");
   const [selectedOrderTypeOption, setSelectedOrderType] = useState("");
-
+  const [IsNewOrder, setIsNewOrder] = useState(true);
   // input fields for customer
   // const [detailsDataJson, setDetailsDataJson ] = useContext(OtherContext);
   const [orderID, setOrderID] = useState("");
+  const [orderStatus, setOrderStatus] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerSalaryAmount, setCustomerSalaryAmount] = useState("");
@@ -100,7 +103,10 @@ const NewOrder = () => {
     setOrderType(value);
     console.log("orderType", value);
   };
-
+  const headers = {
+    "user-id": userID,
+    "auth-key": authKey,
+  };
   const handleSelectLeadSourceChange = (value) => {
     setSelectedLeadSource(value);
     setLeadSource(value);
@@ -124,10 +130,7 @@ const NewOrder = () => {
   };
 
   const handleCompleteOrder = async () => {
-    const headers = {
-      "user-id": userID,
-      "auth-key": authKey,
-    };
+
 
     const fileAttachments = JSON.stringify(attachments);
     const detailsDataJsonString = JSON.stringify(detailsDataJson);
@@ -285,7 +288,16 @@ const NewOrder = () => {
         fields_options_response.data.order_type_options_list
       );
 
+      if (!orderResponse.data.status) {
+        set_required_attachments(
+          fields_options_response.data.required_attachments
+        );
+      }
       if (orderResponse.data.status === true) {
+        setIsNewOrder(false);
+        setOrderStatus(
+          orderResponse.data.order.status
+        );
         setDetailsDataJson(
           JSON.parse(orderResponse.data.order.details_of_amount)
         );
@@ -359,7 +371,19 @@ const NewOrder = () => {
               dir="rtl"
               size="md"
               label="رقم الطلب"
+              disabled={true}
+              className="disabled:bg-gray-300"
               value={orderID}
+              // style={{ backgroundColor: 'gray' }} 
+              readOnly={true}
+            />
+            <Input
+              dir="rtl"
+              size="md"
+              className="disabled:bg-gray-300"
+              disabled={true}
+              label="حالة الطلب"
+              value={order_status_translations[orderStatus]}
               // style={{ backgroundColor: 'gray' }} 
               readOnly={true}
             />
@@ -683,25 +707,120 @@ const NewOrder = () => {
             className="px-16 py-4"
             color="green"
           >
-            إكمال
+            حفظ
           </Button>
+          {!IsNewOrder && !['COMPLETED', 'CANCELLED'].includes(orderStatus) && (
+            <Button
+              onClick={
+                async () => {
+                  const formData = new FormData();
+                  formData.append('order_id', orderID);
+                  formData.append('status', 'PARTIALLY_COMPLETED');
+                  // formData.append('notes', result.value);
+                  const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/update`, formData, { headers: headers })
+                  console.log(rsp.data)
+                  // get input value
+                  if (rsp.data.status) {
+                    navigator('/dashboard/');
+                    Swal.fire(
+                      'تم تحديث حالة الطلب',                      
+                    )
+                  }
+                }
+              }
+              dir="rtl"
+              className="px-16 py-4"
+              color="green"
+            >
+              مكتمل جزئياً
+            </Button>
+          )}
           {/* <Button dir="rtl" className="px-16 py-4" color="blue">
                         إكتملت المهمة
                     </Button> */}
-          <Button dir="rtl" className="px-16 py-4" color="orange">
-            تأجيل
-          </Button>
+          {!IsNewOrder && !['COMPLETED', 'CANCELLED'].includes(orderStatus) && (
+            <Button dir="rtl" className="px-16 py-4" color="orange"
+              onClick={async () => {
+                Swal.fire({
+                  title: 'هل أنت متأكد من إلغاء الطلب؟',
+                  text: "أذكر سبب الإلغاء",
+                  icon: 'warning',
+                  input: 'text',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  cancelButtonText: 'إلغاء',
+                  confirmButtonText: 'نعم، ألغي الطلب!',
+                  customClass: {
+                    container: 'swal-rtl'
+                  },
+                }).then(async (result) => {
+                  if (result.isConfirmed) {
+                    // axios.get("https://miftahaldaar.ratina.co/fields_options", { headers }),
+                    const formData = new FormData();
+                    formData.append('order_id', orderID);
+                    formData.append('notes', result.value);
+                    const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/cancel`, formData, { headers: headers })
+                    console.log(rsp.data)
+                    // get input value
+                    if (rsp.data.status === 200) {
+                      Swal.fire(
+                        'تم إلغاء الطلب!',
+                        'تم إلغاء الطلب بنجاح.',
+                        'success'
+                      )
+                    }
+                  }
+                })
+
+              }}>
+              إلغاء الطلب
+            </Button>)}
           <Button
             dir="rtl"
             className="px-16 py-4"
             color="red"
-            onClick={() => { }}
+            onClick={async () => {
+              Swal.fire({
+                title: 'هل أنت متأكد من خذف الطلب نهائياً؟',
+                // text: "أذكر سبب الإلغاء",
+                icon: 'warning',
+                // input: 'text',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'إلغاء',
+                confirmButtonText: 'نعم، ألغي الطلب!',
+                customClass: {
+                  container: 'swal-rtl'
+                },
+              }).then(async (result) => {
+                if (result.isConfirmed) {
+                  // axios.get("https://miftahaldaar.ratina.co/fields_options", { headers }),
+                  const formData = new FormData();
+                  formData.append('order_id', orderID);
+                  formData.append('notes', result.value);
+                  const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/delete`, formData, { headers: headers })
+                  console.log(rsp.data)
+                  // get input value
+                  if (rsp.data.status) {
+                    navigator('/dashboard/');
+                    Swal.fire(
+                      'تم حذف الطلب',
+                      'تم إلغاء الطلب بنجاح.',
+                      'success'
+                    )
+                  }
+                }
+              })
+
+            }}
           >
-            إلغاء الطلب
+            حذف نهائي للطلب
           </Button>
         </NewOrderFinalActionButtonContainer>
       </NewOrderSectionContainer>
-    </Container>
+    </Container >
   );
 };
 

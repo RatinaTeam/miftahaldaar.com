@@ -13,13 +13,16 @@ import axios, { all } from "axios";
 import AllOrders from "./AllOrders";
 
 export default function Dashboard() {
-    const { searchQuery, overDueOrders, setSearchQuery, orderUpdateOn, setOrderUpdateOn } = useContext(OtherContext);
-    // const [orderUpdateOn, setOrderUpdateOn] = useState(false);
+    const { overDueOrders, } = useContext(OtherContext);
+    ;
+    const { searchQuery, setSearchQuery } = useContext(OtherContext);
+    const [orderUpdateOn, setOrderUpdateOn] = useState(false);
+    // setOrderUpdateOn(false);
     const [orderTimeline, setOrderTimeline] = useState([]);
     const [orderId, setOrderId] = useState(null);
-    const [allOrdersCount,setAllOrdersCount] = useState(0);
-    const [overDueOrdersCount,setOverDueOrdersCount] = useState(0);
-    const [newOrdersCount,setNewOrdersCount] = useState(0);
+    const [allOrdersCount, setAllOrdersCount] = useState(0);
+    const [overDueOrdersCount, setOverDueOrdersCount] = useState(0);
+    const [newOrdersCount, setNewOrdersCount] = useState(0);
     const { userID, authKey } = useContext(AuthContext);
     const navigate = useNavigate();
     // Modal States
@@ -49,7 +52,7 @@ export default function Dashboard() {
     };
 
     // Other States
-    const [select, setSelect] = useState("overdue");
+    const [select, setSelect] = useState("neworders");
     const [dueOrders, setDueOrders] = useState([]);
     const [newOrders, setNewOrders] = useState([]);
     const [allOrders, setAllOrders] = useState([]);
@@ -86,6 +89,18 @@ export default function Dashboard() {
                 }
                 else
                     console.log("orderUpdateOn", orderUpdateOn, "newSearchQuery", Object.keys(newSearchQuery).length)
+
+                // const [params_allRes, params_delayedRes, params_newRes] = [(select=='all'?{...newSearchQuery}:{...newSearchQuery, status: select}), {...newSearchQuery, status: "overdue"}, {...newSearchQuery, status: "new"},]]    
+                const defualtParams = { orderUpdateOn: orderUpdateOn };
+                let params_allRes, params_delayedRes, params_newRes = [{ ...defualtParams }, { ...defualtParams }, { ...defualtParams }];
+
+                if (select == 'allOrders')
+                    params_allRes = newSearchQuery;
+                if (select == 'overdue')
+                    params_delayedRes = newSearchQuery;
+                if (select == 'neworders')
+                    params_newRes = newSearchQuery;
+
 
                 const [allRes, delayedRes, newRes] = await Promise.all([
                     axios.get("https://miftahaldaar.ratina.co/orders/all",
@@ -133,14 +148,14 @@ export default function Dashboard() {
                     setOverDueOrderCounts(delayedRes.data.orders && delayedRes.data.orders.length);
                     setNewOrders(newRes.data.orders || []);
                     setOverDueOrderCounts(newRes.data.orders && newRes.data.orders.length);
-                    if (Object.keys(searchQuery).length === 0){
+                    // if (Object.keys(searchQuery).length === 0) {
                         setNewOrdersCount(newRes.data.count);
                         setOverDueOrdersCount(delayedRes.data.count);
                         setAllOrdersCount(allRes.data.count);
-                    }                        
-                    else{
-                        console.log("searchQuery",searchQuery)
-                    }
+                    // }
+                    // else {
+                    //     console.log("searchQuery", searchQuery)
+                    // }
                     if (fetchedData) {
                         if (allRes.data.orders.length > oldOrdersNumber) {
                             audioRef.current.play();
@@ -154,7 +169,7 @@ export default function Dashboard() {
                         oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
                         oldDelayedRes = delayedRes.data.orders && delayedRes.data.orders.length;
                         oldNewRes = newRes.data.orders && newRes.data.orders.length;
-                        
+
 
                     }
 
@@ -191,7 +206,10 @@ export default function Dashboard() {
     if (failedToFetch) {
         return <ErrorPage />;
     }
-
+    // get search query
+    // window.printSearchQuery = () => {
+    //     console.log(searchQuery)
+    // }
     return (
         <>
             <main>
@@ -201,19 +219,33 @@ export default function Dashboard() {
                         {/* Action Buttons */}
                         <div className="my-2 mx-auto">
                             <ButtonGroup size="md">
-                                <Button onClick={() => navigate("new_order")}>اضافة طلب جديد</Button>
+                                <Button onClick={() => { navigate("new_order") }}>اضافة طلب جديد</Button>
                                 <Button
-                                    onClick={() => setSelect("allOrders")} className="flex items-center">
+                                    onClick={() => {
+                                        setSelect("allOrders")
+                                        setSearchQuery({ '': 'new' })
+                                        setOrderUpdateOn(false)
+                                    }
+                                    } className="flex items-center">
                                     <span className="bg-red-500 p-2 rounded-full mr-3">{allOrdersCount}</span>
                                     <p>
                                         جميع المتطلبات
                                     </p>
                                 </Button>
-                                <Button onClick={() => setSelect("overdue")} className="flex items-center">
+                                <Button onClick={() => {
+                                    setSelect("overdue")
+                                    setSearchQuery({ '': 'new' })
+                                    setOrderUpdateOn(false)
+                                }} className="flex items-center">
                                     <span className="bg-red-500 p-2 rounded-full mr-3">{overDueOrdersCount}</span>
                                     <p>تحديثات الطلبات</p>
                                 </Button>
-                                <Button onClick={() => setSelect("neworders")} className="flex items-center">
+                                <Button onClick={() => {
+                                    setSearchQuery({ '': 'new' })
+                                    setSelect("neworders")
+                                    setOrderUpdateOn(false)
+                                }
+                                } className="flex items-center">
                                     <span className="bg-red-500 p-2 rounded-full mr-3">{newOrdersCount}</span>
                                     <p>المهام</p>
                                 </Button>

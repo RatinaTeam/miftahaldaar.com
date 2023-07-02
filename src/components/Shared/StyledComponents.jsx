@@ -72,6 +72,7 @@ export const SearchField = ({ onSearch, id, value, options })  => {
                 console.log('is loaded');
             }}
             defaultValue={value}
+            
             onKeyUp={(event) => {
                 if (event.key === 'Enter')
                     onSearch(event.target)

@@ -25,8 +25,16 @@ const OtherProvider = ({ children }) => {
         orderUpdateOn,
         setOrderUpdateOn,        
     };
-
+    
     return <OtherContext.Provider value={providerValue}>{children}</OtherContext.Provider>;
 };
 
 export default OtherProvider;
+export const order_status_translations = {
+    PENDING: 'معلق',
+    CANCELLED: 'ملغى',
+    PARTIALLY_COMPLETED: 'منجز جزئياً',
+    COMPLETED: 'منجز',
+    ON_PROGRESS: 'قيد التنفيذ',
+    DELAYED: 'متأخر',
+  }
