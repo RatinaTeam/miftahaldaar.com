@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
 import { useContext, useEffect, useRef, useState, useMemo } from 'react'
-import { OtherContext, order_status_translations,default_order_types } from "../../contexts/OtherContexts";
+import { OtherContext, order_status_translations, default_order_types } from "../../contexts/OtherContexts";
 
 export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData }) {
   const { userID, authKey, loggedUser } = useContext(AuthContext)
@@ -40,6 +40,8 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     'auth-key': authKey,
   }
   const handleAssign = async (order_id) => {
+
+
     const { value: selectedValue } = await Swal.fire({
       title: 'تعيين موظف',
       input: 'select',
@@ -83,10 +85,10 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     {
       arabic: 'الموظف',
       english: 'emp_name',
-      options: usersList.map((user) => { return user.username }),
-      label : 'الموظف',
+      options: usersList?.map((user) => { return user.username }),
+      label: 'الموظف',
     },
-    
+
     {
       arabic: 'حالة الطلب',
       english: 'status',
@@ -98,7 +100,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
         "قيد التنفيذ",
         "متأخر",
       ],
-      label : 'حالة الطلب',
+      label: 'حالة الطلب',
     },
     // {
     //   arabic: 'تاريخ إعادة المعالجة',
@@ -119,7 +121,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       arabic: 'نوع الطلب',
       english: 'order_type',
       options: default_order_types,
-      label : 'نوع الطلب'
+      label: 'نوع الطلب'
     },
     {
       arabic: 'رقم الطلب',
@@ -133,24 +135,52 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     },
     {
       arabic: 'الملاحظات',
+      english: 'Notes',
     },
+    // {
+    //   arabic: 'الموظف',
+    //   english: 'emp_name',
+    //   options: usersList.map((user) => { return user.username }),
+    //   label : 'الموظف',
+    // },
+
     {
-      arabic: 'تاريخ إعادة المعالجة',
+      arabic: 'حالة الطلب',
+      english: 'status',
+      options: [
+        "معلق",
+        "ملغي",
+        "منجز جزئياً",
+        "منجز",
+        "قيد التنفيذ",
+        "متأخر",
+      ],
+      label: 'حالة الطلب',
     },
+    // {
+    //   arabic: 'تاريخ إعادة المعالجة',
+    // },
     {
       arabic: 'الراتب',
+      english: 'customer_salary_amount',
     },
     {
       arabic: 'رقم الجوال',
+      english: 'customer_phone',
     },
     {
       arabic: 'العميل',
+      english: 'customer_name',
     },
     {
       arabic: 'نوع الطلب',
+      english: 'order_type',
+      options: default_order_types,
+      label: 'نوع الطلب'
     },
     {
-      arabic: 'بطاقة تعريف',
+      arabic: 'رقم الطلب',
+      english: 'id',
     },
   ]
 
@@ -162,19 +192,21 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
   }
   const [searchValue, setSearchValue] = useState('');
 
-  const handleSearch = (field,key,value) => {
+  const handleSearch = (field, key, value) => {
     // if (field.value === '') {
     const newSearchQuery = { ...searchQuery };
-    if (field.id)
-      {
-        newSearchQuery[field.id] = field.value;
-        // console.log(key,value,'safsadfasd')
-      }
-    else
-      {
-        console.log(key,value,'safsadfasd')
-        newSearchQuery[key] = value;
-      }
+    if (field.id) {
+      if (field.value === 'الكل')
+        return;
+      newSearchQuery[field.id] = field.value;
+      // console.log(key,value,'safsadfasd')
+    }
+    else {
+      if (value === 'الكل')
+        return;
+      console.log(key, value, 'safsadfasd')
+      newSearchQuery[key] = value;
+    }
     setSearchQuery(newSearchQuery);
     console.log(searchQuery);
     // }

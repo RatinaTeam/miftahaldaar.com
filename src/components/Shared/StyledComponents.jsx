@@ -33,7 +33,8 @@ export const NewOrderFinalActionButtonContainer = ({ children }) => (
 export const SearchField = ({ onSearch, id, value, options, label }) => {
 
     if (options) {
-        // options.append('');
+        if (!options.includes('الكل'))
+            options.unshift('الكل')
         return (
             <select
                 dir="rtl"
@@ -45,6 +46,7 @@ export const SearchField = ({ onSearch, id, value, options, label }) => {
                 //with not more 100px width
                 className="max-w-[150px] text-sm font-normal focus-visible:outline-none px-2 py-1 mt-2 rounded-lg border border-gray-300"
                 onChange={(val) => {
+                    
                     // console.log(val, 'is selected');
                     // console.log(id, 'is id');
                     onSearch('', id, val.target.value)
