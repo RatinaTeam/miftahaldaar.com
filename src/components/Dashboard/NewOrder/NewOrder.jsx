@@ -709,10 +709,11 @@ const NewOrder = () => {
           >
             حفظ
           </Button>
-          {!IsNewOrder && !['COMPLETED', 'CANCELLED'].includes(orderStatus) && (
+          {!IsNewOrder && !['COMPLETED', 'CANCELLED','PARTIALLY_COMPLETED'].includes(orderStatus) && (
             <Button
               onClick={
                 async () => {
+                  handleCompleteOrder();
                   const formData = new FormData();
                   formData.append('order_id', orderID);
                   formData.append('status', 'PARTIALLY_COMPLETED');
@@ -733,6 +734,33 @@ const NewOrder = () => {
               color="green"
             >
               مكتمل جزئياً
+            </Button>
+          )}
+          {!IsNewOrder && (loggedUser === 1 || loggedUser === 2) && ['PARTIALLY_COMPLETED'].includes(orderStatus) && (
+            <Button
+              onClick={
+                async () => {
+                  handleCompleteOrder();
+                  const formData = new FormData();
+                  formData.append('order_id', orderID);
+                  formData.append('status', 'COMPLETED');
+
+                  const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/update`, formData, { headers: headers })
+                  console.log(rsp.data)
+
+                  if (rsp.data.status) {
+                    navigator('/dashboard/');
+                    Swal.fire(
+                      'تم تحديث حالة الطلب',
+                    )
+                  }
+                }
+              }
+              dir="rtl"
+              className="px-16 py-4"
+              color="green"
+            >
+              مكتمل
             </Button>
           )}
           {/* <Button dir="rtl" className="px-16 py-4" color="blue">

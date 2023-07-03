@@ -62,10 +62,13 @@ export default function Dashboard() {
     const [failedToFetch, setFailedToFetch] = useState(false);
     const { setOverDueOrderCounts } = useContext(OtherContext);
     const [firstTime, setFirstTime] = useState(true);
-
+    // console.log("firstTime", firstTime)
     const [lastSearchQuery, setLastSearchQuery] = useState(JSON.stringify(searchQuery));
     const [refetchData, setRefetchData] = useState(false);
     const audioRef = useRef(null);
+    window.searchQuery = () => {
+        console.log("searchQuery", searchQuery)
+    }
     // setOrderUpdateOn(0);
     useEffect(() => {
 
@@ -83,7 +86,7 @@ export default function Dashboard() {
             // from /order_updated_on endpont get order_updated_on 
             // if (lastSearchQuery !== JSON.stringify(searchQuery))  {
                 const resp = await axios.get("https://miftahaldaar.ratina.co/order_updated_on", {});
-                if (resp.data.order_updated_on && resp.data.order_updated_on != orderUpdateOn || lastSearchQuery !== JSON.stringify(searchQuery)) {
+                if (resp.data.order_updated_on && resp.data.order_updated_on != orderUpdateOn || lastSearchQuery !== JSON.stringify(searchQuery)|| firstTime === true) {
                     setOrderUpdateOn(resp.data.order_updated_on);
                     setLastSearchQuery(JSON.stringify(searchQuery));
                     setFirstTime({false1: false});

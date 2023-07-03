@@ -1,4 +1,4 @@
-import { Button,Select,Input } from "@material-tailwind/react";
+import { Button, Select, Input, Option } from "@material-tailwind/react";
 
 
 import { useContext } from 'react'
@@ -30,40 +30,41 @@ export const NewOrderFinalActionButtonContainer = ({ children }) => (
 );
 
 // import { OtherContext } from "../../contexts/OtherContexts";
-export const SearchField = ({ onSearch, id, value, options })  => {
+export const SearchField = ({ onSearch, id, value, options, label }) => {
+
     if (options) {
-        options.append('');
+        // options.append('');
         return (
-            <Select
+            <select
                 dir="rtl"
-                label="بحث"
-                id={id}
-                // className="max-w-[100px] text-sm font-normal focus-visible:outline-none px-2 py-1 mt-2 rounded-sm"
+                label={"بحث بـ " + label}
+                id={id}                
                 placeholder="بحث"
-                style={{ direction: "rtl", textAlign: "right" }}
-                // onChange={(event) => onSearch(event.target)}
-                // onLoad={() => {
-                //     console.log('is loaded');
-                // }}
-                // defaultValue={value}
+                style={{ textAlign: "center" }}
+                value={value}
+                //with not more 100px width
+                className="max-w-[150px] text-sm font-normal focus-visible:outline-none px-2 py-1 mt-2 rounded-lg border border-gray-300"
                 onChange={(val) => {
-                    onSearch(val)
+                    // console.log(val, 'is selected');
+                    // console.log(id, 'is id');
+                    onSearch('', id, val.target.value)
                 }
-                }                
+                }
             >
                 {options.map((option, index) => (
-                    <Option key={index} value={option}>
+                    <option key={index} value={option}  
+                    className="max-w-[100px]">
                         {option}
-                    </Option>
+                    </option>
                 ))}
-            </Select>
+            </select>
         )
     }
     return (
         <input
             type="text"
             id={id}
-            className="max-w-[100px] text-sm font-normal focus-visible:outline-none px-2 py-1 mt-2 rounded-sm"
+            className="max-w-[100px] text-sm font-normal focus-visible:outline-none px-2 py-1 mt-2  rounded-lg border border-gray-300"
             // className="max-w-[100px] text-sm font-normal px-2 py-1 mt-2 "
             placeholder="بحث"
             style={{ direction: "rtl", textAlign: "right" }}
@@ -72,7 +73,7 @@ export const SearchField = ({ onSearch, id, value, options })  => {
                 console.log('is loaded');
             }}
             defaultValue={value}
-            
+
             onKeyUp={(event) => {
                 if (event.key === 'Enter')
                     onSearch(event.target)

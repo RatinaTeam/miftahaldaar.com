@@ -5,14 +5,14 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
 import { useContext, useEffect, useRef, useState, useMemo } from 'react'
-import { OtherContext,order_status_translations } from "../../contexts/OtherContexts";
+import { OtherContext, order_status_translations,default_order_types } from "../../contexts/OtherContexts";
 
 export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData }) {
   const { userID, authKey, loggedUser } = useContext(AuthContext)
   const [usersList, setUsersList] = useState([])
   const { searchQuery, setSearchQuery } = useContext(OtherContext);
 
-  
+
 
   const fetchData = async () => {
     axios
@@ -83,15 +83,26 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     {
       arabic: 'الموظف',
       english: 'emp_name',
+      options: usersList.map((user) => { return user.username }),
+      label : 'الموظف',
     },
+    
     {
       arabic: 'حالة الطلب',
       english: 'status',
+      options: [
+        "معلق",
+        "ملغي",
+        "منجز جزئياً",
+        "منجز",
+        "قيد التنفيذ",
+        "متأخر",
+      ],
+      label : 'حالة الطلب',
     },
-    {
-      arabic: 'تاريخ إعادة المعالجة',
-
-    },
+    // {
+    //   arabic: 'تاريخ إعادة المعالجة',
+    // },
     {
       arabic: 'الراتب',
       english: 'customer_salary_amount',
@@ -107,6 +118,8 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     {
       arabic: 'نوع الطلب',
       english: 'order_type',
+      options: default_order_types,
+      label : 'نوع الطلب'
     },
     {
       arabic: 'رقم الطلب',
@@ -149,10 +162,19 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
   }
   const [searchValue, setSearchValue] = useState('');
 
-  const handleSearch = (field) => {
+  const handleSearch = (field,key,value) => {
     // if (field.value === '') {
     const newSearchQuery = { ...searchQuery };
-    newSearchQuery[field.id] = field.value;
+    if (field.id)
+      {
+        newSearchQuery[field.id] = field.value;
+        // console.log(key,value,'safsadfasd')
+      }
+    else
+      {
+        console.log(key,value,'safsadfasd')
+        newSearchQuery[key] = value;
+      }
     setSearchQuery(newSearchQuery);
     console.log(searchQuery);
     // }
@@ -211,7 +233,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
                     head?.arabic === 'رقم الجوال' ||
                     head?.arabic === 'الراتب' ||
                     head?.arabic === 'نوع الطلب')
-                    && <SearchField onSearch={handleSearch} id={head?.english} value={searchQuery[head?.english]} />}
+                    && <SearchField onSearch={handleSearch} id={head?.english} value={searchQuery[head?.english]} options={head?.options} label={head?.label} />}
                 </div>
 
               </th>
@@ -303,14 +325,14 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
                       </Link>
                     </td>
                   )}
-                  <td className={classes}>
+                  {/* <td className={classes}>
                     <Typography
                       variant='small'
                       color='blue-gray'
                       className='font-normal'>
                       {date_of_reprocessing}
                     </Typography>
-                  </td>
+                  </td> */}
                   <td className={classes}>
                     <Typography
                       variant='small'

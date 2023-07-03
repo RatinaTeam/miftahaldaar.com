@@ -21,11 +21,11 @@ const OtherProvider = ({ children }) => {
         detailsDataJson,
         setDetailsDataJson,
         searchQuery,
-        setSearchQuery,        
+        setSearchQuery,
         orderUpdateOn,
-        setOrderUpdateOn,        
+        setOrderUpdateOn,
     };
-    
+
     return <OtherContext.Provider value={providerValue}>{children}</OtherContext.Provider>;
 };
 
@@ -37,4 +37,11 @@ export const order_status_translations = {
     COMPLETED: 'منجز',
     ON_PROGRESS: 'قيد التنفيذ',
     DELAYED: 'متأخر',
-  }
+}
+export const default_order_types = [
+    "شراء",
+    "رهن",
+    "بناء ذاتي",
+    "ارض وقرض",
+    "فك الرهن واعادة الشراء"
+]
