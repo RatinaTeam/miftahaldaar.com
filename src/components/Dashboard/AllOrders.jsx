@@ -7,7 +7,7 @@ import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
 import { useContext, useEffect, useRef, useState, useMemo } from 'react'
 import { OtherContext, order_status_translations, default_order_types } from "../../contexts/OtherContexts";
 
-export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData }) {
+export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData }) {
   const { userID, authKey, loggedUser } = useContext(AuthContext)
   const [usersList, setUsersList] = useState([])
   const { searchQuery, setSearchQuery } = useContext(OtherContext);
@@ -102,6 +102,10 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       ],
       label: 'حالة الطلب',
     },
+    {
+      arabic: '%',
+      english: 'completed_percentage',
+    },
     // {
     //   arabic: 'تاريخ إعادة المعالجة',
     // },
@@ -157,6 +161,10 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
       ],
       label: 'حالة الطلب',
     },
+    {
+      arabic: '%',
+      english: 'completed_percentage',
+    },
     // {
     //   arabic: 'تاريخ إعادة المعالجة',
     // },
@@ -184,7 +192,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     },
   ]
 
-  const TABLE_ROWS = allOrders
+  const TABLE_ROWS = orderList
 
   const navigate = useNavigate()
   const navigateToRow = (id) => {
@@ -212,7 +220,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
     // }
   };
 
-  const filteredRows = allOrders.filter((row) => {
+  const filteredRows = orderList.filter((row) => {
     const searchableFields = [
       row.customer_name,
       row.order_type,
@@ -237,14 +245,20 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
 
   return (
     <Card className='overflow-auto h-full w-full'>
-      <table className='w-full min-w-max table-auto text-left'>
-        <thead>
-          <tr>
+      <table className='w-full min-w-max table-auto text-left' style={
+        {
+          borderColor: 'rgb(33 150 243 / var(--tw-bg-opacity))',
+          borderBottomWidth: '20px',
+        }
+      }>
+        <thead style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))', borderColor: 'rgb(33 150 243 / var(--tw-bg-opacity))' }}>
+          <tr style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))' }}>
             {(loggedUser === 1 || loggedUser === 2 ? TABLE_HEAD : EMPLOYEE_TABLE_HEAD).map((head, i) => (
               <th
+                style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))', color: 'white' }}
                 key={i}
                 className='border-b border-blue-gray-100 bg-blue-gray-50 p-3'>
-                <div className='flex flex-col gap-2 '>
+                <div className='flex flex-col gap-2 ' >
                   <span>{head?.arabic}</span>
                   {/* <span>{head?.english}</span> */}
                 </div>
@@ -252,10 +266,11 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
               </th>
             ))}
           </tr>
-          <tr>
+          <tr style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))' }}>
             {(loggedUser === 1 || loggedUser === 2 ? TABLE_HEAD : EMPLOYEE_TABLE_HEAD).map((head, i) => (
               <th
                 key={i}
+                style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))' }}
                 className='border-b border-blue-gray-100 bg-blue-gray-50 p-3'>
                 <div className='flex flex-col gap-2 '>
                   {(head?.arabic === 'الموظف' ||
@@ -279,8 +294,10 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
                 last_update_note,
                 customer_name,
                 status,
+                completed_percentage,
                 // date_of_reprocessing = "لا يوجد",
                 date_of_reprocessing = '',
+                
                 customer_salary_amount,
                 customer_phone,
                 order_type,
@@ -343,7 +360,7 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
                       </Typography>
                     </td>
                   )}
-                  {(loggedUser === 1 || loggedUser === 2) && (
+                  {(loggedUser === 1 || loggedUser === 2) ? (
                     <td className={classes}>
                       <Link
                         to={`/dashboard/new_order?order_id=${id}`}
@@ -356,7 +373,24 @@ export default function AllOrders({ allOrders, handleOpenAddUpdates, refetchData
                         </Typography>
                       </Link>
                     </td>
-                  )}
+                  ):(<td className={classes}>
+                    
+                      
+                        {order_status_translations[status]}
+                      
+                    
+                  </td>)}
+                  <td className={classes}>
+                    <Typography
+                      variant='small'
+                      color='blue-gray'
+                      className='font-normal'>
+                      {
+                        
+                        completed_percentage.toFixed(2) + '%'
+                      }
+                    </Typography>
+                  </td>
                   {/* <td className={classes}>
                     <Typography
                       variant='small'

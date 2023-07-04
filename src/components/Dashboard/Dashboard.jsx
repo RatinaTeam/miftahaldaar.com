@@ -227,23 +227,25 @@ export default function Dashboard() {
             else {
                 // console.log("searchQuery", searchQuery, "newRes.data.count", newRes.data.count, "delayedRes.data.count", delayedRes.data.count, "allRes.data.count", allRes.data.count)
             }
-            if (fetchedData) {
-                if (allRes.data.orders && allRes.data.orders.length > oldOrdersNumber) {
-                    audioRef.current.play();
-                }
-                if (delayedRes.data.orders && delayedRes.data.orders.length > oldDelayedRes) {
-                    audioRef.current.play();
-                }
-                if (newRes.data.orders && newRes.data.orders.length > oldNewRes) {
-                    audioRef.current.play();
-                }
-                oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
-                oldDelayedRes = delayedRes.data.orders && delayedRes.data.orders.length;
-                oldNewRes = newRes.data.orders && newRes.data.orders.length;
+            // if (fetchedData) {
+                // if (allRes.data.orders && allRes.data.orders.length > oldOrdersNumber) {
+                //     audioRef.current.play();
+                // }
+                // if (delayedRes.data.orders && delayedRes.data.orders.length > oldDelayedRes) {
+                //     audioRef.current.play();
+                // }
+                // if (newRes.data.orders && newRes.data.orders.length > oldNewRes) {
+                //     audioRef.current.play();
+                // }
+                // oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
+                // oldDelayedRes = delayedRes.data.orders && delayedRes.data.orders.length;
+                // oldNewRes = newRes.data.orders && newRes.data.orders.length;
 
 
-            }
-
+            // }
+            // window.play_sound = () => {
+            //     audioRef.current.play();
+            // }
             if (!fetchedData) {
                 oldOrdersNumber = allRes.data.orders && allRes.data.orders.length;
                 oldDelayedRes = delayedRes.data.orders && delayedRes.data.orders.length;
@@ -284,7 +286,7 @@ export default function Dashboard() {
     return (
         <>
             <main>
-                {/* <audio ref={audioRef} src="notification.mp3" /> */}
+                <audio ref={audioRef} src="notification.mp3" />
                 <Container>
                     <div className="flex flex-col justify-center">
                         {/* Action Buttons */}
@@ -326,7 +328,7 @@ export default function Dashboard() {
                             </ButtonGroup>
                         </div>
 
-                        {select === "allOrders" && <AllOrders allOrders={allOrders}
+                        {select === "allOrders" && <AllOrders orderList={allOrders}
                             handleOpenAddUpdates={handleOpenAddUpdates}
                             refetchData={() => setRefetchData(!refetchData)}
                         />}
@@ -334,7 +336,7 @@ export default function Dashboard() {
                             handleOpenAddUpdates={handleOpenAddUpdates}
                         />}
                         {select === "neworders" && (
-                            <NewOrders newOrders={newOrders} handleOpenAddUpdates={handleOpenAddUpdates} />
+                            <NewOrders orderList={newOrders} handleOpenAddUpdates={handleOpenAddUpdates} />
                         )}
                     </div>
                 </Container>

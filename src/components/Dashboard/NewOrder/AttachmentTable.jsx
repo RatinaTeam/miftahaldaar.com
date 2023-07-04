@@ -2,7 +2,7 @@ import { Button, Card, IconButton, Typography } from "@material-tailwind/react";
 
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { OtherContext } from "../../../contexts/OtherContexts";
+import { OtherContext,serverURL } from "../../../contexts/OtherContexts";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { BsTrash, BsDownload } from "react-icons/bs";
@@ -211,7 +211,7 @@ const AttachmentTable = ({ required_attachments }) => {
                                                     اضافة
                                                 </label>
                                                 :
-                                                <a href={attachments[attachmentName]} target="_blank">
+                                                <a href={serverURL+attachments[attachmentName]} target="_blank">
                                                     <IconButton>
                                                         <BsDownload size={20} />
                                                     </IconButton>

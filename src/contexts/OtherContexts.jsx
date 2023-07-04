@@ -30,6 +30,7 @@ const OtherProvider = ({ children }) => {
 };
 
 export default OtherProvider;
+export const serverURL = "https://miftahaldaar.ratina.co";
 export const order_status_translations = {
     PENDING: 'معلق',
     CANCELLED: 'ملغى',
