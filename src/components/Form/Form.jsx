@@ -100,6 +100,7 @@ function Forms() {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
+        direction: "rtl",
       }}
     >
       {!idOfNewOrder ? (
@@ -107,12 +108,12 @@ function Forms() {
           <Typography variant="h4" color="blue-gray">
             طلب تمويل عقاري
           </Typography>
-          <div className="absolute top-0 right-0">
-            <img src={logo} alt="Logo" className="h-20 w-20" />
+          <div className="absolute top-0 left-0">
+            <img src={logo} alt="Logo" className="h-20 w-20"  />
           </div>
 
           <Typography color="gray" className="mt-1 font-normal">
-            Real estate financing application form
+            الرجاء تعبئة البيانات التالية
           </Typography>
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-4 flex flex-col gap-6">
@@ -130,8 +131,7 @@ function Forms() {
                 <Option value="فك الرهن واعادة الشراء">فك الرهن واعادة الشراء</Option>
               </Select>
               <Input              
-                dir="rtl"
-                variant="standard"
+                dir="rtl"                
                 style={{ direction: "rtl" }}
                 className="text-right"
                 onChange={handleInputChange}

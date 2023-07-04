@@ -332,7 +332,7 @@ export default function Dashboard() {
                             handleOpenAddUpdates={handleOpenAddUpdates}
                             refetchData={() => setRefetchData(!refetchData)}
                         />}
-                        {select === "overdue" && <OverDueOrders dueOrders={dueOrders}
+                        {select === "overdue" && <OverDueOrders orderList={dueOrders}
                             handleOpenAddUpdates={handleOpenAddUpdates}
                         />}
                         {select === "neworders" && (
