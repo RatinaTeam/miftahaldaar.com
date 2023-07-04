@@ -66,7 +66,7 @@ function Forms() {
         axios.post("https://miftahaldaar.ratina.co/order/register", formData, { headers }),
       ]);
       if (response.data.status === false) {
-
+        console.log(response.data);
         Swal.fire({
           title: 'خطأ',
           text: 'الرجاء تعبئة جميع البيانات',

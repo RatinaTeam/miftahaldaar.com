@@ -59,16 +59,18 @@ export default function NewOrders({ orderList, handleOpenAddUpdates, refetchData
       const formData = new FormData()
       formData.append('order_id', order_id)
       formData.append('emp_id', usersList[selectedValue].id)
-      await axios
+      const res = await axios
         .post('https://miftahaldaar.ratina.co/order_status/assign', formData, {
           headers,
         })
         .then((res) => {
+          
           refetchData()
         })
         .catch((err) => {
           console.log(err)
         })
+      // console.log(res.data)
       Swal.fire(`${usersList[selectedValue].username} : لقد حددت`)
     }
   }
@@ -296,7 +298,7 @@ export default function NewOrders({ orderList, handleOpenAddUpdates, refetchData
                 completed_percentage,
                 // date_of_reprocessing = "لا يوجد",
                 date_of_reprocessing = '',
-                
+
                 customer_salary_amount,
                 customer_phone,
                 order_type,
@@ -372,12 +374,12 @@ export default function NewOrders({ orderList, handleOpenAddUpdates, refetchData
                         </Typography>
                       </Link>
                     </td>
-                  ):(<td className={classes}>
-                    
-                      
-                        {order_status_translations[status]}
-                      
-                    
+                  ) : (<td className={classes}>
+
+
+                    {order_status_translations[status]}
+
+
                   </td>)}
                   <td className={classes}>
                     <Typography
@@ -385,7 +387,7 @@ export default function NewOrders({ orderList, handleOpenAddUpdates, refetchData
                       color='blue-gray'
                       className='font-normal'>
                       {
-                        
+
                         completed_percentage.toFixed(2) + '%'
                       }
                     </Typography>

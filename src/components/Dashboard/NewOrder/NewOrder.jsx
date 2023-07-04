@@ -424,6 +424,8 @@ const NewOrder = () => {
               size="md"
               label="تاريخ الطلب"
               value={orderDate}
+              disabled={true}
+              className="disabled:bg-gray-300"
               onChange={(e) => setOrderDate(e.target.value)}
               readOnly={true}
             />

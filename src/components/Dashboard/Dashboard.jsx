@@ -333,10 +333,10 @@ export default function Dashboard() {
                             refetchData={() => setRefetchData(!refetchData)}
                         />}
                         {select === "overdue" && <OverDueOrders orderList={dueOrders}
-                            handleOpenAddUpdates={handleOpenAddUpdates}
+                            handleOpenAddUpdates={handleOpenAddUpdates} refetchData={refetchData}
                         />}
                         {select === "neworders" && (
-                            <NewOrders orderList={newOrders} handleOpenAddUpdates={handleOpenAddUpdates} />
+                            <NewOrders orderList={newOrders} handleOpenAddUpdates={handleOpenAddUpdates} refetchData={refetchData} />
                         )}
                     </div>
                 </Container>
