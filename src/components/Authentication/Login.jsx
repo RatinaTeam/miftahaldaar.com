@@ -55,7 +55,7 @@ const Login = () => {
     };
 
     return (
-        <div className="grid place-items-center h-screen">
+        <div className="grid place-items-center h-screen" dir="rtl">
             <Card className="mx-auto w-full max-w-[24rem] ">
                 <CardHeader variant="gradient" color="blue" className="mb-4 grid h-28 place-items-center">
                     <Typography variant="h3" color="white">
