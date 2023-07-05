@@ -6,7 +6,7 @@ import { getAllUsers } from "../../../utils/dataFetchingFunctions";
 import Loading from "../../Shared/Loading";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import axios from "axios";
-
+import { user_roles_translations } from "../../../contexts/OtherContexts";
 const Users = () => {
     const { userID, authKey } = useContext(AuthContext);
     const [userList, setUserList] = useState([]);
@@ -114,7 +114,7 @@ const Users = () => {
                                                             formData.append("id", id);
                                                             formData.append("username", document.getElementById("username" + id).value);
                                                             formData.append("password", document.getElementById("password" + id).value);
-                                                            formData.append("role", document.getElementById("role" + id).value);
+                                                            // formData.append("role",user_roles_translations[document.getElementById("role" + id).value]);
                                                             formData.append("is_active", is_active);
                                                             axios.post("https://miftahaldaar.ratina.co/user/update",
                                                                 formData
@@ -215,7 +215,8 @@ const Users = () => {
                                                     type="text"
                                                     name=""
                                                     id = {'role'+id}
-                                                    defaultValue={role}
+                                                    disabled={true}
+                                                    defaultValue={user_roles_translations[role]}
                                                     className="bg-transparent py-2 px-2"
                                                 />
                                             </Typography>

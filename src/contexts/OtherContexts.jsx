@@ -39,6 +39,11 @@ export const order_status_translations = {
     ON_PROGRESS: 'قيد التنفيذ',
     DELAYED: 'متأخر',
 }
+export const user_roles_translations = {
+    ADMIN: 'مدير',
+    SUPERVISOR: 'مشرف',
+    EMPLOYEE: 'موظف',
+}
 export const default_order_types = [
     "شراء",
     "رهن",
