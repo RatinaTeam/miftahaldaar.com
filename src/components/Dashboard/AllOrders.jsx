@@ -8,7 +8,7 @@ import { useContext, useEffect, useRef, useState, useMemo } from 'react'
 import { OtherContext, order_status_translations, default_order_types } from "../../contexts/OtherContexts";
 
 export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData }) {
-  const { userID, authKey, loggedUser } = useContext(AuthContext)
+  const { userID, authKey, loggedUser,userRole } = useContext(AuthContext)
   const [usersList, setUsersList] = useState([])
   const { searchQuery, setSearchQuery } = useContext(OtherContext);
 
@@ -29,6 +29,7 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
   }
   useEffect(() => {
     fetchData()
+    console.log(usersList, 'usersList')
   }, [])
 
   const filterUsers = (id) => {
@@ -242,18 +243,26 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
         value.toLowerCase().includes(searchValue.toLowerCase())
     );
   });
+  // check string in list 
+  
+  
+  
+  const [isSuperAdmin, setIsSuperAdmin] = useState(['ADMIN','SUPERVISOR'].includes(userRole));
+  console.log(isSuperAdmin,'isSuperAdmin') 
 
+
+ 
   return (
     <Card className='overflow-auto h-full w-full'>
-      <table className='w-full min-w-max table-auto text-left' style={
+      <table className='w-full min-w-max table-auto text-center' style={
         {
           borderColor: 'rgb(33 150 243 / var(--tw-bg-opacity))',
-          borderBottomWidth: '20px',
+          borderBottomWidth: '20px',          
         }
       }>
         <thead style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))', borderColor: 'rgb(33 150 243 / var(--tw-bg-opacity))' }}>
           <tr style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))' }}>
-            {(loggedUser === 1 || loggedUser === 2 ? TABLE_HEAD : EMPLOYEE_TABLE_HEAD).map((head, i) => (
+            {(isSuperAdmin? TABLE_HEAD : EMPLOYEE_TABLE_HEAD).map((head, i) => (
               <th
                 style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))', color: 'white' }}
                 key={i}
@@ -267,7 +276,7 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
             ))}
           </tr>
           <tr style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))' }}>
-            {(loggedUser === 1 || loggedUser === 2 ? TABLE_HEAD : EMPLOYEE_TABLE_HEAD).map((head, i) => (
+            {(isSuperAdmin ? TABLE_HEAD : EMPLOYEE_TABLE_HEAD).map((head, i) => (
               <th
                 key={i}
                 style={{ background: 'rgb(33 150 243 / var(--tw-bg-opacity))' }}
@@ -310,7 +319,7 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
               const classes = isLast
                 ? 'p-4'
                 : 'p-4 border-b border-blue-gray-50'
-              //   {(loggedUser === 1 || loggedUser === 2) && (
+              //   {(isSuperAdmin) && (
               return (
                 <tr
                   key={index}
@@ -341,15 +350,20 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
                       إضافة التحديث
                     </Button>
                   </td>
-                  <td className={classes}>
+                  <td className={classes} style={
+                    {
+                      maxWidth: '50px',                      
+                    }
+                  }>
                     <Typography
                       variant='small'
                       color='blue-gray'
                       className='font-normal'>
                       {last_update_note}
+                      
                     </Typography>
                   </td>
-                  {(loggedUser === 1 || loggedUser === 2) && (
+                  {(isSuperAdmin) && (
                     <td className={classes}>
                       <Typography
                         onClick={() => handleAssign(id)}
@@ -360,7 +374,7 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
                       </Typography>
                     </td>
                   )}
-                  {(loggedUser === 1 || loggedUser === 2) ? (
+                  {(isSuperAdmin) ? (
                     <td className={classes}>
                       <Link
                         to={`/dashboard/new_order?order_id=${id}`}

@@ -5,7 +5,7 @@ import { Button } from "@material-tailwind/react";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Header = () => {
-    const { userID,loggedUser } = useContext(AuthContext);
+    const { userID,loggedUser,userRole } = useContext(AuthContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleMenuToggle = () => {
@@ -64,7 +64,7 @@ const Header = () => {
                             >
                                 لوحة القيادة
                             </Link>
-                            {(loggedUser === 1 || loggedUser === 2) && (<Link
+                            {userRole === 'ADMIN' && (<Link
                                 to="users_list"
                                 className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-700 "
                             >
@@ -80,9 +80,11 @@ const Header = () => {
 </Button>
                         </div>
                     </div>
-                    <div className="flex items-center flex-shrink-0 ">
-                        <span className="font-semibold text-xl tracking-tight mr-4 border py-2 px-2 rounded-lg text-gray-800">
-                     مفتاح الدار للعقارات
+                    <div className="flex items-center flex-shrink-0 " >
+                        <span className="font-semibold text-xl tracking-tight mr-4 border py-2 px-2 rounded-lg text-gray-800" style={
+                        {backgroundColor:"white"}
+                        }>
+                                <img src="/public/miftahaldaar.com_logo.svg" alt="logo" className="w-12 h-12"  />
                         </span>
                     </div>
                 </nav>

@@ -10,7 +10,7 @@ import { user_roles_translations } from "../../../contexts/OtherContexts";
 const Users = () => {
     const { userID, authKey } = useContext(AuthContext);
     const [userList, setUserList] = useState([]);
-    
+
     // Modal States
     const [openAddNewUser, setOpenAddNewUser] = useState(false);
     // Modal Handlers
@@ -49,6 +49,7 @@ const Users = () => {
         fetchData();
     }, []);
     if (userList.length == 0) return <Loading />;
+    console.log(userList);
 
     const TABLE_HEAD = ["", "كلمة المرور", "اسم المستخدم", "نوع الحساب", "رقم الحساب"];
 
@@ -114,8 +115,17 @@ const Users = () => {
                                                             formData.append("id", id);
                                                             formData.append("username", document.getElementById("username" + id).value);
                                                             formData.append("password", document.getElementById("password" + id).value);
-                                                            // formData.append("role",user_roles_translations[document.getElementById("role" + id).value]);
+                                                            // from user_roles_translations value to key
+
+
+                                                            let new_role;
+                                                            Object.keys(user_roles_translations).forEach(function (key, index) {
+                                                                if (user_roles_translations[key] == document.getElementById("role" + id).value)
+                                                                    new_role = key;
+                                                            });
+                                                            formData.append("role", new_role);
                                                             formData.append("is_active", is_active);
+                                                            console.log(formData)
                                                             axios.post("https://miftahaldaar.ratina.co/user/update",
                                                                 formData
                                                                 , {
@@ -148,23 +158,47 @@ const Users = () => {
                                                     يحفظ
                                                 </Button>
                                                 {/* Disable */}
-                                                {/* <Button size="sm" className="flex items-center gap-3  ">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        strokeWidth={1.5}
-                                                        stroke="currentColor"
-                                                        className="w-6 h-6"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
-                                                        />
-                                                    </svg>
-                                                    إبطال
-                                                </Button> */}
+                                                <Button size="sm" className="flex items-center gap-3  "
+
+                                                    onClick={
+                                                        () => {
+                                                            let formData = new FormData();
+                                                            formData.append("id", id);
+                                                            // formData.append("role",user_roles_translations[document.getElementById("role" + id).value]);
+                                                            formData.append("id", id);
+                                                            formData.append("username", document.getElementById("username" + id).value);
+                                                            formData.append("password", document.getElementById("password" + id).value);
+                                                            // from user_roles_translations value to key
+
+
+                                                            let new_role;
+                                                            Object.keys(user_roles_translations).forEach(function (key, index) {
+                                                                if (user_roles_translations[key] == document.getElementById("role" + id).value)
+                                                                    new_role = key;
+                                                            });
+                                                            formData.append("role", new_role);
+                                                            formData.append("is_active", !is_active);
+
+                                                            axios.post("https://miftahaldaar.ratina.co/user/update",
+                                                                formData
+                                                                , {
+                                                                    headers: {
+                                                                        "user-id": userID,
+                                                                        "auth-key": authKey,
+                                                                    }
+                                                                }).then(res => {
+                                                                    console.log(res)
+                                                                    window.location.reload();
+                                                                }).catch(err => {
+                                                                    console.log(err)
+                                                                })
+                                                        }
+                                                    }
+                                                >
+
+                                                    {is_active ? "تعطيل" : "تفعيل"}
+
+                                                </Button>
                                             </ButtonGroup>
                                         </td>
                                         <td className={classes}>
@@ -193,7 +227,7 @@ const Users = () => {
                                                     className="max-w-[150px] bg-transparent py-2 px-2"
                                                     type={showPass ? "text" : "password"}
                                                     name=""
-                                                    id = {'password'+id}
+                                                    id={'password' + id}
                                                     defaultValue={password}
                                                 />
                                             </div>
@@ -203,7 +237,7 @@ const Users = () => {
                                                 <input
                                                     type="text"
                                                     name=""
-                                                    id = {'username'+id}
+                                                    id={'username' + id}
                                                     defaultValue={username}
                                                     className="bg-transparent py-2 px-2"
                                                 />
@@ -214,7 +248,7 @@ const Users = () => {
                                                 <input
                                                     type="text"
                                                     name=""
-                                                    id = {'role'+id}
+                                                    id={'role' + id}
                                                     disabled={true}
                                                     defaultValue={user_roles_translations[role]}
                                                     className="bg-transparent py-2 px-2"

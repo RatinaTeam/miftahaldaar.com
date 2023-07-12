@@ -2,9 +2,14 @@
   direction: rtl;
   text-align: right;
 }
-th {
+th,td {
   text-align: center;  
 }
+thead,th{
+  position: sticky;
+  top: 0;
+}
+thead tr:first-child th { position: sticky; top: 0; }
 thead,thead tr td , thead th {
   background-color: #173D7B;
 }
@@ -12,3 +17,7 @@ thead,thead tr td , thead th {
 table {
   border: 5px solid #173D7B;  
 }
+*,body {
+  font-size: 17px !important;
+}
+

@@ -43,7 +43,7 @@ function Forms() {
 
   const headers = {
     "user-id": "1010",
-    "auth-key": "sdofmasdmfasdmflkmasdf",
+    "auth-key": "adsgsdfgsdfg",
   };
 
   const handleCompleteOrder = async () => {
@@ -109,7 +109,7 @@ function Forms() {
             طلب تمويل عقاري
           </Typography>
           <div className="absolute top-0 left-0">
-            <img src={logo} alt="Logo" className="h-20 w-20"  />
+            <img src="miftahaldaar.com_logo.svg" alt="Logo" className="h-20 w-20"  />
           </div>
 
           <Typography color="gray" className="mt-1 font-normal">
@@ -125,9 +125,7 @@ function Forms() {
                 onChange={(value) => handleSelectChange("order_type", value)}
               >
                 <Option value="شراء">شراء</Option>
-                <Option value="رهن">رهن</Option>
-                <Option value="بناء ذاتي">بناء ذاتي</Option>
-                <Option value="ارض وقرض">ارض وقرض</Option>
+                <Option value="رهن">رهن</Option>                
                 <Option value="فك الرهن واعادة الشراء">فك الرهن واعادة الشراء</Option>
               </Select>
               <Input              
@@ -148,14 +146,31 @@ function Forms() {
                 size="lg"
                 label="رقم الهاتف"
               />
-              <Input
+              {/* <Input
                 dir="rtl"
                 onChange={handleInputChange}
                 value={Data.customer_employer}
                 name="customer_employer"
                 size="lg"
                 label="جهة العمل"
-              />
+              /> */}
+              <Select
+                dir="rtl"
+                onChange={(value) => handleSelectChange("customer_employer", value)}
+                name="customer_employer"
+                value={Data.customer_employer}
+                label="جهة العمل"
+              >                
+                {[
+                  'عسكري',
+                  'مدني',
+                  'قطاع خاص',
+                  'متقاعد',
+                ].map((item) => (
+                  <Option value={item}>{item}</Option>
+                ))}
+                
+              </Select>
               <Input
                 dir="rtl"
                 onChange={handleInputChange}
@@ -182,10 +197,7 @@ function Forms() {
                 <Option value="الجزيرة"> الجزيرة </Option>
                 <Option value="سامبا"> سامبا </Option>
                 <Option value="بنك الامارات "> بنك الامارات </Option>
-                <Option value="شركة سهل "> شركة سهل </Option>
-                <Option value="شركة دويتشه "> شركة دويتشه </Option>
-                <Option value="شركة بداية "> شركة بداية </Option>
-                <Option value="جهة تمويل الشركات والمؤسسات "> جهة تمويل الشركات والمؤسسات </Option>
+                
               </Select>
               {/* <Input
                 onChange={handleInputChange}
