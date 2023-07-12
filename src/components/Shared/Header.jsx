@@ -84,7 +84,7 @@ const Header = () => {
                         <span className="font-semibold text-xl tracking-tight mr-4 border py-2 px-2 rounded-lg text-gray-800" style={
                         {backgroundColor:"white"}
                         }>
-                                <img src="/public/miftahaldaar.com_logo.svg" alt="logo" className="w-12 h-12"  />
+                                <img src="miftahaldaar.com_logo.svg" alt="logo" className="w-12 h-12"  />
                         </span>
                     </div>
                 </nav>
