@@ -5,9 +5,9 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
 import { useContext, useEffect, useRef, useState, useMemo } from 'react'
-import { OtherContext, order_status_translations, default_order_types } from "../../contexts/OtherContexts";
+import { OtherContext, order_status_translations, default_order_types,backendURL } from "../../contexts/OtherContexts";
 // import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
-// import { OtherContext } from "../../../contexts/OtherContexts";
+
 
 
 export default function OverDueOrders({ orderList,handleOpenAddUpdates,refetchData }) {
@@ -20,7 +20,7 @@ export default function OverDueOrders({ orderList,handleOpenAddUpdates,refetchDa
     const fetchData = async () => {
       axios
         .get(
-          'https://miftahaldaar.ratina.co/user/all',
+          backendURL+'/user/all',
           { headers }
         )
         .then((res) => {
@@ -64,7 +64,7 @@ export default function OverDueOrders({ orderList,handleOpenAddUpdates,refetchDa
         formData.append('order_id', order_id)
         formData.append('emp_id', usersList[selectedValue].id)
         await axios
-          .post('https://miftahaldaar.ratina.co/order_status/assign', formData, {
+          .post(backendURL+'/order_status/assign', formData, {
             headers,
           })
           .then((res) => {

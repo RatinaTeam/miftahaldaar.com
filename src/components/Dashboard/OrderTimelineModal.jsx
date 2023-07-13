@@ -14,7 +14,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
-
+import { OtherContext,backendURL } from "../../contexts/OtherContexts";
 const OrderTimelineModal = ({ openAddUpdates, orderId, handleOpenAddUpdates, orderTimeline, setOpenAddUpdates }) => {
     const { userID, authKey } = useContext(AuthContext);
     const order_status_translations = {
@@ -34,7 +34,7 @@ const OrderTimelineModal = ({ openAddUpdates, orderId, handleOpenAddUpdates, ord
         formData.append("order_id", orderId);
         formData.append("notes", note);
         try {
-            axios.post("https://miftahaldaar.ratina.co/order_status/add_notes", formData
+            axios.post(backendURL+"/order_status/add_notes", formData
                 , {
                     headers: {
                         "user-id": userID,

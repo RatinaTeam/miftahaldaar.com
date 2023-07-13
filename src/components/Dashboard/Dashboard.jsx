@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import OverDueOrders from "./OverDueOrders";
 import NewOrders from "./NewOrders";
 import OrderTimelineModal from "./OrderTimelineModal";
-import { OtherContext } from "../../contexts/OtherContexts";
+import { OtherContext,backendURL } from "../../contexts/OtherContexts";
 import { AuthContext } from "../../contexts/AuthProvider";
 import Loading from "../Shared/Loading";
 import ErrorPage from "../Shared/ErrorPage";
@@ -35,7 +35,7 @@ export default function Dashboard() {
         if (openAddUpdates === false) {
             const formData = new FormData();
             formData.append("order_id", order_id);
-            axios.post("https://miftahaldaar.ratina.co/order/get",
+            axios.post(backendURL+"/order/get",
                 formData
                 , {
                     headers: {
@@ -85,7 +85,7 @@ export default function Dashboard() {
                 // return;
             // from /order_updated_on endpont get order_updated_on 
             // if (lastSearchQuery !== JSON.stringify(searchQuery))  {
-                const resp = await axios.get("https://miftahaldaar.ratina.co/order_updated_on", {});
+                const resp = await axios.get(backendURL+"/order_updated_on", {});
                 if (resp.data.order_updated_on && resp.data.order_updated_on != orderUpdateOn || lastSearchQuery !== JSON.stringify(searchQuery)|| firstTime === true) {
                     setOrderUpdateOn(resp.data.order_updated_on);
                     setLastSearchQuery(JSON.stringify(searchQuery));
@@ -163,17 +163,17 @@ export default function Dashboard() {
 
             // console.log("params_allRes", params_allRes, "params_delayedRes", params_delayedRes, "params_newRes", params_newRes)
             const [allRes, delayedRes, newRes] = await Promise.all([
-                axios.get("https://miftahaldaar.ratina.co/orders/all",
+                axios.get(backendURL+"/orders/all",
                 {
                     headers: headers,
                     params: searchQuery
                 }
                 ),
-                axios.get("https://miftahaldaar.ratina.co/orders/delayed_orders", {
+                axios.get(backendURL+"/orders/delayed_orders", {
                     headers: headers,
                     params: params_delayedRes
                 }),
-                axios.get("https://miftahaldaar.ratina.co/orders/new_orders", {
+                axios.get(backendURL+"/orders/new_orders", {
                     headers: headers,
                     params: params_newRes
                 }),

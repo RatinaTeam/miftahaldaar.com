@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const baseUrl = "https://miftahaldaar.ratina.co/";
+const baseUrl = "https://srv.miftahaldaar.com";
 
 /****************************************************************
  *********** USERS

@@ -26,7 +26,7 @@ import Loading from "../../Shared/Loading";
 import ErrorPage from "../../Shared/ErrorPage";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { useNavigate } from 'react-router-dom';
-import { OtherContext, order_status_translations } from "../../../contexts/OtherContexts";
+import { OtherContext, order_status_translations,backendURL } from "../../../contexts/OtherContexts";
 import Swal from "sweetalert2";
 
 const NewOrder = () => {
@@ -175,14 +175,14 @@ const NewOrder = () => {
       let response = null;
       if (order_id)
         [response] = await Promise.all([
-          axios.post("https://miftahaldaar.ratina.co/order/update", formData, {
+          axios.post(backendURL+"/order/update", formData, {
             headers,
           }),
 
         ]);
       else
         [response] = await Promise.all([
-          axios.post("https://miftahaldaar.ratina.co/order/create", formData, {
+          axios.post(backendURL+"/order/create", formData, {
             headers,
           }),
 
@@ -254,8 +254,8 @@ const NewOrder = () => {
 
     try {
       const [fields_options_response, orderResponse] = await Promise.all([
-        axios.get("https://miftahaldaar.ratina.co/fields_options", { headers }),
-        axios.post("https://miftahaldaar.ratina.co/order/get", formData, {
+        axios.get(backendURL+"/fields_options", { headers }),
+        axios.post(backendURL+"/order/get", formData, {
           headers,
         }),
       ]);
@@ -720,7 +720,7 @@ const NewOrder = () => {
                   formData.append('order_id', orderID);
                   formData.append('status', 'PARTIALLY_COMPLETED');
 
-                  const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/update`, formData, { headers: headers })
+                  const rsp = await axios.post(`${backendURL}/order_status/update`, formData, { headers: headers })
                   console.log(rsp.data)
 
                   if (rsp.data.status) {
@@ -747,7 +747,7 @@ const NewOrder = () => {
                   formData.append('order_id', orderID);
                   formData.append('status', 'COMPLETED');
 
-                  const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/update`, formData, { headers: headers })
+                  const rsp = await axios.post(`${backendURL}/order_status/update`, formData, { headers: headers })
                   console.log(rsp.data)
 
                   if (rsp.data.status) {
@@ -786,11 +786,11 @@ const NewOrder = () => {
                   },
                 }).then(async (result) => {
                   if (result.isConfirmed) {
-                    // axios.get("https://miftahaldaar.ratina.co/fields_options", { headers }),
+                    // axios.get(backendURL+"/fields_options", { headers }),
                     const formData = new FormData();
                     formData.append('order_id', orderID);
                     formData.append('notes', result.value);
-                    const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/cancel`, formData, { headers: headers })
+                    const rsp = await axios.post(`${backendURL}/order_status/cancel`, formData, { headers: headers })
                     console.log(rsp.data)
                     // get input value
                     if (rsp.data.status === 200) {
@@ -826,11 +826,11 @@ const NewOrder = () => {
                 },
               }).then(async (result) => {
                 if (result.isConfirmed) {
-                  // axios.get("https://miftahaldaar.ratina.co/fields_options", { headers }),
+                  // axios.get(backendURL+"/fields_options", { headers }),
                   const formData = new FormData();
                   formData.append('order_id', orderID);
                   formData.append('notes', result.value);
-                  const rsp = await axios.post(`https://miftahaldaar.ratina.co/order_status/delete`, formData, { headers: headers })
+                  const rsp = await axios.post(`${backendURL}/order_status/delete`, formData, { headers: headers })
                   console.log(rsp.data)
                   // get input value
                   if (rsp.data.status) {

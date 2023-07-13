@@ -30,7 +30,7 @@ const AttachmentTable = ({ required_attachments }) => {
         formData.append("file", event.target.files[0]);
         try {
             const response = await axios.post(
-                "https://miftahaldaar.ratina.co/update_file",
+                backendURL+"/update_file",
                 formData,
                 {
                     headers: headers,
@@ -61,7 +61,7 @@ const AttachmentTable = ({ required_attachments }) => {
             formData.append("file_url", file_url);
 
             const response = await axios.post(
-                "https://miftahaldaar.ratina.co/delete_file",
+                backendURL+"/delete_file",
                 formData,
                 {
                     headers: headers,
@@ -90,7 +90,7 @@ const AttachmentTable = ({ required_attachments }) => {
             formData.append("file", fileList[key]);
             try {
                 const response = await axios.post(
-                    "https://miftahaldaar.ratina.co/update_file",
+                    backendURL+"/update_file",
                     formData,
                     {
                         headers: {

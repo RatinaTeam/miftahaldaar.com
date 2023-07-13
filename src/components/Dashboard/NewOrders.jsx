@@ -16,7 +16,7 @@ export default function NewOrders({ orderList, handleOpenAddUpdates, refetchData
   const fetchData = async () => {
     axios
       .get(
-        'https://miftahaldaar.ratina.co/user/all',
+        backendURL+'/user/all',
         { headers }
       )
       .then((res) => {
@@ -60,7 +60,7 @@ export default function NewOrders({ orderList, handleOpenAddUpdates, refetchData
       formData.append('order_id', order_id)
       formData.append('emp_id', usersList[selectedValue].id)
       const res = await axios
-        .post('https://miftahaldaar.ratina.co/order_status/assign', formData, {
+        .post(backendURL+'/order_status/assign', formData, {
           headers,
         })
         .then((res) => {

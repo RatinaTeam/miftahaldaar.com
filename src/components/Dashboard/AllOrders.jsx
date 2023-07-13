@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import AuthProvider, { AuthContext } from '../../contexts/AuthProvider'
 import { useContext, useEffect, useRef, useState, useMemo } from 'react'
-import { OtherContext, order_status_translations, default_order_types } from "../../contexts/OtherContexts";
+import { OtherContext, order_status_translations, default_order_types,backendURL } from "../../contexts/OtherContexts";
 
 export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData }) {
   const { userID, authKey, loggedUser,userRole } = useContext(AuthContext)
@@ -17,7 +17,7 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
   const fetchData = async () => {
     axios
       .get(
-        'https://miftahaldaar.ratina.co/user/all',
+        backendURL+'/user/all',
         { headers }
       )
       .then((res) => {
@@ -62,7 +62,7 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
       formData.append('order_id', order_id)
       formData.append('emp_id', usersList[selectedValue].id)
       await axios
-        .post('https://miftahaldaar.ratina.co/order_status/assign', formData, {
+        .post(backendURL+'/order_status/assign', formData, {
           headers,
         })
         .then((res) => {
@@ -132,6 +132,10 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
       arabic: 'رقم الطلب',
       english: 'id',
     },
+    {
+      arabic: '#',
+      english: '#',
+    },
   ]
 
   const EMPLOYEE_TABLE_HEAD = [
@@ -190,6 +194,10 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
     {
       arabic: 'رقم الطلب',
       english: 'id',
+    },
+    {
+      arabic: '#',
+      english: '#',
     },
   ]
 
@@ -451,6 +459,14 @@ export default function AllOrders({ orderList, handleOpenAddUpdates, refetchData
                       color='blue-gray'
                       className='font-normal'>
                       {id}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant='small'
+                      color='blue-gray'
+                      className='font-normal'>
+                      {index+1}
                     </Typography>
                   </td>
                 </tr>

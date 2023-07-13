@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
-
+import { OtherContext,backendURL } from "../contexts/OtherContexts";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
         "auth-key": authKey,
       };
       axios
-        .get("https://miftahaldaar.ratina.co/user/all", { headers })
+        .get(backendURL+"/user/all", { headers })
         .then((res) => {
           const usersList = res.data.users;
           const userInfo = usersList?.find((user) => user.id == userID);

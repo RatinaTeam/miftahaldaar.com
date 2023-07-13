@@ -6,7 +6,7 @@ import { getAllUsers } from "../../../utils/dataFetchingFunctions";
 import Loading from "../../Shared/Loading";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import axios from "axios";
-import { user_roles_translations } from "../../../contexts/OtherContexts";
+import { user_roles_translations,backendURL } from "../../../contexts/OtherContexts";
 const Users = () => {
     const { userID, authKey } = useContext(AuthContext);
     const [userList, setUserList] = useState([]);
@@ -24,7 +24,7 @@ const Users = () => {
         const fetchData = async () => {
             try {
 
-                // const response = await fetch("https://miftahaldaar.ratina.co/user/all", {
+                // const response = await fetch(backendURL+"/user/all", {
                 //     headers: {
                 //         "user-id": "1010",
                 //         "auth-key": authKey,
@@ -126,7 +126,7 @@ const Users = () => {
                                                             formData.append("role", new_role);
                                                             formData.append("is_active", is_active);
                                                             console.log(formData)
-                                                            axios.post("https://miftahaldaar.ratina.co/user/update",
+                                                            axios.post(backendURL+"/user/update",
                                                                 formData
                                                                 , {
                                                                     headers: {
@@ -179,7 +179,7 @@ const Users = () => {
                                                             formData.append("role", new_role);
                                                             formData.append("is_active", !is_active);
 
-                                                            axios.post("https://miftahaldaar.ratina.co/user/update",
+                                                            axios.post(backendURL+"/user/update",
                                                                 formData
                                                                 , {
                                                                     headers: {

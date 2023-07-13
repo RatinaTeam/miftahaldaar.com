@@ -3,7 +3,7 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import { addNewUser } from "../../../utils/dataFetchingFunctions";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import { user_roles_translations } from "../../../contexts/OtherContexts";
+import { user_roles_translations , backendURL} from "../../../contexts/OtherContexts";
 
 const AddNewUserModal = ({ openAddNewUser, handleOpenAddNewUser }) => {
     const [selectedRole, setSelectedRole] = useState("");

@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 
 export const OtherContext = createContext();
-
+export const backendURL = "https://srv.miftahaldaar.com";
 const OtherProvider = ({ children }) => {
     // States
     const [overDueOrdersCount, setOverDueOrderCounts] = useState(true);
@@ -30,7 +30,7 @@ const OtherProvider = ({ children }) => {
 };
 
 export default OtherProvider;
-export const serverURL = "https://miftahaldaar.ratina.co";
+export const serverURL = "https://srv.miftahaldaar.com";
 export const order_status_translations = {
     PENDING: 'معلق',
     CANCELLED: 'ملغى',
