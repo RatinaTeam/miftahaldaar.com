@@ -126,7 +126,8 @@ function Forms() {
               >
                 <Option value="شراء">شراء</Option>
                 <Option value="رهن">رهن</Option>                
-                <Option value="فك الرهن واعادة الشراء">فك الرهن واعادة الشراء</Option>
+                <Option value="فك رهن واعادة تمويل">فك رهن واعادة تمويل</Option>
+                
               </Select>
               <Input              
                 dir="rtl"                
@@ -234,7 +235,7 @@ function Forms() {
           <div className="flex flex-col items-center justify-center h-screen">
             <h1 className="text-2xl font-bold">تم اضافة الطلب بنجاح</h1>
             <h1 className="text-2xl font-bold">رقم طلبك هو # {idOfNewOrder}</h1>
-            <a href={`tel:0545917427`} className="mt-4">
+            {/* <a href={`tel:0545917427`} className="mt-4">
               <Button color="primary" variant="contained">
 
                 <BsTelephone size={20} style={{ display: "inline", marginRight: '5px' }} />
@@ -248,7 +249,7 @@ function Forms() {
                 <BsWhatsapp size={20} style={{ display: "inline", marginRight: '5px' }} />
                 <span> 0545917427</span>
               </Button>
-            </a>
+            </a> */}
 
           </div>
         )
