@@ -12,12 +12,12 @@ export const getAllUsers = async (userID, authKey) => {
         "user-id": userID,
         "auth-key": authKey,
     };
-    const users = await axios.get(baseUrl + "user/all", { headers });
+    const users = await axios.get(baseUrl + "/user/all", { headers });
     return users;
 };
 
 export const addNewUser = async (formData, headers) => {
-    const newUser = await axios.post(baseUrl + "user/create", formData, { headers });
+    const newUser = await axios.post(baseUrl + "/user/create", formData, { headers });
     return newUser;
 };
 
