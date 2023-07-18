@@ -114,9 +114,7 @@ function Forms() {
           <div className="absolute top-0 left-0">
             <img src="miftahaldaar.com_logo.svg" alt="Logo" className="h-20 w-20" alt="مفتاح الدار للعقارات"  />
           </div>
-          <Typography color="gray" className="mt-1 font-normal">
-          مفتاح الدار للعقارات. ايجاد حلول تمويليه تناسب دخل العميل  تسهيل استخراج التمويل ايجاد حلول  لسداد اللتزامات الماليه
-          </Typography>
+          
           <Typography color="gray" className="mt-1 font-normal">
             الرجاء تعبئة البيانات التالية
           </Typography>
