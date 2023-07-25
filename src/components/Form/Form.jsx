@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import logo from "../Form/vite.png";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { backendURL } from "../../contexts/OtherContexts";
 
 function Forms() {
   const [Data, setData] = useState({
@@ -247,12 +248,12 @@ function Forms() {
               </Button>
             </a>
             {/* whatsapp button with text menithon order id , button color green */}
-            <a href={`https://wa.me/966545917427?text=طلب تمويل عقاري رقم ${idOfNewOrder}`} className="mt-4">
+            {/* <a href={`https://wa.me/966545917427?text=طلب تمويل عقاري رقم ${idOfNewOrder}`} className="mt-4">
               <Button variant="contained" color="green">
                 <BsWhatsapp size={20} style={{ display: "inline", marginRight: '5px' }} />
                 <span> 0545917427</span>
               </Button>
-            </a> */}
+            </a>  */}
 
           </div>
         )
