@@ -123,7 +123,7 @@ const OrderTimelineModal = ({ openAddUpdates, orderId, handleOpenAddUpdates, ord
                                             </td>
                                             <td className={classes}>
                                                 <Typography variant="small" color="blue-gray" className="font-normal">
-                                                {emp.username}
+                                                {emp?.username}
                                                 </Typography>
                                             </td>
                                             <td className={classes}>
